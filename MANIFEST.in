@@ -1,0 +1,3 @@
+include LICENSE README.md
+recursive-exclude * *.pyc
+recursive-include ai *.py *.html *.js
