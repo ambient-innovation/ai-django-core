@@ -1,10 +1,17 @@
+# coding=utf-8
 from django import template
 
 register = template.Library()
 
 @register.filter(name='mult')
 def mult(value, arg):
-    "Multiplies the arg and the value"
+    """
+    Multiplies the arg and the value
+
+    :param value:
+    :param arg:
+    :return:
+    """
     if value:
         value = "%s" % value
         if type(value) is str and len(value) > 0:
@@ -14,7 +21,13 @@ def mult(value, arg):
 
 @register.filter(name='sub')
 def sub(value, arg):
-    "Subtracts the arg from the value"
+    """
+    Subtracts the arg from the value
+
+    :param value:
+    :param arg:
+    :return:
+    """
     value = nonetozero(value)
     arg = nonetozero(arg)
     return int(value) - int(arg)
@@ -22,7 +35,13 @@ def sub(value, arg):
 
 @register.filter(name='div')
 def div(value, arg):
-    "Divides the value by the arg"
+    """
+    Divides the value by the arg
+
+    :param value:
+    :param arg:
+    :return:
+    """
     if value:
         return float(value) / float(arg)
     else:
@@ -30,6 +49,12 @@ def div(value, arg):
 
 
 def nonetozero(value):
+    """
+    Returns 0 if value is None
+
+    :param value:
+    :return:
+    """
     if value is None:
         return 0
     else:
@@ -37,5 +62,20 @@ def nonetozero(value):
 
 @register.filter(name='toint')
 def toint(value):
+    """
+    Parses a string to int value
+
+    :param value:
+    :return:
+    """
     return int(value)
 
+@register.filter()
+def currency(value):
+    """
+    Converts the number to an €-amount
+    """
+    if value:
+        return (("%.2f" % round(value, 2)) + "€").replace(".", ",")
+    else:
+        return "-"

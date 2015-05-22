@@ -14,5 +14,5 @@ setup(
     description='Lots of helper functions and useful widgets.',
     long_description=open('README.rst').read(),
     zip_safe=False,
-    install_requires=[]
+    install_requires=['django-crispy-forms>=1.4.0', 'Django>=1.7.0']
 )
