@@ -110,6 +110,10 @@ def restoreWindows1252Controls(s):
     return re.sub(ur'[\u0080-\u0099]', toWindows1252, s)
 
 
+def date_to_string(value, replacement="-"):
+    return value.strftime("%d.%m.%Y") if value is not None else replacement
+
+
 def number_to_string(value, decimal_digits=0, replacement="-"):
     return intcomma(floatformat(value, decimal_digits)) if value is not None else replacement
 
