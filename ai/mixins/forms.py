@@ -3,13 +3,11 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.utils.translation import ugettext_lazy as _
 
-__author__ = 'dennismosemann'
-
 
 class RequestInFormKwargsMixin(object):
     """
     Injects the request in the form.
-    Attention: Have to be removed in the init of the form
+    Attention: Have to be removed in the init of the form (via .pop())
     """
     def get_form_kwargs(self):
         kwargs = super(RequestInFormKwargsMixin, self).get_form_kwargs()

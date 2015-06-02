@@ -4,7 +4,6 @@ from django import template
 register = template.Library()
 
 
-
 @register.filter
 def format_to_minutes(time):
     """
@@ -15,5 +14,3 @@ def format_to_minutes(time):
     """
 
     return time.seconds / 60
-
-

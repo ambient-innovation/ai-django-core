@@ -7,17 +7,13 @@ from django.contrib.humanize.templatetags.humanize import intcomma
 from django.template.defaultfilters import floatformat
 
 
-def numbertotext(value):
+def number_to_text(value):
     if value == 0:
-        return "first"
+        return u"first"
     elif value == 1:
-        return "second"
+        return u"second"
     else:
-        return "third"
-
-
-def localize_float(value):
-    return value.replace('.', ',')
+        return u"third"
 
 
 def distinct(l):
@@ -25,25 +21,6 @@ def distinct(l):
     map(setitem, (d,)*len(l), l, [])
     return d.keys()
 
-
-def float_to_string(value):
-    if value is not None:
-        return localize_float("%.2f" % value)
-    else:
-        return "0,00"
-
-
-def splitString(str):
-    result = []
-
-    arr = str.split(',')
-    for element in arr:
-        element = element.strip()
-        if len(element) > 0:
-            result.append(element)
-    
-    return result              
-                    
 
 def slugify_file_name(file_name):
     """
@@ -53,7 +30,6 @@ def slugify_file_name(file_name):
     try:
         from django.template.defaultfilters import slugify
         from django.utils.encoding import smart_str
-        #print "before: %s" % file_name
         nameext = file_name.rsplit('.',1)
         name = nameext[0] 
         ext = nameext[1]
@@ -74,7 +50,8 @@ def replace_link_pattern(text):
 
 
 def smart_truncate(text, max_length=100, suffix='...'):
-    """Returns a string of at most `max_length` characters, cutting
+    """
+    Returns a string of at most `max_length` characters, cutting
     only at word-boundaries. If the string was truncated, `suffix`
     will be appended.
     """
@@ -96,18 +73,26 @@ def smart_truncate(text, max_length=100, suffix='...'):
     return ' '.join(words) + suffix
 
 
-def restoreWindows1252Controls(s):
-    """Replace C1 control characters in the Unicode string s by the
+def restore_windows1252controls(s):
+    """
+    Replace C1 control characters in the Unicode string s by the
     characters at the corresponding code points in Windows-1252, where
-    possible."""
+    possible.
+    """
     import re
-    def toWindows1252(match):
+    def to_windows1252(match):
         try:
             return chr(ord(match.group(0))).decode('windows-1252')
         except UnicodeDecodeError:
             # No character at the corresponding code point: remove it.
             return ''
-    return re.sub(ur'[\u0080-\u0099]', toWindows1252, s)
+    return re.sub(ur'[\u0080-\u0099]', to_windows1252, s)
+
+
+def float_to_string(value, replacement="0,00"):
+    def localize_float(value):
+        return value.replace('.', ',')
+    return localize_float("%.2f" % value) if value is not None else replacement
 
 
 def date_to_string(value, replacement="-"):
