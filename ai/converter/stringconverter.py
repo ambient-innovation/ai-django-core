@@ -106,7 +106,8 @@ def number_to_string(value, decimal_digits=0, replacement="-"):
 def string_or_none_to_string(value, replacement="-"):
     return value if value is not None else replacement
 
-def encode_to_xml(str):
+def encode_to_xml(text):
+    str = str(text)
     str = str.replace('&', '&amp;')
     str = str.replace('<', '&lt;')
     str = str.replace('>', '&gt;')
