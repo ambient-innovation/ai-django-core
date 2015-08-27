@@ -58,7 +58,7 @@ def to_int(value):
     :param value:
     :return:
     """
-    return int(value)
+    return int(value) if value else 0
 
 
 @register.filter(name="currency")
