@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
+
 setup(
     name='ai-django-core',
     version='1.0.1.0',
