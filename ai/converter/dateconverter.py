@@ -12,6 +12,8 @@ def add_months(sourcedate, months):
 def add_days(sourcedate, days):
     return sourcedate + relativedelta(days=days)
 
+def add_minutes(sourcedate, minutes):
+    return sourcedate + relativedelta(minutes=minutes)
 
 def get_next_month():
     dt = date.today()
