@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ai-django-core',
-    version='1.0.2.0',
+    version='1.0.4.0',
     author=u'Ambient Innovation GmbH',
     author_email='info@ambient-innovation.com',
     packages=find_packages(),
@@ -15,5 +15,5 @@ setup(
     description='Lots of helper functions and useful widgets.',
     long_description=open('README.rst').read(),
     zip_safe=False,
-    install_requires=['django-crispy-forms>=1.4.0', 'Django>=1.7.0']
+    install_requires=['django-crispy-forms>=1.4.0', 'Django>=1.7.0', 'bleach>=1.4.2']
 )
