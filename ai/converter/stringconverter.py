@@ -31,12 +31,16 @@ def slugify_file_name(file_name):
         from django.template.defaultfilters import slugify
         from django.utils.encoding import smart_str
         nameext = file_name.rsplit('.',1)
-        name = nameext[0] 
-        ext = nameext[1]
+        name = ''
+        ext = ''
+        if nameext:
+            name = nameext[0]
+            if len(nameext) > 1:
+                ext = nameext[1]
         #name = name.encode('latin1')
         name = smart_str(slugify(name).replace('-', '_'))
         ext = smart_str(slugify(ext))
-        result = '%s.%s' % (name[:40], ext)
+        result = '%s%s%s' % (name[:40], "." if ext else "", ext)
         #print "after: %s" % result
     except:
         print "Unexpected error:", sys.exc_info()[0]
@@ -55,20 +59,20 @@ def smart_truncate(text, max_length=100, suffix='...'):
     only at word-boundaries. If the string was truncated, `suffix`
     will be appended.
     """
-    
+
     if text is None:
         return ''
-    
+
     # Return the string itself if length is smaller or equal to the limit
     if len(text) <= max_length:
         return text
-    
+
     # Cut the string
     value = text[:max_length]
-    
+
     # Break into words and remove the last
     words = value.split(' ')[:-1]
-    
+
     # Join the words and return
     return ' '.join(words) + suffix
 
