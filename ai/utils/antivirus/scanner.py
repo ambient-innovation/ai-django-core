@@ -12,8 +12,11 @@ class AVScanner(object):
         with tempfile.NamedTemporaryFile(delete=False) as temporaryfile:
             temporaryfile.write(file.read())
             temporaryfile.close()
+            os.chmod(temporaryfile.name, 0644)  # clamav needs permission to scan
             ret = self.multi_av.scan(temporaryfile.name, AV_SPEED_MEDIUM)
             os.unlink(temporaryfile.name)
-            if ret != {}:
-                return True, ret
+            for x in ret.values():
+                if x != {}:
+                    # all is lost as soon as one scanner finds something
+                    return True, ret
             return False, None
