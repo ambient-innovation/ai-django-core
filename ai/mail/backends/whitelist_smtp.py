@@ -10,6 +10,19 @@ REGEX = r'^[\w\-\.]+@(%s)$' % '|'.join(x for x in EMAIL_BACKEND_DOMAIN_WHITELIST
 
 
 class EmailBackend(SMTPEmailBackend):
+    @staticmethod
+    def whitify_mail_adresses(mail_adress_list):
+        allowed_recipients = []
+        # unallowed_recipients = []
+        for to in mail_adress_list:
+            if re.search(REGEX, to):
+                allowed_recipients.append(to)
+            else:
+                # sende nicht erlaubte Mails an den testuser.t-ped.de Catchall
+                allowed_recipients.append("%s@testuser.t-ped.de" % to.replace('@', '_'))
+                # unallowed_recipients.append(to)
+        return allowed_recipients
+
     def __init__(self, *args, **kwargs):
         self.console_backend = ConsoleEmailBackend(*args, **kwargs)
         super(EmailBackend, self).__init__(*args, **kwargs)
@@ -20,15 +33,7 @@ class EmailBackend(SMTPEmailBackend):
         Uses regular smtp-sending afterwards.
         """
         for email in email_messages:
-            allowed_recipients = []
-            # unallowed_recipients = []
-            for to in email.to:
-                if re.search(REGEX, to):
-                    allowed_recipients.append(to)
-                else:
-                    # sende nicht erlaubte Mails an den t-ped.biz Catchall
-                    allowed_recipients.append("%s@t-ped.biz" % to.replace('@', '_'))
-                    # unallowed_recipients.append(to)
+            allowed_recipients = self.whitify_mail_adresses(email.to)
             email.to = allowed_recipients
-        super(EmailBackend, self).send_messages(email_messages)
-        # self.console_backend.send_messages(email_messages)
+        # super(EmailBackend, self).send_messages(email_messages)
+        self.console_backend.send_messages(email_messages)
