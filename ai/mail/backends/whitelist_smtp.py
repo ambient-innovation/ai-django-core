@@ -25,8 +25,10 @@ class EmailBackend(SMTPEmailBackend):
             for to in email.to:
                 if re.search(REGEX, to):
                     allowed_recipients.append(to)
-                # else:
-                #     unallowed_recipients.append(to)
+                else:
+                    # sende nicht erlaubte Mails an den t-ped.biz Catchall
+                    allowed_recipients.append("%s@t-ped.biz" % to.replace('@', '_'))
+                    # unallowed_recipients.append(to)
             email.to = allowed_recipients
         super(EmailBackend, self).send_messages(email_messages)
         # self.console_backend.send_messages(email_messages)
