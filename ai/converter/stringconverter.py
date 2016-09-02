@@ -22,7 +22,7 @@ def distinct(l):
     return d.keys()
 
 
-def slugify_file_name(file_name):
+def slugify_file_name(file_name, length=40):
     """
         Translit and slugify file name.
     """
@@ -40,7 +40,7 @@ def slugify_file_name(file_name):
         #name = name.encode('latin1')
         name = smart_str(slugify(name).replace('-', '_'))
         ext = smart_str(slugify(ext))
-        result = '%s%s%s' % (name[:40], "." if ext else "", ext)
+        result = '%s%s%s' % (name[:length], "." if ext else "", ext)
         #print "after: %s" % result
     except:
         print "Unexpected error:", sys.exc_info()[0]
