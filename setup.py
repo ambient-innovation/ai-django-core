@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ai-django-core',
-    version='1.0.6.1',
+    version='1.0.6.2',
     author=u'Ambient Innovation GmbH',
     author_email='info@ambient-innovation.com',
     packages=find_packages(),
