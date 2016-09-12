@@ -11,11 +11,10 @@ scanner = AVScanner()
 
 
 def file_validator(f):
-    if os.path.exists(f.path):
-        has_virus, name = scanner.has_virus(f.file)
-        if has_virus:
-            raise ValidationError(_('In dieser Datei wurde ein Virus erkannt.'))
-            # raise ValidationError(_('Virus "{}" wurde erkannt.').format(name))
+    has_virus, name = scanner.has_virus(f.file)
+    if has_virus:
+        raise ValidationError(_('In dieser Datei wurde ein Virus erkannt.'))
+        # raise ValidationError(_('Virus "{}" wurde erkannt.').format(name))
 
 
 class AVProtectedFileField(models.FileField):
