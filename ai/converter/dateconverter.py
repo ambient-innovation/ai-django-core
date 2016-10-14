@@ -36,7 +36,7 @@ def get_formatted_date_str(dt):
     return dt.strftime('%d.%m.%Y')
 
 
-def getSeconds(string_time):
+def get_seconds(string_time):
     duration = time.strptime(string_time, "%H:%M:%S")
 
     hour = duration.tm_hour
@@ -48,7 +48,7 @@ def getSeconds(string_time):
     return total_seconds
 
 
-def getTimeFromSeconds(seconds):
+def get_time_from_seconds(seconds):
     ### CONVERT TO TIME
     new_hor = int(seconds/3600)
     new_minu = int((seconds-(new_hor*3600))/60)

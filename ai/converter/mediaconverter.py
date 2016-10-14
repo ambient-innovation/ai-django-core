@@ -3,7 +3,6 @@ from django.conf import settings
 import subprocess
 import re
 import time
-from time import gmtime, strftime
 
 
 def generate_video_thumbnail(videofile, fallback_icon_path, image_path):
@@ -11,7 +10,7 @@ def generate_video_thumbnail(videofile, fallback_icon_path, image_path):
     file_path_wo_extension, extension = os.path.splitext(videofile.name)
     video_path = videofile.url
     full_path = "%s%s" % (base_path, video_path)
-    length = getLength(full_path)
+    length = get_video_length(full_path)
 
     try:
         duration = time.strptime(length, "%H:%M:%S")
@@ -39,7 +38,7 @@ def generate_video_thumbnail(videofile, fallback_icon_path, image_path):
         return fallback_icon_path
 
 
-def getLength(filename):
+def get_video_length(filename):
     try:
         result = subprocess.Popen(["ffprobe", filename], stdout = subprocess.PIPE, stderr = subprocess.STDOUT)
     except Exception, e:

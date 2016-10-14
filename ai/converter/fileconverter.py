@@ -1,7 +1,7 @@
 import zlib
 import hashlib
 
-def getFilenameWithoutEnding(filename):
+def get_filename_without_ending(filename):
     """
     Returns the filename without extension
     :param filename:
@@ -17,7 +17,7 @@ def crc(fileName):
     return "%X"%(prev & 0xFFFFFFFF)
 
 
-def md5Checksum(filePath):
+def md5_checksum(filePath):
     """
     Returns the md5 checksum of the file from the given filepath
     :param filePath:
