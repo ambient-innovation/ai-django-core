@@ -103,12 +103,17 @@ def date_to_string(value, replacement="-"):
     return value.strftime("%d.%m.%Y") if value is not None else replacement
 
 
+def datetime_to_string(value, replacement="-"):
+    return value.strftime("%d.%m.%Y %H:%M:%S") if value is not None else replacement
+
+
 def number_to_string(value, decimal_digits=0, replacement="-"):
     return intcomma(floatformat(value, decimal_digits)) if value is not None else replacement
 
 
 def string_or_none_to_string(value, replacement="-"):
     return value if value is not None else replacement
+
 
 def encode_to_xml(text):
     str = unicode(text)
