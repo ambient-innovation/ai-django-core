@@ -99,12 +99,12 @@ def float_to_string(value, replacement="0,00"):
     return localize_float("%.2f" % value) if value is not None else replacement
 
 
-def date_to_string(value, replacement="-"):
-    return value.strftime("%d.%m.%Y") if value is not None else replacement
+def date_to_string(value, replacement="-", format="%d.%m.%Y"):
+    return value.strftime(format) if value is not None else replacement
 
 
-def datetime_to_string(value, replacement="-"):
-    return value.strftime("%d.%m.%Y %H:%M:%S") if value is not None else replacement
+def datetime_to_string(value, replacement="-", format="%d.%m.%Y %H:%M"):
+    return value.strftime(format) if value is not None else replacement
 
 
 def number_to_string(value, decimal_digits=0, replacement="-"):
