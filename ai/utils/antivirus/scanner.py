@@ -12,7 +12,8 @@ class AVScanner(object):
         with tempfile.NamedTemporaryFile(delete=False) as temporaryfile:
             temporaryfile.write(file.read())
             temporaryfile.close()
-            os.chmod(temporaryfile.name, 0644)  # clamav needs permission to scan
+            permission = 0o664 # PEP 3127: octal literals
+            os.chmod(temporaryfile.name, permission)  # clamav needs permission to scan
             ret = self.multi_av.scan(temporaryfile.name, AV_SPEED_MEDIUM)
             os.unlink(temporaryfile.name)
             for x in ret.values():

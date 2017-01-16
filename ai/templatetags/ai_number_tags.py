@@ -1,4 +1,5 @@
 # coding=utf-8
+from __future__ import division
 from django import template
 
 register = template.Library()
@@ -45,7 +46,7 @@ def divide(value, arg):
     :return:
     """
     if value:
-        return float(value) / float(arg)
+        return value / arg
     else:
         return None
 

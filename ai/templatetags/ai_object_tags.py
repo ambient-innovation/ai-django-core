@@ -11,12 +11,9 @@ def dict_key_lookup(the_dict, key):
 
     :param the_dict:
     :param key:
-    :return:
+    :return: str
     """
-    try:
-        return the_dict[key]
-    except KeyError:
-        return ''
+    return the_dict.get(key, '')
 
 
 @register.filter(name='label')

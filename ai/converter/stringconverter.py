@@ -2,6 +2,7 @@
 import re
 import sys
 from operator import setitem
+from builtins import str
 
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.template.defaultfilters import floatformat
@@ -43,7 +44,7 @@ def slugify_file_name(file_name, length=40):
         result = '%s%s%s' % (name[:length], "." if ext else "", ext)
         #print "after: %s" % result
     except:
-        print "Unexpected error:", sys.exc_info()[0]
+        print("Unexpected error:", sys.exc_info()[0])
     return result
 
 
@@ -83,14 +84,20 @@ def restore_windows1252controls(s):
     characters at the corresponding code points in Windows-1252, where
     possible.
     """
-    import re
     def to_windows1252(match):
         try:
             return chr(ord(match.group(0))).decode('windows-1252')
         except UnicodeDecodeError:
             # No character at the corresponding code point: remove it.
             return ''
-    return re.sub(ur'[\u0080-\u0099]', to_windows1252, s)
+    pattern = r'[\u0080-\u0099]'
+    try:
+        pattern = pattern.decode('raw_unicode_escape')
+    except AttributeError as e:
+        # Python 3
+        # PEP 414: ur'...' prefix replaced wit just r'...'
+        pass
+    return re.sub(pattern, to_windows1252, s)
 
 
 def float_to_string(value, replacement="0,00"):
@@ -116,9 +123,9 @@ def string_or_none_to_string(value, replacement="-"):
 
 
 def encode_to_xml(text):
-    str = unicode(text)
-    str = str.replace('&', '&amp;')
-    str = str.replace('<', '&lt;')
-    str = str.replace('>', '&gt;')
+    text_str = str(text)
+    text_str = text_str.replace('&', '&amp;')
+    text_str = text_str.replace('<', '&lt;')
+    text_str = text_str.replace('>', '&gt;')
 
-    return str
+    return text_str
