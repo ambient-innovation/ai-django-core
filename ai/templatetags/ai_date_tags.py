@@ -1,4 +1,5 @@
 # coding=utf-8
+from __future__ import division
 from django import template
 
 register = template.Library()
@@ -13,4 +14,4 @@ def format_to_minutes(time):
     :return minutes:
     """
 
-    return time.seconds / 60
+    return time.seconds // 60

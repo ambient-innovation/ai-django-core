@@ -1,9 +1,11 @@
 # coding=utf-8
+from __future__ import division
 from datetime import date
 import datetime
 from dateutil.relativedelta import relativedelta
 from django.utils.timezone import utc
 import time
+
 
 def add_months(sourcedate, months):
     return sourcedate + relativedelta(months=months)
@@ -12,8 +14,10 @@ def add_months(sourcedate, months):
 def add_days(sourcedate, days):
     return sourcedate + relativedelta(days=days)
 
+
 def add_minutes(sourcedate, minutes):
     return sourcedate + relativedelta(minutes=minutes)
+
 
 def get_next_month():
     dt = date.today()
@@ -43,15 +47,15 @@ def get_seconds(string_time):
     min = duration.tm_min
     sec = duration.tm_sec
     ##### CONVERT TO SECONDS
-    total_seconds = ((hour*60) + min)*60 + sec
+    total_seconds = ((hour * 60) + min) * 60 + sec
 
     return total_seconds
 
 
 def get_time_from_seconds(seconds):
     ### CONVERT TO TIME
-    new_hor = int(seconds/3600)
-    new_minu = int((seconds-(new_hor*3600))/60)
-    new_seg = seconds-((new_hor*3600)+(new_minu*60))
-    result = "%02d:%02d:%02d" % (new_hor, new_minu,new_seg)
+    new_hor = seconds // 3600
+    new_minu = (seconds - (new_hor * 3600)) // 60
+    new_seg = seconds - ((new_hor * 3600) + (new_minu * 60))
+    result = "%02d:%02d:%02d" % (new_hor, new_minu, new_seg)
     return result

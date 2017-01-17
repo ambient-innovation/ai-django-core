@@ -10,6 +10,7 @@
 ## 1.1 - fixed typos
 ## 1.2 - renamed functions _apart & _npart to a_part & n_part as zope does not allow functions to
 ## start with _
+from __future__ import division
 def generate_password(alpha=8, numeric=4):
     """
     returns a human-readble password (say rol86din instead of
@@ -41,9 +42,9 @@ def generate_password(alpha=8, numeric=4):
             ret += digits[randid]
         return ret
 
-    fpl = alpha / 2
+    fpl = alpha // 2
     if alpha % 2:
-        fpl = int(alpha / 2) + 1
+        fpl = (alpha // 2) + 1
     lpl = alpha - fpl
 
     start = a_part(fpl)
