@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: UTF-8 -*-
 from datetime import date
 import datetime
 from dateutil.relativedelta import relativedelta

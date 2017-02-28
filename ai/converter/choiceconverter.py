@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: UTF-8 -*-
 
 
 def get_name_by_value(choices_tuple, input_val):
