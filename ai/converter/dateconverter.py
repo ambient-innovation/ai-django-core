@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: UTF-8 -*-
 from __future__ import division
 from datetime import date
 import datetime
