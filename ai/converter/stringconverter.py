@@ -7,6 +7,8 @@ from builtins import str
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.template.defaultfilters import floatformat
 
+from ai.converter.dateconverter import time_format
+
 
 def number_to_text(value):
     if value == 0:
@@ -107,11 +109,11 @@ def float_to_string(value, replacement="0,00"):
 
 
 def date_to_string(value, replacement="-", format="%d.%m.%Y"):
-    return value.strftime(format) if value is not None else replacement
+    return time_format(value, format) if value is not None else replacement
 
 
 def datetime_to_string(value, replacement="-", format="%d.%m.%Y %H:%M"):
-    return value.strftime(format) if value is not None else replacement
+    return time_format(value, format) if value is not None else replacement
 
 
 def number_to_string(value, decimal_digits=0, replacement="-"):
