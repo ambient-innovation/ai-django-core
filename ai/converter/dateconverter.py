@@ -2,7 +2,10 @@
 from __future__ import division
 from datetime import date
 import datetime
+
+import pytz
 from dateutil.relativedelta import relativedelta
+from django.conf import settings
 from django.utils.timezone import utc
 import time
 
@@ -59,3 +62,9 @@ def get_time_from_seconds(seconds):
     new_seg = seconds - ((new_hor * 3600) + (new_minu * 60))
     result = "%02d:%02d:%02d" % (new_hor, new_minu, new_seg)
     return result
+
+
+def time_format(time, dt_format):  # Uses strftime, but considers timezone
+    if hasattr(settings, 'TIME_ZONE'):
+        return time.astimezone(tz=pytz.timezone(settings.TIME_ZONE)).strftime(dt_format)
+    return time.strftime(dt_format)
