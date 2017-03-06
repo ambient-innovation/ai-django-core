@@ -65,6 +65,8 @@ def get_time_from_seconds(seconds):
 
 
 def datetime_format(datetime, dt_format):  # Uses strftime, but considers timezone (only for datetime objects)
-    if hasattr(settings, 'TIME_ZONE'):
-        return datetime.astimezone(tz=pytz.timezone(settings.TIME_ZONE)).strftime(dt_format)
-    return datetime.strftime(dt_format)
+    try:
+        dt_format = datetime.astimezone(tz=pytz.timezone(settings.TIME_ZONE)).strftime(dt_format)
+    except:
+        dt_format = datetime.strftime(dt_format)
+    return dt_format
