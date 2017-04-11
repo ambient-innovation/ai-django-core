@@ -1,13 +1,21 @@
 import zlib
 import hashlib
 
-def get_filename_without_ending(filename):
+
+def get_filename_without_ending(filepath):
     """
     Returns the filename without extension
     :param filename:
     :return:
     """
-    return filename.rsplit('.',1)[0]
+
+    # if filename has filepath parts
+    if '/' in filepath:
+        filename = filepath.rsplit('/')[-1]
+    else:
+        filename = filepath
+
+    return filename.rsplit('.', 1)[0]
 
 
 def crc(fileName):
