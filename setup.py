@@ -12,7 +12,7 @@ requirements=[
 
 setup(
     name='ai-django-core',
-    version='1.1.0',
+    version='1.1.2',
     author=u'Ambient Innovation GmbH',
     author_email='info@ambient-innovation.com',
     packages=find_packages(),
