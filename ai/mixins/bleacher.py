@@ -2,6 +2,12 @@ import bleach
 
 
 class BleacherMixin(object):
+    """
+    Entfernt HTML Tags/Attribute aus den definierten Feldern in `fields_to_bleach`.
+    Die erlaubten Tags und Attribute sind in `ALLOWED_TAGS` und `ALLOWED_ATTRIBUTES` spezifiziert.
+    Wenn keine Tags und/oder Attribute spezifiziert sind, werden die default-Listen verwendet.
+    """
+
     DEFAULT_ALLOWED_ATTRIBUTES = {
         '*': ['class', 'style', 'id'],
         'a': ['href', 'rel'],
