@@ -25,8 +25,9 @@ class BleacherMixin(object):
 
     def _bleach_field(self, field_name):
         str_to_bleach = getattr(self, field_name, "")
-        cleaned_value = bleach.clean(str_to_bleach, tags=self.allowed_tags, attributes=self.allowed_attributes)
-        setattr(self, field_name, cleaned_value)
+        if str_to_bleach:
+            cleaned_value = bleach.clean(str_to_bleach, tags=self.allowed_tags, attributes=self.allowed_attributes)
+            setattr(self, field_name, cleaned_value)
 
     def save(self, *args, **kwargs):
         for field in self.fields_to_bleach:
