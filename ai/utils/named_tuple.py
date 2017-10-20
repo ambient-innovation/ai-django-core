@@ -101,7 +101,7 @@ def get_value_from_tuple_by_key(choices, key):
     """
     Fetches the tuple value by a given key
     Useful for getting the name of a key from a model choice tuple of tuples.
-    Usage: get_value_from_tuple_by_key(PROJECT_TYPE_CHOICES, PROJECT_TYPE_A)
+    Usage: project_type_a_name = get_value_from_tuple_by_key(PROJECT_TYPE_CHOICES, PROJECT_TYPE_A)
     :param choices: tuple
     :param key: key to get tuple value with
     :return:
