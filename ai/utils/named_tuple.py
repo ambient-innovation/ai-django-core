@@ -95,3 +95,18 @@ def get_namedtuple_choices(name, choices_tuple):
             return False
 
     return Choices._make([val for val, name, desc in choices_tuple])
+
+
+def get_value_from_tuple_by_key(choices, key):
+    """
+    Fetches the tuple value by a given key
+    Useful for getting the name of a key from a model choice tuple of tuples.
+    Usage: project_type_a_name = get_value_from_tuple_by_key(PROJECT_TYPE_CHOICES, PROJECT_TYPE_A)
+    :param choices: tuple
+    :param key: key to get tuple value with
+    :return:
+    """
+    try:
+        return [x[1] for x in choices if x[0] == key][0]
+    except IndexError:
+        return '-'
