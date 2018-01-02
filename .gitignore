@@ -1,3 +1,10 @@
 *~
 *.pyc
 .idea
+.cache
+.coverage
+
+/*.egg-info/
+/attachments/
+/build
+/dist
