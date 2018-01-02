@@ -1,3 +1,4 @@
-include LICENSE README.rstpip
+include README.md
+include LICENSE.md
 recursive-exclude * *.pyc
 recursive-include ai *.py *.html *.js *.cfg
