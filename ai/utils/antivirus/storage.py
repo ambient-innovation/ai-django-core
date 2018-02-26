@@ -16,4 +16,7 @@ class AVFileSystemStorage(FileSystemStorage):
         raise AVException(av_result[1])
 
 class SingleCoreAVFileSystemStorage(AVFileSystemStorage):
+    """
+    Same as AVFileSystemStorage, but doesn't run multiple scanners in parallel
+    """
     parallel = False
