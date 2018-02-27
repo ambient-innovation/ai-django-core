@@ -15,6 +15,9 @@ class AVScanner(object):
             permission = 0o664 # PEP 3127: octal literals
             os.chmod(temporaryfile.name, permission)  # clamav needs permission to scan
             if parallel:
+                # TODO: Handle the case for when no scanner is installed ...
+                # Currently we say that nothing was found...
+                # The single core case works as expected
                 ret = self.multi_av.scan(temporaryfile.name, AV_SPEED_MEDIUM)
             else:
 
@@ -22,9 +25,7 @@ class AVScanner(object):
                     ret = self.multi_av.single_scan(temporaryfile.name, AV_SPEED_MEDIUM)
                 except OSError as err:
                     # It would seem a scanner is not installed...
-                    # We don't need to check this when in parallel
-                    # As the main process is still alive
-                    return False, None
+                    return True, "No virus scanner was found on the system..."
 
             os.unlink(temporaryfile.name)
             for x in ret.values():
