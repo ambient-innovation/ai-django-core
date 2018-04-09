@@ -29,10 +29,13 @@ class _FormsetMixin(object):
                 self.additional_is_valid(form, formset)
 
             return redirect(self.get_success_url())
-        return render(request, self.get_template_names(), {
-            'form': form,
-            'formset': formset
-        })
+        # Get all context data
+        context = self.get_context_data()
+        # Update form and formset variables
+        context['form'] = form
+        context['formset'] = formset
+        # Pass all data to template
+        return render(request, self.get_template_names(), context)
 
 
 class FormsetUpdateViewMixin(_FormsetMixin):
