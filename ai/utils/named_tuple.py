@@ -110,3 +110,18 @@ def get_value_from_tuple_by_key(choices, key):
         return [x[1] for x in choices if x[0] == key][0]
     except IndexError:
         return '-'
+
+
+def get_key_from_tuple_by_value(choices, value):
+    """
+    Fetches the tuple key by a given value
+    Useful for getting the key of a value from a model choice tuple of tuples.
+    Usage: project_type_a_name = get_value_from_tuple_by_key(PROJECT_TYPE_CHOICES, 'Budget-Project')
+    :param choices: tuple
+    :param value: value to get tuple key with
+    :return:
+    """
+    try:
+        return [x[0] for x in choices if x[1] == value][0]
+    except IndexError:
+        return '-'
