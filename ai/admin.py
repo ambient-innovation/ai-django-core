@@ -1,7 +1,12 @@
 from django.contrib import admin
 
 
-class ReadonlyAdmin(admin.ModelAdmin):
+class ReadOnlyAdmin(admin.ModelAdmin):
+    """
+    Class for being extended by ModelAdmin-classes.
+    Disables all create, delete or edit functionality in the regular admin.
+    """
+
     def get_readonly_fields(self, request, obj=None):
         if obj:
             self.readonly_fields = [field.name for field in obj.__class__._meta.fields]
@@ -11,7 +16,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         extra_context['show_save_and_continue'] = False
         extra_context['show_save'] = False
-        return super(ReadonlyAdmin, self).changeform_view(request, object_id, extra_context=extra_context)
+        return super(ReadOnlyAdmin, self).changeform_view(request, object_id, extra_context=extra_context)
 
     def has_add_permission(self, request):
         return False
@@ -20,7 +25,30 @@ class ReadonlyAdmin(admin.ModelAdmin):
         return False
 
 
-class ReadonlyTabularInline(admin.TabularInline):
+class EditableOnlyAdmin(admin.ModelAdmin):
+    """
+    Class for being extended by ModelAdmin-classes.
+    Disables all create and delete functionality so all records can only be edited.
+    """
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_actions(self, request):
+        # Disable delete
+        actions = super(EditableOnlyAdmin, self).get_actions(request)
+        del actions['delete_selected']
+        return actions
+
+    def has_add_permission(self, request):
+        return False
+
+
+class ReadOnlyTabularInline(admin.TabularInline):
+    """
+    Class for being extended by TabularInline-classes.
+    Disables all create, delete or edit functionality in the tabular inline admin.
+    """
     can_delete = False
 
     def has_add_permission(self, request):
