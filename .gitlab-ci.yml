@@ -1,0 +1,27 @@
+image: docker:stable
+
+stages:
+- lint
+# - test
+
+# When using dind, it's wise to use the overlays driver for
+# improved performance.
+variables:
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  DOCKER_HOST: tcp://localhost:2375
+
+services:
+- docker:dind
+
+lint:
+  image: python:3.6
+  stage: lint
+  tags:
+  - rancher2
+  script:
+    - pip install flake8 pep8-naming
+    - flake8
+  allow_failure: true
+
+# TODO run tests without django
