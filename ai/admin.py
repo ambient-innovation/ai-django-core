@@ -9,7 +9,8 @@ class ReadOnlyAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
-            self.readonly_fields = [field.name for field in obj.__class__._meta.fields]
+            self.readonly_fields = [field.name for field in self.opts.local_fields] + \
+                                   [field.name for field in self.opts.local_many_to_many]
         return self.readonly_fields
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
