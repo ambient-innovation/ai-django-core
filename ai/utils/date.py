@@ -49,7 +49,7 @@ def date_month_delta(start_date: datetime.date, end_date: datetime.date):
 
     # If `start_date` is greater, this logic doesn't make any sense
     if start_date > end_date:
-        return False
+        raise NotImplementedError('Start date > end date')
 
     # Calculate date difference between dates
     date_diff = (end_date - start_date).days
@@ -65,7 +65,7 @@ def date_month_delta(start_date: datetime.date, end_date: datetime.date):
         days_to_month_end = min((iter_month_days - (iter_date.day - 1)), date_diff)
         # Add percentage of the month these days cover to return variable
         delta += days_to_month_end / iter_month_days
-        # Reduce leftover days by the amout we already processed
+        # Reduce leftover days by the amount we already processed
         date_diff -= days_to_month_end
 
         # Set iteration date to first of next month
