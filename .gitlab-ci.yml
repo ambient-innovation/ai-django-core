@@ -2,7 +2,8 @@ image: docker:stable
 
 stages:
 - lint
-# - test
+- build
+- test
 
 # When using dind, it's wise to use the overlays driver for
 # improved performance.
@@ -24,4 +25,24 @@ lint:
     - flake8
   allow_failure: true
 
-# TODO run tests without django
+build:
+  stage: build
+  tags:
+    - rancher2
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#using-docker-caching
+    - docker pull $CI_REGISTRY_IMAGE:master || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:master -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+
+tests:
+  stage: test
+  tags:
+   - rancher2
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker pull $IMAGE_TAG
+    - docker run $IMAGE_TAG python -m unittest discover ai/tests -v
