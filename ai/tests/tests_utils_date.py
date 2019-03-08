@@ -1,8 +1,7 @@
 import datetime
-import unittest
 from unittest import TestCase
 
-from ai.utils.date import date_month_delta
+from ai.utils.date import date_month_delta, get_start_and_end_date_from_calendar_week
 
 
 class DateUtilTest(TestCase):
@@ -11,6 +10,16 @@ class DateUtilTest(TestCase):
     def setUp(self):
         # BaseTest setup
         super(DateUtilTest, self).setUp()
+
+    def test_get_start_and_end_date_from_calendar_week(self):
+        monday, sunday = get_start_and_end_date_from_calendar_week(2016, 52)
+        self.assertEquals(monday, datetime.date(year=2016, month=12, day=26))
+
+        monday, sunday = get_start_and_end_date_from_calendar_week(2018, 1)
+        self.assertEquals(monday, datetime.date(year=2018, month=1, day=1))
+
+        monday, sunday = get_start_and_end_date_from_calendar_week(2017, 30)
+        self.assertEquals(monday, datetime.date(year=2017, month=7, day=24))
 
     def test_date_month_delta(self):
         start_date = datetime.date(year=self.TEST_CURRENT_YEAR, month=2, day=1)
