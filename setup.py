@@ -9,7 +9,8 @@ requirements = [
     'python-dateutil>=2.5.3',
     'future>=0.16',
     'pytest-cov',
-    'pytest-django'
+    'pytest-django',
+    'mock'
 ]
 
 setup(
