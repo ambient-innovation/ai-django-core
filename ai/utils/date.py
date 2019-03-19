@@ -11,7 +11,7 @@ def get_start_and_end_date_from_calendar_week(year, calendar_week):
     :param calendar_week: int
     :return:
     """
-    monday = datetime.datetime.strptime('{%s}-{%s}-1' % (year, calendar_week), "%Y-%W-%w").date()
+    monday = datetime.datetime.strptime(f'{year}-{calendar_week}-1', "%Y-%W-%w").date()
     return monday, monday + datetime.timedelta(days=6.9)
 
 
