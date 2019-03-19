@@ -4,6 +4,8 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
+from ai.middleware.current_user import get_current_user
+
 
 class CreatedAtInfo(models.Model):
     created_at = models.DateTimeField(_(u"Erstellt am"), default=now, db_index=True)
@@ -28,6 +30,13 @@ class CommonInfo(CreatedAtInfo, models.Model):
 
     def save(self, *args, **kwargs):
         self.lastmodified_at = now()
+        current_user = get_current_user()
+        # We only get the current user if `CurrentUserMiddleware` is active.
+        if current_user and current_user.pk:
+            if self.pk:
+                self.lastmodified_by = current_user
+            else:
+                self.created_by = current_user
         super(CommonInfo, self).save(*args, **kwargs)
 
     class Meta:
