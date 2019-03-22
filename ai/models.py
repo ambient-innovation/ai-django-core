@@ -33,10 +33,9 @@ class CommonInfo(CreatedAtInfo, models.Model):
         current_user = get_current_user()
         # We only get the current user if `CurrentUserMiddleware` is active.
         if current_user and current_user.pk:
-            if self.pk:
-                self.lastmodified_by = current_user
-            else:
+            if not self.pk:
                 self.created_by = current_user
+            self.lastmodified_by = current_user
         super(CommonInfo, self).save(*args, **kwargs)
 
     class Meta:
