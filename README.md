@@ -29,25 +29,38 @@ This package contains various useful helper functions.
     
 - Create a pull request
 
-# Publish to PyPI
+## Publish to PyPi
+
+- Update `Changelog` in `Readme.md`
+ 
+- Create pull request / merge to master
 
 - Run:
 
-    `python setup.py sdist upload`
-
-If you run into trouble, please create a file in your home directory: ~/.pypirc
-
-```
-[distutils]
-index-servers =
-    pypi
-
-[pypi]
-repository: https://upload.pypi.org/legacy/
-username: 
-password: 
-```
-
+    * Make sure you have all the required packages installed  
+    `pip install twine wheel`
+    * Create a file in your home directory: `~/.pypirc`
+    ```
+    [distutils]
+    index-servers=
+        pypi
+        testpypi
+    
+    [pypi]
+    repository: https://upload.pypi.org/legacy/
+    username: ambient-innovation
+    
+    [testpypi]
+    repository: https://test.pypi.org/legacy/
+    username: ambient-innovation
+    ```
+    * Create distribution  
+    `python setup.py sdist bdist_wheel`
+    * Upload to Test-PyPi  
+    `twine upload --repository testpypi dist/*`
+    * Check at Test-PyPi if it looks nice  
+    * Upload to real PyPi  
+    `twine upload dist/*`
 
 # Tests
 
@@ -58,3 +71,19 @@ password:
 - Run tests
 
     `pytest`
+
+
+# Changelog
+
+
+## Changelog
+
+* **1.2.2** (2019-04-05)
+    * Updated deployment documentation
+    * Added markdown support to Readme file
+    
+* **1.2.1** (2019-03-25)
+    * Fixed bug causing `CommonInfo` middleware to not set `lastmodified_by` on object creation
+
+* **1.2.0** (2019-03-19)
+    * Added `CommonInfo` middleware
