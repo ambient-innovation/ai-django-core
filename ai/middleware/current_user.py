@@ -18,7 +18,7 @@ class CurrentUserMiddleware(MiddlewareMixin):
     def process_request(self, request):
         _user.value = request.user
 
-
-def get_current_user():
-    if hasattr(_user, 'value') and _user.value:
-        return _user.value
+    @staticmethod
+    def get_current_user():
+        if hasattr(_user, 'value') and _user.value:
+            return _user.value
