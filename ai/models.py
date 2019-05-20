@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
-from ai.middleware.current_user import get_current_user
+from ai.middleware.current_user import CurrentUserMiddleware
 
 
 class CreatedAtInfo(models.Model):
@@ -30,7 +30,7 @@ class CommonInfo(CreatedAtInfo, models.Model):
 
     def save(self, *args, **kwargs):
         self.lastmodified_at = now()
-        current_user = get_current_user()
+        current_user = CurrentUserMiddleware.get_current_user()
         # We only get the current user if `CurrentUserMiddleware` is active.
         if current_user and current_user.pk:
             if not self.pk:
