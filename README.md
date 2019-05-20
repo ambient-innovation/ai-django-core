@@ -54,6 +54,7 @@ This package contains various useful helper functions.
     repository: https://test.pypi.org/legacy/
     username: ambient-innovation
     ```
+    * Empty `dist` directory
     * Create distribution  
     `python setup.py sdist bdist_wheel`
     * Upload to Test-PyPi  
