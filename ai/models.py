@@ -28,14 +28,30 @@ class CommonInfo(CreatedAtInfo, models.Model):
                                         null=True, related_name="%(app_label)s_%(class)s_lastmodified",
                                         on_delete=models.SET_NULL)
 
+    @staticmethod
+    def get_current_user():
+        """
+        Get the currently logged in user over middleware.
+        Can be overwritten to use e.g. other middleware or additional functionality.
+        :return: user instance
+        """
+        return CurrentUserMiddleware.get_current_user()
+
+    def set_user_fields(self, user):
+        """
+        Set user-related fields before saving the instance.
+        If no user with primary key is given the fields are not set.
+        :param user: user instance of current user
+        """
+        if user and user.pk:
+            if not self.pk:
+                self.created_by = user
+            self.lastmodified_by = user
+
     def save(self, *args, **kwargs):
         self.lastmodified_at = now()
-        current_user = CurrentUserMiddleware.get_current_user()
-        # We only get the current user if `CurrentUserMiddleware` is active.
-        if current_user and current_user.pk:
-            if not self.pk:
-                self.created_by = current_user
-            self.lastmodified_by = current_user
+        current_user = self.get_current_user()
+        self.set_user_fields(current_user)
         super(CommonInfo, self).save(*args, **kwargs)
 
     class Meta:
