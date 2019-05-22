@@ -79,6 +79,9 @@ This package contains various useful helper functions.
 
 ## Changelog
 
+* **1.2.4** (2019-05-20)
+    * More refactoring on `CurrentUserMiddleware` to make it more easy to override internal functions 
+    
 * **1.2.3** (2019-05-20)
     * Moved `get_current_user` function inside `CurrentUserMiddleware` as a static method to enable devs to override it 
     
