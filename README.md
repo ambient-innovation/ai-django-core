@@ -31,6 +31,8 @@ This package contains various useful helper functions.
 
 ## Publish to PyPi
 
+- Increment version in main `__init__.py`
+
 - Update `Changelog` in `Readme.md`
  
 - Create pull request / merge to master
@@ -79,6 +81,9 @@ This package contains various useful helper functions.
 
 ## Changelog
 
+* **1.2.5** (2019-06-25)
+    * Added helper class `DateHelper` to provide constants to use in djangos ORM lookup `__week_day`
+    
 * **1.2.4** (2019-05-20)
     * More refactoring on `CurrentUserMiddleware` to make it more easy to override internal functions 
     

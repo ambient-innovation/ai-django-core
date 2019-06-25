@@ -4,6 +4,18 @@ from calendar import monthrange
 from dateutil.relativedelta import relativedelta
 
 
+class DateHelper:
+    # Constants to use for django ORMs `__weekday` lookup to avoid usage of integers directly.
+    # Unfortunately python's calendar weekdays are not equivalent to the database ones.
+    ORM_SUNDAY = 1
+    ORM_MONDAY = 2
+    ORM_TUESDAY = 3
+    ORM_WEDNESDAY = 4
+    ORM_THURSDAY = 5
+    ORM_FRIDAY = 6
+    ORM_SATURDAY = 7
+
+
 def get_start_and_end_date_from_calendar_week(year, calendar_week):
     """
     Returns the first and last day of a given calendar week
