@@ -81,6 +81,9 @@ This package contains various useful helper functions.
 
 ## Changelog
 
+* **1.2.6** (2019-07-02)
+    * Added helper class `tz_today()` to provide an easy getter for a timezone-aware today
+    
 * **1.2.5** (2019-06-25)
     * Added helper class `DateHelper` to provide constants to use in djangos ORM lookup `__week_day`
     
