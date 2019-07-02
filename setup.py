@@ -12,6 +12,7 @@ requirements = [
     'bleach>=1.4.2',
     'python-dateutil>=2.5.3',
     'future>=0.16',
+    'freezegun',
     'pytest-cov',
     'pytest-django',
     'mock'

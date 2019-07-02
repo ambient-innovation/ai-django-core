@@ -2,6 +2,8 @@ import datetime
 from calendar import monthrange
 
 from dateutil.relativedelta import relativedelta
+from django.conf import settings
+from django.utils import timezone
 
 
 class DateHelper:
@@ -85,3 +87,19 @@ def date_month_delta(start_date: datetime.date, end_date: datetime.date):
 
     # Return data
     return delta
+
+
+def tz_today(str_format=None):
+    """
+    Returns either a timezone-aware today object or string. Depending if the `str_format` param is set.
+    :param str_format: If set, formats the date object to a string. Pass strftime-compatible value
+    :return:
+    """
+    if settings.USE_TZ:
+        date = timezone.now().date()
+    else:
+        date = datetime.datetime.now().date()
+
+    if str_format:
+        return date.strftime(str_format)
+    return date

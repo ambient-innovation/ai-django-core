@@ -1,11 +1,22 @@
 import datetime
 from unittest import TestCase
 
-from ai.utils.date import date_month_delta, get_start_and_end_date_from_calendar_week
+from django.test.utils import override_settings
+from freezegun import freeze_time
+
+from ai.utils.date import date_month_delta, get_start_and_end_date_from_calendar_week, tz_today
 
 
 class DateUtilTest(TestCase):
     TEST_CURRENT_YEAR = 2017
+
+    @classmethod
+    def setUpClass(cls):
+        super(DateUtilTest, cls).setUpClass()
+
+        # Initialize django settings
+        from django.conf import settings
+        settings.configure()
 
     def setUp(self):
         # BaseTest setup
@@ -60,3 +71,20 @@ class DateUtilTest(TestCase):
         start_date = datetime.date(year=self.TEST_CURRENT_YEAR, month=4, day=15)
         end_date = datetime.date(year=self.TEST_CURRENT_YEAR, month=4, day=14)
         self.assertRaises(NotImplementedError, date_month_delta, start_date, end_date)
+
+    @override_settings(USE_TZ=True)
+    def test_tz_today_as_object_tz_active(self):
+        frozen_date = datetime.datetime(year=2019, month=9, day=19, hour=10)
+        with freeze_time(frozen_date):
+            self.assertEqual(tz_today(), frozen_date.date())
+
+    def test_tz_today_as_object_tz_not_active(self):
+        frozen_date = datetime.datetime(year=2019, month=9, day=19, hour=10)
+        with freeze_time(frozen_date):
+            self.assertEqual(tz_today(), frozen_date.date())
+
+    @override_settings(USE_TZ=True)
+    def test_tz_today_as_str(self):
+        frozen_date = datetime.datetime(year=2019, month=9, day=19, hour=10)
+        with freeze_time(frozen_date):
+            self.assertEqual(tz_today('%d.%m.%Y'), '19.09.2019')
