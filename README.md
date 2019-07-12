@@ -78,9 +78,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
-
-## Changelog
-
+* **1.2.7** (2019-07-11)
+    * Added email testing class `EmailTestService` to provide a wrapper for better email unittests
+    
 * **1.2.6** (2019-07-02)
     * Added helper class `tz_today()` to provide an easy getter for a timezone-aware today
     

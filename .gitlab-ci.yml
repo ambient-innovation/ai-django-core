@@ -22,8 +22,7 @@ lint:
   - rancher2
   script:
     - pip install flake8 pep8-naming
-    - flake8
-  allow_failure: true
+    - git diff origin/master -U0 | flake8 --diff
 
 build:
   stage: build
