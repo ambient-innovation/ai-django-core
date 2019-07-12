@@ -1,6 +1,7 @@
 import datetime
 from unittest import TestCase
 
+from django.core.exceptions import ImproperlyConfigured
 from django.test.utils import override_settings
 from freezegun import freeze_time
 
@@ -16,7 +17,12 @@ class DateUtilTest(TestCase):
 
         # Initialize django settings
         from django.conf import settings
-        settings.configure()
+        try:
+            settings_configured = settings.configured
+        except ImproperlyConfigured:
+            settings_configured = False
+        if not settings_configured:
+            settings.configure()
 
     def setUp(self):
         # BaseTest setup
