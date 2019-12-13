@@ -13,13 +13,13 @@ variables:
   DOCKER_HOST: tcp://localhost:2375
 
 services:
-- docker:dind
+  - docker:18.09-dind
 
 lint:
   image: python:3.6
   stage: lint
   tags:
-  - rancher2
+    - normal-load
   script:
     - pip install flake8 pep8-naming
     - git diff origin/master -U0 | flake8 --diff
@@ -27,7 +27,7 @@ lint:
 build:
   stage: build
   tags:
-    - rancher2
+    - normal-load
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#using-docker-caching
@@ -38,7 +38,7 @@ build:
 tests:
   stage: test
   tags:
-   - rancher2
+    - normal-load
   variables:
     GIT_STRATEGY: none
   script:
