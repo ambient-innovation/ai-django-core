@@ -28,7 +28,7 @@ with open("ai/__init__.py", "rb") as f:
 setup(
     name='ai-django-core',
     version=version,
-    author=u'Ambient Innovation GmbH',
+    author=u'Ambient Innovation: GmbH',
     author_email='hello@ambient-innovation.com',
     packages=find_packages(),
     include_package_data=True,
