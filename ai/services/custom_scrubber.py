@@ -1,21 +1,26 @@
 import logging
 
 from django.conf import settings
+from django.contrib.admin.models import LogEntry
+from django.contrib.auth.hashers import make_password
 from django.core.management import call_command
 from django.db import connections
 
 
 class AbstractScrubbingService(object):
-    # USER_PASSWORD is the hash of "Admin0404!"
-    DEFAULT_USER_PASSWORD = 'pbkdf2_sha256$150000$i1ZI64P5GPHI$74I7aENo6mRjCZ9lkNoObJet1Qyf5sJSJev45ygqpls='
+    DEFAULT_USER_PASSWORD = 'Admin0404!'
 
     # Overwritable values
     keep_scrubber_data = False
+    keep_django_admin_log = False
     pre_scrub_functions = []
     post_scrub_functions = []
 
     def __init__(self):
         self._logger = logging.getLogger('django_scrubber')
+
+    def _get_hashed_default_password(self):
+        return make_password(self.DEFAULT_USER_PASSWORD)
 
     def _validation(self):
         if not settings.DEBUG:
@@ -25,6 +30,9 @@ class AbstractScrubbingService(object):
         if 'django_scrubber' not in settings.INSTALLED_APPS:
             self._logger.warning('Attention! django-scrubber needs to be installed!')
             return False
+
+        if 'django_scrubber' not in settings.LOGGING['loggers'].keys():
+            self._logger.warning('Attention! Logging for django-scrubber is not activated!')
 
         return True
 
@@ -50,6 +58,10 @@ class AbstractScrubbingService(object):
             self._logger.info(f'Post-Scrubbing: Calling "{name}()"...')
             method = getattr(self, name)
             method()
+
+        # Empty django admin log (may contain user-related data)
+        if not self.keep_django_admin_log:
+            LogEntry.objects.all().delete()
 
         # Reset scrubber data to avoid huge db dumps
         if not self.keep_scrubber_data:
