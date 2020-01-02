@@ -77,6 +77,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **1.2.9** (2020-01-02)
+    * Extended and improved class `AbstractScrubbingService`
+
 * **1.2.8** (2019-12-13)
     * Added custom scrubber class `AbstractScrubbingService` to provide a helper for adding custom scrubbing logic for
     data anonymisation
