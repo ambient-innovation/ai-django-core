@@ -66,6 +66,8 @@ class AbstractScrubbingService(object):
         # Reset scrubber data to avoid huge db dumps
         if not self.keep_scrubber_data:
             self._logger.info('Scrubbing data from "scrub_data" ...')
+            # We truncate and don't scrub because the table is huge and will stay the same size if we just
+            # delete the records.
             cursor = connections['default'].cursor()
             cursor.execute('TRUNCATE TABLE django_scrubber_fakedata;')
 

@@ -1,3 +1,6 @@
+[![pypi](https://img.shields.io/pypi/v/ai-django-core.svg)](https://pypi.python.org/pypi/ai-django-core/)
+[![Downloads](https://pepy.tech/badge/ai-django-core)](https://pepy.tech/project/ai-django-core)
+
 # Overview:
 This package contains various useful helper functions.
 
@@ -76,6 +79,12 @@ This package contains various useful helper functions.
     `twine upload dist/*`
 
 # Changelog
+
+* **1.2.11** (2020-01-28)
+    * Bugfix in documentation
+
+* **1.2.10** (2020-01-28)
+    * Improved documentation
 
 * **1.2.9** (2020-01-02)
     * Extended and improved class `AbstractScrubbingService`
