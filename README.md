@@ -80,6 +80,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **1.2.12** (2020-02-14)
+    * Added CBV testing mixing `ClassBasedViewTestMixin`
+
 * **1.2.11** (2020-01-28)
     * Bugfix in documentation
 
