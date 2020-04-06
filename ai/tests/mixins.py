@@ -42,3 +42,7 @@ class ClassBasedViewTestMixin(TestCase):
     def post(self, user=None, data=None, url_params=None, *args, **kwargs):
         """Returns response for a POST request."""
         return self._get_response('post', user, data, url_params, args, kwargs)
+
+    def delete(self, user=None, data=None, url_params=None, *args, **kwargs):
+        """Returns response for a DELETE request."""
+        return self._get_response('delete', user, data, url_params, args, kwargs)
