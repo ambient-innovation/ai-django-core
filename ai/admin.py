@@ -17,7 +17,7 @@ class ReadOnlyAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         extra_context['show_save_and_continue'] = False
         extra_context['show_save'] = False
-        return super(ReadOnlyAdmin, self).changeform_view(request, object_id, extra_context=extra_context)
+        return super().changeform_view(request, object_id, extra_context=extra_context)
 
     def has_add_permission(self, request):
         return False
@@ -37,7 +37,7 @@ class EditableOnlyAdmin(admin.ModelAdmin):
 
     def get_actions(self, request):
         # Disable delete
-        actions = super(EditableOnlyAdmin, self).get_actions(request)
+        actions = super().get_actions(request)
         del actions['delete_selected']
         return actions
 

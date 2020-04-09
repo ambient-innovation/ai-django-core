@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-from __future__ import division
 from django import template
 
 register = template.Library()

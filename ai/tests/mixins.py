@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.messages.storage.fallback import FallbackStorage
+from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import TestCase, RequestFactory
 
 
@@ -25,10 +26,16 @@ class ClassBasedViewTestMixin(TestCase):
         if data:
             req_kwargs.update({'data': data})
         req = getattr(factory, method)('/', **req_kwargs)
+
+        # Annotate a request object with a session
+        middleware = SessionMiddleware()
+        middleware.process_request(req)
+        req.session.save()
+
+        # Authenticate user
         self._authentication(req, user)
 
         # Setup messages
-        setattr(req, 'session', 'session')
         messages = FallbackStorage(req)
         setattr(req, '_messages', messages)
 

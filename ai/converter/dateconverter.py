@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-from __future__ import division
 from datetime import date
 import datetime
 
@@ -49,14 +47,14 @@ def get_seconds(string_time):
     hour = duration.tm_hour
     min = duration.tm_min
     sec = duration.tm_sec
-    ##### CONVERT TO SECONDS
+    # CONVERT TO SECONDS
     total_seconds = ((hour * 60) + min) * 60 + sec
 
     return total_seconds
 
 
 def get_time_from_seconds(seconds):
-    ### CONVERT TO TIME
+    # CONVERT TO TIME
     new_hor = seconds // 3600
     new_minu = (seconds - (new_hor * 3600)) // 60
     new_seg = seconds - ((new_hor * 3600) + (new_minu * 60))
@@ -67,6 +65,6 @@ def get_time_from_seconds(seconds):
 def datetime_format(datetime, dt_format):  # Uses strftime, but considers timezone (only for datetime objects)
     try:
         dt_format = datetime.astimezone(tz=pytz.timezone(settings.TIME_ZONE)).strftime(dt_format)
-    except:
+    except Exception:
         dt_format = datetime.strftime(dt_format)
     return dt_format

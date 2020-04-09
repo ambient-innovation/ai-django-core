@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.shortcuts import redirect, render
 
 
@@ -11,7 +10,7 @@ class _FormsetMixin(object):
         return dict(instance=self.object)
 
     def get_context_data(self, **kwargs):
-        context = super(_FormsetMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['formset'] = self.formset_class(**self.get_formset_kwargs())
         return context
 
@@ -46,7 +45,8 @@ class FormsetUpdateViewMixin(_FormsetMixin):
     class MandantSettingsUpdate(FormsetUpdateViewMixin, generic.UpdateView):
         form_class = MandantSettingsForm
         template_name = 'mandant/mandantsettings_form.html'
-        formset_class = inlineformset_factory(Mandant, MandantProdukttyp, form=MandantProdukttypForm, extra=0, can_delete=False)
+        formset_class = inlineformset_factory(Mandant, MandantProdukttyp, form=MandantProdukttypForm, extra=0, \
+                                              can_delete=False)
         model = Mandant
         success_url = reverse_lazy('mandant:edit-settings')
 
@@ -57,7 +57,7 @@ class FormsetUpdateViewMixin(_FormsetMixin):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        return super(FormsetUpdateViewMixin, self).post(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
 
 
 class FormsetCreateViewMixin(_FormsetMixin):
@@ -68,4 +68,4 @@ class FormsetCreateViewMixin(_FormsetMixin):
 
     def post(self, request, *args, **kwargs):
         self.object = None
-        return super(FormsetCreateViewMixin, self).post(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
