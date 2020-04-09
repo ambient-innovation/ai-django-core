@@ -80,6 +80,14 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **2.0.0** (2020-04-09)
+    * Dropped Python 2.x support
+    * Removed explicit dependency to package `mock` and using implicit one via unittest
+    * Improved linting
+
+* **1.2.14** (2020-04-06)
+    * Fixed a bug with session setup in `ClassBasedViewTestMixin`
+
 * **1.2.13** (2020-04-02)
     * Added ``DELETE`` method for testing mixing `ClassBasedViewTestMixin`
 

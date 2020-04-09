@@ -10,7 +10,7 @@ class EmailServiceTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(EmailServiceTest, cls).setUpClass()
+        super().setUpClass()
 
         # Initialize django settings
         from django.conf import settings
@@ -53,7 +53,7 @@ class EmailServiceTest(TestCase):
         mail.outbox.append(email)
 
     def tearDown(self) -> None:
-        super(EmailServiceTest, self).tearDown()
+        super().tearDown()
         # Emtpy mailbox for next test
         mail.outbox = []
 

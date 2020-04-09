@@ -2,36 +2,36 @@ import zlib
 import hashlib
 
 
-def get_filename_without_ending(filepath):
+def get_filename_without_ending(file_path):
     """
     Returns the filename without extension
-    :param filename:
+    :param file_path:
     :return:
     """
 
-    # if filename has filepath parts
-    if '/' in filepath:
-        filename = filepath.rsplit('/')[-1]
+    # if filename has file_path parts
+    if '/' in file_path:
+        filename = file_path.rsplit('/')[-1]
     else:
-        filename = filepath
+        filename = file_path
 
     return filename.rsplit('.', 1)[0]
 
 
-def crc(fileName):
+def crc(filename):
     prev = 0
-    for eachLine in open(fileName,"rb"):
-        prev = zlib.crc32(eachLine, prev)
-    return "%X"%(prev & 0xFFFFFFFF)
+    for line in open(filename, "rb"):
+        prev = zlib.crc32(line, prev)
+    return "%X" % (prev & 0xFFFFFFFF)
 
 
-def md5_checksum(filePath):
+def md5_checksum(file_path):
     """
-    Returns the md5 checksum of the file from the given filepath
-    :param filePath:
+    Returns the md5 checksum of the file from the given file_path
+    :param file_path:
     :return:
     """
-    fh = open(filePath, 'rb')
+    fh = open(file_path, 'rb')
     m = hashlib.md5()
     while True:
         data = fh.read(8192)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 
 from django.conf import settings
@@ -41,4 +40,4 @@ class WhitelistEmailBackend(SMTPEmailBackend):
         for email in email_messages:
             allowed_recipients = self.whitify_mail_adresses(email.to)
             email.to = allowed_recipients
-        super(WhitelistEmailBackend, self).send_messages(email_messages)
+        super().send_messages(email_messages)

@@ -31,7 +31,7 @@ class AbstractScrubbingService(object):
             self._logger.warning('Attention! django-scrubber needs to be installed!')
             return False
 
-        if 'django_scrubber' not in settings.LOGGING['loggers'].keys():
+        if 'django_scrubber' not in list(settings.LOGGING['loggers'].keys()):
             self._logger.warning('Attention! Logging for django-scrubber is not activated!')
 
         return True

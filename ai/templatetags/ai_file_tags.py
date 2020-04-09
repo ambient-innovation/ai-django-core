@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 import os
 
 from django import template
@@ -12,13 +11,14 @@ def filename(value, max_length=25):
     """
     Shortens the filename to maxlength 25 without loosing the file extension
 
-    :param file:
+    :param value:
+    :param max_length:
     :return filename with a max length of 25
     """
     name = os.path.basename(value.url)
     if len(name) > max_length:
         ext = name.split('.')[-1]
-        name = u"%s[..].%s" % (name[:max_length], ext)
+        name = "%s[..].%s" % (name[:max_length], ext)
     return name
 
 
@@ -32,5 +32,5 @@ def filesize(value):
     """
     try:
         return os.path.getsize("%s%s" % (settings.MEDIA_ROOT, value))
-    except:
+    except Exception:
         return 0

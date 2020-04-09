@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -19,11 +18,11 @@ def file_validator(f):
 
 class AVProtectedFileField(models.FileField):
     def __init__(self, *args, **kwargs):
-        super(AVProtectedFileField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.validators.append(file_validator)
 
 
 class AVProtectedImageField(models.ImageField):
     def __init__(self, *args, **kwargs):
-        super(AVProtectedImageField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.validators.append(file_validator)

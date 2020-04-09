@@ -1,9 +1,10 @@
-from __future__ import division
+
 import os
-from django.conf import settings
-import subprocess
 import re
+import subprocess
 import time
+
+from django.conf import settings
 
 
 def generate_video_thumbnail(videofile, fallback_icon_path, image_path):
@@ -18,7 +19,7 @@ def generate_video_thumbnail(videofile, fallback_icon_path, image_path):
         hour = duration.tm_hour
         min = duration.tm_min
         sec = duration.tm_sec
-        ##### CONVERT TO SECONDS
+        # CONVERT TO SECONDS
 
         total_seconds = ((hour * 60) + min) * 60 + sec
         middle_point = total_seconds // 2
@@ -36,7 +37,7 @@ def generate_video_thumbnail(videofile, fallback_icon_path, image_path):
         subprocess.call(command)
         return image_path
 
-    except Exception as e:
+    except Exception:
         return fallback_icon_path
 
 

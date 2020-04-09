@@ -1,7 +1,5 @@
-# -*- coding: UTF-8 -*-
+import os
 import re
-import sys
-from operator import setitem
 from builtins import str
 
 from django.contrib.humanize.templatetags.humanize import intcomma
@@ -12,47 +10,38 @@ from ai.converter.dateconverter import datetime_format
 
 def number_to_text(value):
     if value == 0:
-        return u"first"
+        return "first"
     elif value == 1:
-        return u"second"
+        return "second"
     else:
-        return u"third"
+        return "third"
 
 
-def distinct(l):
-    d = {}
-    map(setitem, (d,)*len(l), l, [])
-    return d.keys()
+def distinct(not_distinct_list: list):
+    """
+    Returns a list with no duplicate elements
+    """
+    return list(set(not_distinct_list))
 
 
 def slugify_file_name(file_name, length=40):
     """
-        Translit and slugify file name.
+    Translit and slugify file name.
     """
-    result = ""
-    try:
-        from django.template.defaultfilters import slugify
-        from django.utils.encoding import smart_str
-        nameext = file_name.rsplit('.',1)
-        name = ''
-        ext = ''
-        if nameext:
-            name = nameext[0]
-            if len(nameext) > 1:
-                ext = nameext[1]
-        #name = name.encode('latin1')
-        name = smart_str(slugify(name).replace('-', '_'))
-        ext = smart_str(slugify(ext))
-        result = '%s%s%s' % (name[:length], "." if ext else "", ext)
-        #print "after: %s" % result
-    except:
-        print("Unexpected error:", sys.exc_info()[0])
+    from django.template.defaultfilters import slugify
+    from django.utils.encoding import smart_str
+    name, ext = os.path.splitext(file_name)
+    name = smart_str(slugify(name).replace('-', '_'))
+    ext = smart_str(slugify(ext))
+    result = '%s%s%s' % (name[:length], "." if ext else "", ext)
     return result
 
 
 def replace_link_pattern(text):
-    text = re.sub(r"(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)", "\g<1><a href=\"\g<2>\" target=\"_blank\">\g<2></a>", text);
-    text = re.sub(r"(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)", "\g<1><a href=\"http://\g<2>\" target=\"_blank\">\g<2></a>", text)
+    text = re.sub(r"(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)",
+                  r"\g<1><a href=\"\g<2>\" target=\"_blank\">\g<2></a>", text)
+    text = re.sub(r"(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)",
+                  r"\g<1><a href=\"http://\g<2>\" target=\"_blank\">\g<2></a>", text)
     return text
 
 
@@ -95,7 +84,7 @@ def restore_windows1252controls(s):
     pattern = r'[\u0080-\u0099]'
     try:
         pattern = pattern.decode('raw_unicode_escape')
-    except AttributeError as e:
+    except AttributeError:
         # Python 3
         # PEP 414: ur'...' prefix replaced wit just r'...'
         pass

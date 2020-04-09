@@ -18,7 +18,7 @@ class BleacherMixin(object):
                                                   'h6', 'img', 'div', 'u', 'br', 'blockquote']
 
     def __init__(self, *args, **kwargs):
-        super(BleacherMixin, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields_to_bleach = getattr(self, 'BLEACH_FIELD_LIST', [])
         self.allowed_tags = getattr(self, 'ALLOWED_TAGS', self.DEFAULT_ALLOWED_TAGS)
         self.allowed_attributes = getattr(self, 'ALLOWED_ATTRIBUTES', self.DEFAULT_ALLOWED_ATTRIBUTES)
@@ -33,4 +33,4 @@ class BleacherMixin(object):
         for field in self.fields_to_bleach:
             self._bleach_field(field)
 
-        super(BleacherMixin, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)

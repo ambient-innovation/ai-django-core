@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from collections import namedtuple, OrderedDict
 
 
@@ -41,7 +40,7 @@ def get_namedtuple_choices(name, choices_tuple):
         _choices = tuple([desc for val, name, desc in choices_tuple])
 
         def get_choices(self):
-            return zip(tuple(self), self._choices)
+            return list(zip(tuple(self), self._choices))
 
         def get_choices_dict(self):
             """
