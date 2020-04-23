@@ -30,12 +30,10 @@ setup(
     author_email='hello@ambient-innovation.com',
     packages=find_packages(),
     include_package_data=True,
-    url='https://gitlab.ambient-innovation.com/ai/ai-django-core.git',
     license="The MIT License (MIT)",
     description='Lots of helper functions and useful widgets.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     zip_safe=False,
-    dependency_links=['https://github.com/ambient-innovation/multiav/master/#egg=multiav', ],
     install_requires=requirements
 )

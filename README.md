@@ -80,6 +80,12 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **2.1.0** (2020-04-20)
+    * Removed password generator method `generate_password`
+    * Renamed math method `round_up_to_decimal` to `round_up_decimal`
+    * Added math method `round_to_decimal`
+    * Updated metadata in setup.cfg
+
 * **2.0.0** (2020-04-09)
     * Dropped Python 2.x support
     * Removed explicit dependency to package `mock` and using implicit one via unittest
