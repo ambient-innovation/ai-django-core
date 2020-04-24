@@ -36,7 +36,7 @@ This package contains various useful helper functions.
 
 - Check coverage
 
-    `pytest --cov=ai-django-core`
+    `pytest --cov=.`
 
 - Run tests
 
@@ -79,6 +79,12 @@ This package contains various useful helper functions.
     `twine upload dist/*`
 
 # Changelog
+
+* **2.1.1** (2020-04-24)
+    * Refactors open calls to use context managers
+    * Refactors the test setup
+    * Configures coverage
+    * Adds a coverage report to the CI
 
 * **2.1.0** (2020-04-20)
     * Removed password generator method `generate_password`

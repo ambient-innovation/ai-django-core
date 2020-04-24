@@ -2,7 +2,7 @@
 import ast
 import re
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 # Dependencies
 requirements = [
@@ -14,6 +14,7 @@ requirements = [
     'freezegun',
     'pytest-cov',
     'pytest-django',
+    'pytest-mock',
 ]
 
 # Parse version
