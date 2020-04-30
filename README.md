@@ -80,6 +80,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **2.1.2** (2020-04-30)
+    * Extended pypi documentation with classifiers
+
 * **2.1.1** (2020-04-24)
     * Refactors open calls to use context managers
     * Refactors the test setup
