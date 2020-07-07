@@ -80,6 +80,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **2.2.0** (2020-07-01)
+    * Added response class `CustomPermissionMixin`
+
 * **2.1.2** (2020-04-30)
     * Extended pypi documentation with classifiers
 
