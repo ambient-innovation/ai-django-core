@@ -1,10 +1,10 @@
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.test import TestCase, RequestFactory
+from django.test import RequestFactory
 
 
-class ClassBasedViewTestMixin(TestCase):
+class ClassBasedViewTestMixin:
     """Test mixin for Django views"""
     factory_class = RequestFactory
     view_class = None

@@ -80,6 +80,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **2.2.1** (2020-07-01)
+    * Removed misleading inheritance of mixin `ClassBasedViewTestMixin` from `TestCase`
+
 * **2.2.0** (2020-07-01)
     * Added response class `CustomPermissionMixin`
 
