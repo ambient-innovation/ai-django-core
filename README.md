@@ -80,6 +80,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **2.3.0** (2020-08-07)
+    * Changed `ugettext_lazy` to `gettext_lazy` to tackle django 4.0 deprecation warnings
+
 * **2.2.1** (2020-07-01)
     * Removed misleading inheritance of mixin `ClassBasedViewTestMixin` from `TestCase`
 
