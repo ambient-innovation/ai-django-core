@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from ai.middleware.current_user import CurrentUserMiddleware
+from ai_django_core.middleware.current_user import CurrentUserMiddleware
 
 
 class CreatedAtInfo(models.Model):

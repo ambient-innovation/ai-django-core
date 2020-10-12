@@ -3,7 +3,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.mail import EmailMultiAlternatives
 from unittest import TestCase
 
-from ai.mail.services.tests import EmailTestService, EmailTestServiceQuerySet
+from ai_django_core.mail.services.tests import EmailTestService, EmailTestServiceQuerySet
 
 
 class EmailServiceTest(TestCase):

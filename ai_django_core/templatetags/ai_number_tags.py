@@ -29,8 +29,8 @@ def subtract(value, arg):
     :param arg:
     :return:
     """
-    value = nonetozero(value)
-    arg = nonetozero(arg)
+    value = value if value is not None else 0
+    arg = value if arg is not None else 0
     return int(value) - int(arg)
 
 

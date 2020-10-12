@@ -5,7 +5,7 @@ from django.core.mail.backends.smtp import EmailBackend as SMTPEmailBackend
 
 EMAIL_BACKEND_DOMAIN_WHITELIST = getattr(settings, 'EMAIL_BACKEND_DOMAIN_WHITELIST', [])
 EMAIL_BACKEND_REDIRECT_ADDRESS = getattr(settings, 'EMAIL_BACKEND_REDIRECT_ADDRESS')
-REGEX = r'^[\w\-\.]+@(%s)$' % '|'.join(x for x in EMAIL_BACKEND_DOMAIN_WHITELIST).replace('.', '\.')
+REGEX = r'^[\w\-\.]+@(%s)$' % '|'.join(x for x in EMAIL_BACKEND_DOMAIN_WHITELIST).replace('.', r'\.')
 
 
 class WhitelistEmailBackend(SMTPEmailBackend):
@@ -13,7 +13,7 @@ class WhitelistEmailBackend(SMTPEmailBackend):
     Man kann über die folgenden Settings konfigurieren, ob Mails an _alle_ Adressen verschickt werden.
     Wenn nicht, dann kann eine Umleitung an ein Postfach mit CATCHALL konfiguriert werden.
 
-    EMAIL_BACKEND = 'ai.mail.backends.whitelist_smtp.WhitelistEmailBackend'
+    EMAIL_BACKEND = 'ai_django_core.mail.backends.whitelist_smtp.WhitelistEmailBackend'
     EMAIL_BACKEND_DOMAIN_WHITELIST = ['ambient-innovation.com']
     EMAIL_BACKEND_REDIRECT_ADDRESS = '%s@testuser.ambient-innovation.com'
 

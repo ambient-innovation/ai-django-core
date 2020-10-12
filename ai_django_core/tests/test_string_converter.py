@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from ai.converter.stringconverter import slugify_file_name
+from ai_django_core.converter.stringconverter import slugify_file_name
 
 
 class StringConverterTest(TestCase):

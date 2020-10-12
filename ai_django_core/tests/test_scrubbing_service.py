@@ -4,7 +4,7 @@
 # from django.core.exceptions import ImproperlyConfigured
 # from django.test import TestCase, override_settings
 #
-# from ai.services.custom_scrubber import AbstractScrubbingService
+# from ai_django_core.services.custom_scrubber import AbstractScrubbingService
 #
 #
 # class AbstractScrubbingServiceTest(TestCase):

@@ -1,7 +1,7 @@
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 
-from ai.utils.antivirus import AVException
+from .exception import AVException
 from .scanner import AVScanner
 
 av_scanner = AVScanner()

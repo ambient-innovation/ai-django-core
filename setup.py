@@ -7,7 +7,7 @@ from setuptools import find_packages, setup
 # Dependencies
 requirements = [
     'django-crispy-forms>=1.4.0',
-    'Django>=1.7.0',
+    'Django>=2.0.0',
     'bleach>=1.4.2',
     'python-dateutil>=2.5.3',
     'future>=0.16',
@@ -19,7 +19,7 @@ requirements = [
 
 # Parse version
 _version_re = re.compile(r"__version__\s+=\s+(.*)")
-with open("ai/__init__.py", "rb") as f:
+with open("ai_django_core/__init__.py", "rb") as f:
     version = str(
         ast.literal_eval(_version_re.search(f.read().decode("utf-8")).group(1))
     )
@@ -43,6 +43,7 @@ setup(
         "Framework :: Django :: 2.1",
         "Framework :: Django :: 2.2",
         "Framework :: Django :: 3.0",
+        "Framework :: Django :: 3.1",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
@@ -52,6 +53,7 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Utilities",
     ],
     zip_safe=False,

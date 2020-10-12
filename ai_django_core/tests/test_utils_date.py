@@ -5,7 +5,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.test.utils import override_settings
 from freezegun import freeze_time
 
-from ai.utils.date import date_month_delta, get_start_and_end_date_from_calendar_week, tz_today
+from ai_django_core.utils.date import date_month_delta, get_start_and_end_date_from_calendar_week, tz_today
 
 
 class DateUtilTest(TestCase):
