@@ -80,6 +80,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **3.0.1** (2020-10-12)
+    * Added missing ``__init__.py`` file to package mail.services
+
 * **3.0.0** (2020-09-09)
     * Breaking change: Renamed package from `ai` to `ai_django_core` to clarify dependencies for usages
     * Finished code linting
