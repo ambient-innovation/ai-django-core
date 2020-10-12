@@ -12,7 +12,7 @@ This package contains various useful helper functions.
 
 - Add module to `INSTALLED_APPS`:
 
-    `ai`
+    `ai_django_core`
 
 - Run migrations
 
@@ -79,6 +79,11 @@ This package contains various useful helper functions.
     `twine upload dist/*`
 
 # Changelog
+
+* **3.0.0** (2020-09-09)
+    * Breaking change: Renamed package from `ai` to `ai_django_core` to clarify dependencies for usages
+    * Finished code linting
+    * Removed unused imports in antivirus util package
 
 * **2.3.0** (2020-08-07)
     * Changed `ugettext_lazy` to `gettext_lazy` to tackle django 4.0 deprecation warnings

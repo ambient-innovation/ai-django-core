@@ -1,5 +1,5 @@
 import pytest
-from ai.converter.fileconverter import crc, md5_checksum
+from ai_django_core.converter.fileconverter import crc, md5_checksum
 
 
 @pytest.fixture
@@ -22,7 +22,7 @@ def test_closes_file(mocker, test_func):
     Tests if the CRC and MD5 checksum functions use a context manager to open the file, to guarantee that the opened
     file descriptor is closed.
     """
-    open_mock = mocker.patch('ai.converter.fileconverter.open')
+    open_mock = mocker.patch('ai_django_core.converter.fileconverter.open')
     open_mock.return_value.__enter__.return_value.read.return_value = None  # to make f.read() return None.
     file_mock = mocker.Mock()
     test_func(file_mock)

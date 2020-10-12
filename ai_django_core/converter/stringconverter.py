@@ -5,7 +5,7 @@ from builtins import str
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.template.defaultfilters import floatformat
 
-from ai.converter.dateconverter import datetime_format
+from ai_django_core.converter.dateconverter import datetime_format
 
 
 def number_to_text(value):

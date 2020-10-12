@@ -3,14 +3,14 @@ import time
 from unittest import TestCase
 from unittest.mock import Mock
 
-from ai.middleware.current_user import CurrentUserMiddleware
+from ai_django_core.middleware.current_user import CurrentUserMiddleware
 
 
 class CurrentUserMiddlewareTest(TestCase):
-    def test_current_user_is_None_if_no_user_given(self):
+    def test_current_user_is_none_if_no_user_given(self):
         self.assertIsNone(CurrentUserMiddleware.get_current_user())
 
-    def test_current_user_is_None_if_request_user_is_None(self):
+    def test_current_user_is_none_if_request_user_is_none(self):
         set_current_user(user=None)
         self.assertIsNone(CurrentUserMiddleware.get_current_user())
 
