@@ -80,6 +80,11 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **3.0.2** (2020-10-15)
+    * Imports all utils into the modules scope
+    * Retranslates some docstrings into English
+    * Adds tests for the log_whodid util function
+
 * **3.0.1** (2020-10-12)
     * Added missing ``__init__.py`` file to package mail.services
 
