@@ -42,6 +42,12 @@ This package contains various useful helper functions.
 
     `pytest`
 
+# Documentation
+
+- To generate new auto-docs for new modules run: `sphinx-apidoc -o ./docs/modules/ ./ai/ ./ai/utils/antivirus/` (in the current setup an auto doc for the anti virus module is not supported due to installation and import problems. Since it might be removed in the future, that should be fine for now).
+- To build the documentation run: `sphinx-build docs/ docs/_build/html/` or go into the **docs** folder and run: `make html`.
+  Open `docs/_build/html/index.html` to see the documentation.
+
 ## Publish to PyPi
 
 - Increment version in main `__init__.py`
@@ -83,6 +89,7 @@ This package contains various useful helper functions.
 * **3.2.0** (2020-10-16)
     * Added ``AbstractPermissionMixin``, ``AbstractUserSpecificQuerySet`` and ``AbstractUserSpecificManager`` abstract managers
     * Removed deprecated antivir package
+    * Added Sphinx documentation setup to package
 
 * **3.1.0** (2020-10-14)
     * Added context manager ``TempDisconnectSignal`` to nicely disable model signals temporarily
