@@ -17,6 +17,8 @@ COPY $AI_CORE_SRC $AI_CORE_SRVPROJ
 
 # Install Python dependencies
 RUN pip install -U pip
+RUN python ./setup.py install
+# Install dev dependencies - it's ok to do it here because we never deploy this image
 RUN pip install .[dev]
 
 # Copy entrypoint script into the image

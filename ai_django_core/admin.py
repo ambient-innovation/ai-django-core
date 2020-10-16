@@ -52,7 +52,7 @@ class ReadOnlyTabularInline(admin.TabularInline):
     """
     can_delete = False
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, request, **kwargs):
         return False
 
     def get_readonly_fields(self, request, obj=None):
