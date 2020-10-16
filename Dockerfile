@@ -16,7 +16,8 @@ WORKDIR $AI_CORE_SRVPROJ
 COPY $AI_CORE_SRC $AI_CORE_SRVPROJ
 
 # Install Python dependencies
-RUN python ./setup.py install
+RUN pip install -U pip
+RUN pip install .[dev]
 
 # Copy entrypoint script into the image
 WORKDIR $AI_CORE_SRVPROJ

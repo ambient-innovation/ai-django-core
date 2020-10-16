@@ -10,11 +10,6 @@ requirements = [
     'Django>=2.0.0',
     'bleach>=1.4.2',
     'python-dateutil>=2.5.3',
-    'future>=0.16',
-    'freezegun',
-    'pytest-cov',
-    'pytest-django',
-    'pytest-mock',
 ]
 
 # Parse version
@@ -57,5 +52,13 @@ setup(
         "Topic :: Utilities",
     ],
     zip_safe=False,
-    install_requires=requirements
+    install_requires=requirements,
+    extras_require={
+        'dev': [
+            'freezegun',
+            'pytest-cov',
+            'pytest-django',
+            'pytest-mock',
+        ]
+    }
 )

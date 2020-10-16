@@ -80,6 +80,10 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **3.1.0** (2020-10-14)
+    * Added context manager ``TempDisconnectSignal`` to nicely disable model signals temporarily
+    * Moved dev dependencies to ``extras_require`` in the setup file
+
 * **3.0.2** (2020-10-15)
     * Imports all utils into the modules scope
     * Retranslates some docstrings into English
