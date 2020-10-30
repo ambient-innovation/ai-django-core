@@ -1,7 +1,6 @@
 import datetime
-from unittest import TestCase
 
-from django.core.exceptions import ImproperlyConfigured
+from django.test import TestCase
 from django.test.utils import override_settings
 from freezegun import freeze_time
 
@@ -10,23 +9,6 @@ from ai_django_core.utils.date import date_month_delta, get_start_and_end_date_f
 
 class DateUtilTest(TestCase):
     TEST_CURRENT_YEAR = 2017
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
-        # Initialize django settings
-        from django.conf import settings
-        try:
-            settings_configured = settings.configured
-        except ImproperlyConfigured:
-            settings_configured = False
-        if not settings_configured:
-            settings.configure()
-
-    def setUp(self):
-        # BaseTest setup
-        super().setUp()
 
     def test_get_start_and_end_date_from_calendar_week(self):
         monday, sunday = get_start_and_end_date_from_calendar_week(2016, 52)

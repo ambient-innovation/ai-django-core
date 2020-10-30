@@ -1,5 +1,5 @@
 ### STAGE 2: Setup ###
-FROM python:3.7
+FROM python:3.8
 
 # Set env variables used in this Dockerfile (add a unique prefix, such as DOCKYARD)
 # Local directory with project source
@@ -7,7 +7,7 @@ ENV AI_CORE_SRC=.
 # Directory in container for all project files
 ENV AI_CORE_SRVHOME=/srv
 # Directory in container for project source files
-ENV AI_CORE_SRVPROJ=/srv/ai-core
+ENV AI_CORE_SRVPROJ=/srv/ai-django-core
 
 # Create application subdirectories
 WORKDIR $AI_CORE_SRVPROJ

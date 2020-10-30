@@ -1,4 +1,4 @@
-from unittest import TestCase
+from django.test import TestCase
 
 from ai_django_core.converter.stringconverter import slugify_file_name
 

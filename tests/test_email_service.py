@@ -1,7 +1,6 @@
 from django.core import mail
-from django.core.exceptions import ImproperlyConfigured
 from django.core.mail import EmailMultiAlternatives
-from unittest import TestCase
+from django.test import TestCase
 
 from ai_django_core.mail.services.tests import EmailTestService, EmailTestServiceQuerySet
 
@@ -11,15 +10,6 @@ class EmailServiceTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-
-        # Initialize django settings
-        from django.conf import settings
-        try:
-            settings_configured = settings.configured
-        except ImproperlyConfigured:
-            settings_configured = False
-        if not settings_configured:
-            settings.configure()
 
         # Mail data
         cls.subject = 'Super great email (definitely not spam!)'

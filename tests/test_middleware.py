@@ -1,7 +1,8 @@
 import threading
 import time
-from unittest import TestCase
 from unittest.mock import Mock
+
+from django.test import TestCase
 
 from ai_django_core.middleware.current_user import CurrentUserMiddleware
 
@@ -28,8 +29,8 @@ class CurrentUserMiddlewareTest(TestCase):
         user2 = Mock(user_name='user2')
         current_users = []
 
-        first_thread = threading.Thread(target=set_current_user, args=(user1, 0, 5, current_users))
-        second_thread = threading.Thread(target=set_current_user, args=(user2, 3, 0, current_users))
+        first_thread = threading.Thread(target=set_current_user, args=(user1, 0, 1, current_users))
+        second_thread = threading.Thread(target=set_current_user, args=(user2, 0.5, 0, current_users))
         first_thread.start()
         second_thread.start()
         first_thread.join()
