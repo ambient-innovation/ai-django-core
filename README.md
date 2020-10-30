@@ -86,6 +86,11 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **3.3.0** (2020-10-30)
+    * Merged package ``ai-drf-core`` into this package and enabled djangorestframework-specific installation with `pip install ai_django_core[drf]`
+    * Added ``BaseModelSerializer`` and ``CommonInfoSerializer``
+    * Incremented dependencies django and bleach to previous versions latest bugfix release
+
 * **3.2.0** (2020-10-16)
     * Added ``AbstractPermissionMixin``, ``AbstractUserSpecificQuerySet`` and ``AbstractUserSpecificManager`` abstract managers
     * Removed deprecated antivir package
