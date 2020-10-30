@@ -44,4 +44,4 @@ tests:
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $IMAGE_TAG
-    - docker run $IMAGE_TAG pytest ai_django_core/tests --cov=ai_django_core/
+    - docker run $IMAGE_TAG pytest --ds settings tests --cov=ai_django_core/

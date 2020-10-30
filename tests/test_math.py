@@ -1,4 +1,4 @@
-from unittest import TestCase
+from django.test import TestCase
 
 from ai_django_core.utils.math import round_to_decimal, round_up_decimal
 

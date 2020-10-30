@@ -59,6 +59,7 @@ setup(
             'pytest-cov',
             'pytest-django',
             'pytest-mock',
+            'gevent',
             'sphinx',
             'recommonmark',
             'sphinx-rtd-theme',
