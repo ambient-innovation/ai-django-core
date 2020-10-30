@@ -7,8 +7,8 @@ from setuptools import find_packages, setup
 # Dependencies
 requirements = [
     'django-crispy-forms>=1.4.0',
-    'Django>=2.0.0',
-    'bleach>=1.4.2',
+    'Django>=2.0.13',
+    'bleach>=1.4.3',
     'python-dateutil>=2.5.3',
 ]
 
@@ -62,6 +62,9 @@ setup(
             'sphinx',
             'recommonmark',
             'sphinx-rtd-theme',
+        ],
+        'drf': [
+            'djangorestframework>=3.8.2',
         ],
     },
 )
