@@ -67,5 +67,9 @@ setup(
         'drf': [
             'djangorestframework>=3.8.2',
         ],
+        'graphql': [
+            'graphene-django>=2.2.0',
+            'django-graphql-jwt>=0.2.1',
+        ],
     },
 )
