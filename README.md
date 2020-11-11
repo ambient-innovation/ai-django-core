@@ -44,9 +44,15 @@ This package contains various useful helper functions.
 
 # Documentation
 
+## Generate HTML locally
 - To generate new auto-docs for new modules run: `sphinx-apidoc -o ./docs/modules/ ./ai_django_core/ ./ai_django_core/utils/antivirus/` (in the current setup an auto doc for the anti virus module is not supported due to installation and import problems. Since it might be removed in the future, that should be fine for now).
 - To build the documentation run: `sphinx-build docs/ docs/_build/html/` or go into the **docs** folder and run: `make html`.
   Open `docs/_build/html/index.html` to see the documentation.
+
+## Publish to ReadTheDocs.io
+
+- Fetch latest changes in github mirror and push them
+- Trigger new build at ReadTheDocs.io (follow instructions in admin panel at RTD)
 
 ## Publish to PyPi
 
@@ -85,6 +91,10 @@ This package contains various useful helper functions.
     `twine upload dist/*`
 
 # Changelog
+
+* **3.5.0** (2020-11-10)
+    * Merged package ``graphene-django-ai`` into this package and enabled graphql-specific installation with `pip install ai_django_core[graphql]`
+    * Added some files for readthedocs.io and updated Readme
 
 * **3.4.0** (2020-10-30)
     * Moved tests out of package scope
