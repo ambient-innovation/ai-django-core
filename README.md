@@ -92,6 +92,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **3.5.1** (2020-11-19)
+    * Bugfix with args and kwargs in ``ClassBasedViewTestMixin``
+
 * **3.5.0** (2020-11-10)
     * Merged package ``graphene-django-ai`` into this package and enabled graphql-specific installation with `pip install ai_django_core[graphql]`
     * Added some files for readthedocs.io and updated Readme
