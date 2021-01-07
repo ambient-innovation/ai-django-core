@@ -92,6 +92,9 @@ This package contains various useful helper functions.
 
 # Changelog
 
+* **3.5.2** (2021-01-07)
+    * Bugfix with args and kwargs in ``ReadOnlyTabularInline``
+
 * **3.5.1** (2020-11-19)
     * Bugfix with args and kwargs in ``ClassBasedViewTestMixin``
 
