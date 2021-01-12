@@ -18,3 +18,15 @@ class CustomPermissionMixin(generic.View):
             return super().dispatch(request, *args, **kwargs)
         else:
             return render(self.request, ERROR_403_TEMPLATE_NAME, status=403)
+
+
+class RequestInFormKwargsMixin:
+    """
+    Injects the request in the form.
+    Attention: Have to be removed in the init of the form (via .pop())
+    """
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'request': self.request})
+        return kwargs

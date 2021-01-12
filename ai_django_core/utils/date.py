@@ -1,14 +1,20 @@
 import datetime
 from calendar import monthrange
+from typing import Union
 
+import pytz
 from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+from pytz import UnknownTimeZoneError
 
 
 class DateHelper:
-    # Constants to use for django ORMs `__weekday` lookup to avoid usage of integers directly.
-    # Unfortunately python's calendar weekdays are not equivalent to the database ones.
+    """
+    Constants to use for django ORMs `__weekday` lookup to avoid usage of integers directly.
+    Unfortunately python's calendar weekdays are not equivalent to the database ones.
+    """
     ORM_SUNDAY = 1
     ORM_MONDAY = 2
     ORM_TUESDAY = 3
@@ -18,49 +24,101 @@ class DateHelper:
     ORM_SATURDAY = 7
 
 
-def get_start_and_end_date_from_calendar_week(year, calendar_week):
+def tz_today(str_format=None):
+    """
+    Returns either a timezone-aware today object or string. Depending if the `str_format` param is set.
+    :param str_format: If set, formats the date object to a string. Pass strftime-compatible value
+    :return:
+    """
+    if settings.USE_TZ:
+        date = timezone.now().date()
+    else:
+        date = datetime.datetime.now().date()
+
+    if str_format:
+        return date.strftime(str_format)
+    return date
+
+
+def add_months(source_date: Union[datetime.date, datetime.datetime], months: Union[int, float]) -> \
+        Union[datetime.date, datetime.datetime]:
+    return source_date + relativedelta(months=months)
+
+
+def add_days(source_date: Union[datetime.date, datetime.datetime], days: int) -> \
+        Union[datetime.date, datetime.datetime]:
+    return source_date + datetime.timedelta(days=days)
+
+
+def add_minutes(source_datetime: datetime.datetime, minutes: int) -> Union[datetime.date, datetime.datetime]:
+    return source_datetime + relativedelta(minutes=minutes)
+
+
+def get_next_month() -> datetime.date:
+    return add_months(tz_today(), 1)
+
+
+def first_day_of_month(source_date: datetime.date) -> datetime.date:
+    return datetime.date(source_date.year, source_date.month, 1)
+
+
+def get_formatted_date_str(source_date: Union[datetime.date, datetime.datetime]) -> str:
+    return source_date.strftime('%d.%m.%Y')
+
+
+def get_time_from_seconds(seconds: int) -> str:
+    if seconds < 0:
+        raise ValueError(_('Seconds have to be a positive value.'))
+    hours = seconds // 3600
+    minutes = (seconds - (hours * 3600)) // 60
+    seconds = seconds - ((hours * 3600) + (minutes * 60))
+    return "%02d:%02d:%02d" % (hours, minutes, seconds)
+
+
+def datetime_format(target_datetime: datetime.datetime, dt_format: str) -> str:
+    """
+    Uses strftime, but considers timezone (only for datetime objects)
+    """
+    try:
+        dt_format = target_datetime.astimezone(tz=pytz.timezone(settings.TIME_ZONE)).strftime(dt_format)
+    except UnknownTimeZoneError:
+        dt_format = target_datetime.strftime(dt_format)
+    return dt_format
+
+
+def get_start_and_end_date_from_calendar_week(year: int, calendar_week: int) -> (datetime.date, datetime.date):
     """
     Returns the first and last day of a given calendar week
-    :param year: int
-    :param calendar_week: int
-    :return:
     """
     monday = datetime.datetime.strptime(f'{year}-{calendar_week}-1', "%Y-%W-%w").date()
     return monday, monday + datetime.timedelta(days=6.9)
 
 
-def get_next_calendar_week(compare_date):
+def get_next_calendar_week(compare_date: datetime.date) -> int:
     """
     Returns the next calendar week as an integer
-    :param compare_date: date
-    :return:
     """
     day_in_one_week = compare_date + datetime.timedelta(days=(7 - compare_date.weekday()))
     return day_in_one_week.isocalendar()[1]
 
 
-def next_weekday(d, weekday):
+def next_weekday(given_date: datetime.date, weekday: int) -> datetime.date:
     """
     Returns the next date of the given weekday
-    For example: next_weekday(d, calendar.MONDAY) would return the next monday starting at date "d"
-    :param d: date
-    :param weekday: int
-    :return:
+    For example: next_weekday(d, calendar.MONDAY) would return the next monday starting at date "given_date"
     """
-    days_ahead = weekday - d.weekday()
+    days_ahead = weekday - given_date.weekday()
     if days_ahead <= 0:
         days_ahead += 7
-    return d + datetime.timedelta(days_ahead)
+    return given_date + datetime.timedelta(days_ahead)
 
 
-def date_month_delta(start_date: datetime.date, end_date: datetime.date):
+def date_month_delta(start_date: datetime.date, end_date: datetime.date) -> float:
     """
     Calculates the number of months lying between two dates.
     So from April 15th to May 1st it's 0.5 months.
     Attention: `end_date` will be excluded in the result (outer border)
-    :return: float or False (if `start_date` > `end_date`)
     """
-
     # If `start_date` is greater, this logic doesn't make any sense
     if start_date > end_date:
         raise NotImplementedError('Start date > end date')
@@ -87,19 +145,3 @@ def date_month_delta(start_date: datetime.date, end_date: datetime.date):
 
     # Return data
     return delta
-
-
-def tz_today(str_format=None):
-    """
-    Returns either a timezone-aware today object or string. Depending if the `str_format` param is set.
-    :param str_format: If set, formats the date object to a string. Pass strftime-compatible value
-    :return:
-    """
-    if settings.USE_TZ:
-        date = timezone.now().date()
-    else:
-        date = datetime.datetime.now().date()
-
-    if str_format:
-        return date.strftime(str_format)
-    return date

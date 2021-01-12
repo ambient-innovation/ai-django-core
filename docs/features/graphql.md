@@ -1,8 +1,5 @@
-# Needs to be rewritten
-
-// todo make it happen!
-
-## Examples
+# Graphene extension
+// todo Needs to be rewritten
 
 ### GraphQL based on django ModelForms
 
@@ -18,7 +15,7 @@ class User(models.Model):
 
 Now we create a `ModelForm` in `my_app/forms.py`:
 
-```python
+```
 from django import forms
 from .models import User
 
@@ -31,7 +28,7 @@ class UserForm(forms.ModelForm):
  We need to create an `ObjectType` which we derive from our model.
  Lives in `my_apps/schemes/schematypes.py`:
 
-```python
+```
 from graphene_django import DjangoObjectType
 from ..models import User
 
@@ -43,7 +40,7 @@ class UserType(DjangoObjectType):
  Here's the mutation in `my_app/schema/mutations.py`.
  It takes a `ModelForm` (or a non-model form) to derive the validation rules from:
 
- ```python
+ ```
 import graphene
 from graphene_django_ai.forms.mutations import LoginRequiredDjangoModelFormMutation
 from .schematypes import UserType

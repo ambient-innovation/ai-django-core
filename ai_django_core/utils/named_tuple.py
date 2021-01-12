@@ -1,7 +1,9 @@
 from collections import namedtuple, OrderedDict
+from typing import Any
 
 
 def get_namedtuple_choices(name, choices_tuple):
+    # todo copied code -> test if it works
     """
     Made by Ross Crawford-d'Heureuse.
 
@@ -96,14 +98,11 @@ def get_namedtuple_choices(name, choices_tuple):
     return Choices._make([val for val, name, desc in choices_tuple])
 
 
-def get_value_from_tuple_by_key(choices, key):
+def get_value_from_tuple_by_key(choices: tuple, key) -> Any:
     """
     Fetches the tuple value by a given key
     Useful for getting the name of a key from a model choice tuple of tuples.
     Usage: project_type_a_name = get_value_from_tuple_by_key(PROJECT_TYPE_CHOICES, PROJECT_TYPE_A)
-    :param choices: tuple
-    :param key: key to get tuple value with
-    :return:
     """
     try:
         return [x[1] for x in choices if x[0] == key][0]
@@ -111,14 +110,11 @@ def get_value_from_tuple_by_key(choices, key):
         return '-'
 
 
-def get_key_from_tuple_by_value(choices, value):
+def get_key_from_tuple_by_value(choices: tuple, value) -> Any:
     """
     Fetches the tuple key by a given value
     Useful for getting the key of a value from a model choice tuple of tuples.
     Usage: project_type_a_name = get_value_from_tuple_by_key(PROJECT_TYPE_CHOICES, 'Budget-Project')
-    :param choices: tuple
-    :param value: value to get tuple key with
-    :return:
     """
     try:
         return [x[0] for x in choices if x[1] == value][0]

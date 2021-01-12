@@ -1,4 +1,7 @@
-def log_whodid(obj, user):
+from django.db import models
+
+
+def log_whodid(obj: models.Model, user) -> None:
     """
     Stores the given user as creator or editor of the given object
     """

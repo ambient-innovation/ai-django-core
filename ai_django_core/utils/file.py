@@ -2,7 +2,7 @@ import hashlib
 import zlib
 
 
-def get_filename_without_ending(file_path):
+def get_filename_without_ending(file_path: str) -> str:
     """
     Returns the filename without extension
     :param file_path:
@@ -18,7 +18,7 @@ def get_filename_without_ending(file_path):
     return filename.rsplit('.', 1)[0]
 
 
-def crc(file_path):
+def crc(file_path: str) -> str:
     """Calculates the cyclic redundancy checksum (CRC) of the given file.
 
     See ``open`` for all the exceptins that can be raised.
@@ -33,7 +33,7 @@ def crc(file_path):
     return "%08X" % (prev & 0xFFFFFFFF)
 
 
-def md5_checksum(file_path):
+def md5_checksum(file_path: str) -> str:
     """
     Returns the md5 checksum of the file from the given file_path.
 

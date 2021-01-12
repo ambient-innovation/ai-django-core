@@ -1,17 +1,32 @@
-ai-django-core documentation
-============================
+ai-django-core
+==============
+
+Since 2012 we are gathering tools and useful code snippets to share them across projects. The toolbox ``ai-django-core``
+provides utilities for a wide range of applications. Please have a look at the following chapters to familiarise
+yourself with them.
+
+The package is published at pypi under the following link: `https://pypi.org/project/ai-django-core/ <https://pypi.org/project/ai-django-core/>`_
+
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :caption: Contents:
 
-   introduction.md
-   features/common_info.md
-   features/unit_testing_for_mails.md
+   features/setup.md
+   features/admin.md
+   features/context_manager.md
+   features/context_processors.md
    features/database_anonymisation.md
-   features/mixins/views.md
-   features/settings.md
+   features/djangorestframework.md
    features/graphql.md
+   features/managers.md
+   features/models.md
+   features/mixins.md
+   features/services.md
+   features/tests.md
+   features/utils.rst
+   features/view-layer.rst
+   features/changelog.md
 
 Indices and tables
 ==================

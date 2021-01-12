@@ -6,7 +6,6 @@ from setuptools import find_packages, setup
 
 # Dependencies
 requirements = [
-    'django-crispy-forms>=1.4.0',
     'Django>=2.0.13',
     'bleach>=1.4.3',
     'python-dateutil>=2.5.3',
@@ -25,6 +24,7 @@ setup(
     author='Ambient Innovation: GmbH',
     author_email='hello@ambient-innovation.com',
     packages=find_packages(),
+    url='https://ai-django-core.readthedocs.io/en/latest/index.html',
     include_package_data=True,
     license="The MIT License (MIT)",
     description='Lots of helper functions and useful widgets.',
@@ -63,6 +63,7 @@ setup(
             'sphinx',
             'recommonmark',
             'sphinx-rtd-theme',
+            'm2r2',
         ],
         'drf': [
             'djangorestframework>=3.8.2',
@@ -71,5 +72,8 @@ setup(
             'graphene-django>=2.2.0',
             'django-graphql-jwt>=0.2.1',
         ],
+        'view-layer': [
+            'django-crispy-forms>=1.4.0',
+        ]
     },
 )
