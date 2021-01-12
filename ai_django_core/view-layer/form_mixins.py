@@ -3,21 +3,11 @@ from crispy_forms.layout import Submit
 from django.utils.translation import gettext_lazy as _
 
 
-class RequestInFormKwargsMixin(object):
-    """
-    Injects the request in the form.
-    Attention: Have to be removed in the init of the form (via .pop())
-    """
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs.update({'request': self.request})
-        return kwargs
-
-
-class CrispyLayoutFormMixin(object):
+class CrispyLayoutFormMixin:
     """
     Styles the form in bootstrap style
     """
+
     def __init__(self, *args, **kwargs):
         # Crispy
         self.helper = FormHelper()

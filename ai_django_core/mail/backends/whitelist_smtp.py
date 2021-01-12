@@ -16,6 +16,7 @@ class WhitelistEmailBackend(SMTPEmailBackend):
     EMAIL_BACKEND = 'ai_django_core.mail.backends.whitelist_smtp.WhitelistEmailBackend'
     EMAIL_BACKEND_DOMAIN_WHITELIST = ['ambient-innovation.com']
     EMAIL_BACKEND_REDIRECT_ADDRESS = '%s@testuser.ambient-innovation.com'
+    # todo these settings need to be documented
 
     Wenn EMAIL_BACKEND_REDIRECT_ADDRESS gesetzt ist, wird eine Mail an xy.z@example.com umgeleitet an:
     xy.z_example.com@testuser.ambient-innovation.com

@@ -1,10 +1,12 @@
-# Object ownership
+# Models
+
+## Object ownership
 
 If you are interested in the backgrounds of this part, you can have a look at Medium,
 [we posted an article there some time ago](https://medium.com/ambient-innovation/automatic-and-reliable-handling-of-object-ownership-in-django-34d7ad9721e9).
 
 
-## Abstract class
+### Abstract class
 
 If you want to keep track of the creator, creation time, last modificator and last modification time,
 you can use the abstract class `CommonInfo` like this:
@@ -21,7 +23,7 @@ You then get four fields: `created_by`, `created_at`, `lastmodified_by`, `lastmo
 If you are interested in the details, just have a look at the code base.
 
 
-## Automatic object ownership
+### Automatic object ownership
 
 If you want to keep track of object ownership automatically, you can use the `CurrentUserMiddleware`.
 Just make sure, you'll insert it **after** djangos `AuthenticationMiddleware`:

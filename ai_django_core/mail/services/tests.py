@@ -2,7 +2,7 @@ from django.core import mail
 from django.test import TestCase
 
 
-class EmailTestService(object):
+class EmailTestService:
     _outbox = None
 
     def _ensure_outbox_is_loaded(self):

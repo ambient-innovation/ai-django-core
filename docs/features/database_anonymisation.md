@@ -1,3 +1,3 @@
-# Semantic anonymisation for databases
+# Database Anonymisation
 
-[Link to blog entry](https://medium.com/ambient-innovation/semantic-anonymisation-for-databases-via-django-88851f169081)
+Clean and anonymised working copy with django-scrubber... tbc

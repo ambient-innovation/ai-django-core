@@ -1,9 +1,9 @@
 from django.test import TestCase
 
-from ai_django_core.converter.stringconverter import slugify_file_name
+from ai_django_core.utils.string import slugify_file_name
 
 
-class StringConverterTest(TestCase):
+class UtilsStringTest(TestCase):
 
     def test_slugify_file_name_regular(self):
         filename = 'hola and hello.txt'

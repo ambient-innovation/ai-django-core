@@ -16,13 +16,24 @@ services:
   - docker:18.09-dind
 
 lint:
-  image: python:3.7-slim
+  image: python:3.8-slim
   stage: lint
   tags:
     - normal-load
   script:
     - pip install flake8 pep8-naming
     - flake8 .
+
+security check backend:
+  image: python:3.8-slim
+  stage: lint
+  tags:
+    - low-load
+  script:
+    - pip install pipreqs safety
+    - pipreqs
+    - safety check --file requirements.txt
+  allow_failure: true
 
 build:
   stage: build

@@ -5,7 +5,9 @@ from django.test import RequestFactory
 
 
 class ClassBasedViewTestMixin:
-    """Test mixin for Django views"""
+    """
+    Helper mixin for easy testing of Django views
+    """
     factory_class = RequestFactory
     view_class = None
 

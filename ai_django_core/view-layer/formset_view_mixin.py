@@ -1,9 +1,10 @@
 from django.shortcuts import redirect, render
 
 
-class _FormsetMixin(object):
+class _FormsetMixin:
     """
     Do NOT use directly. Do use FormsetUpdateViewMixin or FormsetCreateViewMixin
+    todo find more suitable name for this mixin and write about what it does
     """
     def get_formset_kwargs(self):
         # may be overridden or extended
@@ -31,6 +32,8 @@ class _FormsetMixin(object):
         # Get all context data
         context = self.get_context_data()
         # Update form and formset variables
+        # todo this should go into `get_context_data()`, shouldn't it? Or does this overwrite the other stuff on
+        #  purpose?
         context['form'] = form
         context['formset'] = formset
         # Pass all data to template
