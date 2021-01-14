@@ -65,6 +65,11 @@ setup(
             'sphinx-rtd-theme',
             'm2r2',
         ],
+        'docs': [
+            'recommonmark',
+            'sphinx-rtd-theme',
+            'm2r2',
+        ],
         'drf': [
             'djangorestframework>=3.8.2',
         ],

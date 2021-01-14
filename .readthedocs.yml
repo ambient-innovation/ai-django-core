@@ -19,5 +19,3 @@ python:
         - docs
     - method: setuptools
       path: .
-    - method: pip
-      path: m2r2
