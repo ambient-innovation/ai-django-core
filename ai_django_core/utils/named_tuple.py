@@ -105,8 +105,8 @@ def get_value_from_tuple_by_key(choices: tuple, key) -> Any:
     Usage: project_type_a_name = get_value_from_tuple_by_key(PROJECT_TYPE_CHOICES, PROJECT_TYPE_A)
     """
     try:
-        return [x[1] for x in choices if x[0] == key][0]
-    except IndexError:
+        return dict(choices)[key]
+    except KeyError:
         return '-'
 
 
