@@ -1,5 +1,9 @@
 # Changelog
 
+* **4.0.1** (2021-01-29)
+    * Optimised code of function `test_get_value_from_tuple_by_key_found()`
+    * Added unittests for named tuple functions
+
 * **4.0.0** (2020-11-10)
     * *Breaking change:* Moved view mixin ``RequestInFormKwargsMixin`` from ``mixin.forms`` to proper place
     ``mixin.views``
