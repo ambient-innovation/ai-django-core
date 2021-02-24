@@ -5,7 +5,7 @@ from django.test import TestCase
 from ai_django_core.mail.services.tests import EmailTestService, EmailTestServiceQuerySet
 
 
-class EmailServiceTest(TestCase):
+class EmailTestServiceTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -166,29 +166,40 @@ class EmailServiceTest(TestCase):
         self.ets.filter(subject=self.subject).assert_one()
 
     def test_assert_one_false(self):
-        self.assertRaises(AssertionError, self.ets.all().assert_one)
+        with self.assertRaises(AssertionError):
+            self.ets.all().assert_one()
 
     def test_assert_quantity_true(self):
         self.ets.filter(subject=self.subject).assert_quantity(1)
 
     def test_assert_quantity_false(self):
-        self.assertRaises(AssertionError, self.ets.filter(subject=self.subject).assert_quantity, 0)
+        with self.assertRaises(AssertionError):
+            self.ets.filter(subject=self.subject).assert_quantity(0)
 
     def test_assert_subject_true(self):
         self.ets.filter(subject=self.subject).assert_subject(self.subject)
 
     def test_assert_subject_false(self):
-        self.assertRaises(AssertionError, self.ets.filter(subject=self.subject).assert_subject, self.other_mail_subject)
+        with self.assertRaises(AssertionError):
+            self.ets.filter(subject=self.subject).assert_subject(self.other_mail_subject)
 
     def test_assert_body_contains_true(self):
         self.ets.filter(subject=self.subject).assert_body_contains(self.content_part)
 
     def test_assert_body_contains_false(self):
-        self.assertRaises(AssertionError, self.ets.filter(subject=self.subject).assert_body_contains, 'Not in here!')
+        with self.assertRaises(AssertionError):
+            self.ets.filter(subject=self.subject).assert_body_contains('Not in here!')
 
     def test_assert_body_contains_not_true(self):
         self.ets.filter(subject=self.subject).assert_body_contains_not('Not in here!')
 
     def test_assert_body_contains_not_false(self):
-        self.assertRaises(AssertionError, self.ets.filter(subject=self.subject).assert_body_contains_not,
-                          self.content_part)
+        with self.assertRaises(AssertionError):
+            self.ets.filter(subject=self.subject).assert_body_contains_not(self.content_part)
+
+    def test_assert_body_contains_no_html_part(self):
+        subject = 'No html email'
+        email = EmailMultiAlternatives(subject, self.text_content, to=[self.to], cc=[self.cc], bcc=[self.bcc])
+        mail.outbox.append(email)
+
+        self.ets.filter(subject=subject).assert_body_contains(self.content_part)

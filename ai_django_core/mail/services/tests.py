@@ -105,11 +105,13 @@ class EmailTestServiceQuerySet(TestCase):
         :return: str
         """
         # Search for string
-        return self._match_list[0].alternatives[0][0]
+        if len(self._match_list[0].alternatives) > 0:
+            return self._match_list[0].alternatives[0][0]
+        return None
 
     def _get_txt_content(self):
         """
-        Ensure we just have found one element and then return HTML part of the email
+        Ensure we just have found one element and then return text part of the email
         :return: str
         """
         # Search for string
@@ -193,8 +195,10 @@ class EmailTestServiceQuerySet(TestCase):
 
         # Assert string is contained in TXT part
         self.assertIn(search_str, self._get_txt_content(), msg=msg)
-        # Assert string is contained in HTML part
-        self.assertIn(search_str, self._get_html_content(), msg=msg)
+        # Assert string is contained in HTML part (if HTML part is set)
+        html_content = self._get_html_content()
+        if html_content is not None:
+            self.assertIn(search_str, html_content, msg=msg)
 
     def assert_body_contains_not(self, search_str, msg=None):
         """

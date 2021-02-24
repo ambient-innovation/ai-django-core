@@ -1,5 +1,9 @@
 # Changelog
 
+* **4.0.2** (2021-02-24)
+    * Fixed a bug in ``EmailTestService.assert_body_contains()`` method to make it work for emails NOT having an HTML
+      part
+
 * **4.0.1** (2021-01-29)
     * Optimised code of function `test_get_value_from_tuple_by_key_found()`
     * Added unittests for named tuple functions
