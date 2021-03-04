@@ -1,5 +1,11 @@
 # Changelog
 
+* **4.1.0** (2021-02-25)
+    * Added class `BaseEmailService` for easier email creation and factory `BaseEmailServiceFactory`
+      for multiple (mostly personalised) emails
+    * Added `html2text` as a dependency to be able to automatically process the text part of an email from the html
+      template
+
 * **4.0.2** (2021-02-24)
     * Fixed a bug in ``EmailTestService.assert_body_contains()`` method to make it work for emails NOT having an HTML
       part
