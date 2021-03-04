@@ -73,9 +73,9 @@ If you do not set it, the ``DEFAULT_FROM_EMAIL`` variable from the django settin
 
 #### Public method overview
 
-* ``__init__(recipient_email_list: Union[list, str] = None, context_data: dict = None)``
+* `__init__(recipient_email_list: Union[list, str] = None, context_data: dict = None)`
   Takes a list of recipient email addresses or just a single email address as a string and optionally some context data.
-  ``recipient_email_list`` might be none, because you could set the variable statically in the class definition.
+  `recipient_email_list` might be none, because you could set the variable statically in the class definition.
 
 
 * ``get_context_data()``

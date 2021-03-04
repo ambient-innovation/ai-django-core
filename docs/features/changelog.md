@@ -1,5 +1,8 @@
 # Changelog
 
+* **4.1.1** (2021-03-04)
+    * Fixed a bug in the documentation
+
 * **4.1.0** (2021-02-25)
     * Added class `BaseEmailService` for easier email creation and factory `BaseEmailServiceFactory`
       for multiple (mostly personalised) emails
