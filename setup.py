@@ -9,6 +9,7 @@ requirements = [
     'Django>=2.0.13',
     'bleach>=1.4.3',
     'python-dateutil>=2.5.3',
+    'html2text>=2020.1.16',
 ]
 
 # Parse version

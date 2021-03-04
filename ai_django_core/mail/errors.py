@@ -1,0 +1,2 @@
+class EmailServiceConfigError(RuntimeError):
+    pass
