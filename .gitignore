@@ -8,6 +8,7 @@
 /attachments/
 /build
 /dist
+/docs/modules/
 
 # sphinx build folder
 _build

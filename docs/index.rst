@@ -20,6 +20,7 @@ The package is published at pypi under the following link: `https://pypi.org/pro
    features/djangorestframework.md
    features/graphql.md
    features/managers.md
+   features/mail.md
    features/models.md
    features/mixins.md
    features/services.md
