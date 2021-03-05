@@ -1,5 +1,8 @@
 # Changelog
 
+* **4.1.2** (2021-03-05)
+    * Added kwargs parameter to init-method of `BaseEmailServiceFactory`
+
 * **4.1.1** (2021-03-04)
     * Fixed a bug in the documentation
 
