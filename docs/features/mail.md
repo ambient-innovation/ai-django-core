@@ -20,8 +20,8 @@ USPs:
 
 There are two scenarios covered by this package:
 
-* **Single mail**: Create a single mail through a class to utilise benefits of object-orientation
-* **Similar mais**: Create a bunch of similar mails with a factory class, for example if you want to send the same content
+* **Single mail**: Create a single mail through a class to utilise benefits of object-orientation.
+* **Similar mails**: Create a bunch of similar mails with a factory class, for example if you want to send the same content
   but with a personal salutation to a number of people.
 
 ### Create a single email
@@ -45,14 +45,14 @@ class MyFancyClassBasedMail(BaseEmailService):
         return data
 ````
 
-This is a simple example of how to create an email. We pass or set the recipients in the ``__init__()`` method and can
-add more data in the ``get_context_data`` - or just provide the context on creation as a parameter.
+This is a simple example of how to create an email. We pass or set the recipients in the `__init__()` method and can
+add more data in the `get_context_data()` - or just provide the context on creation as a parameter.
 
 One big advantage is that you can create your own base class which handles all the context data you need to have for
 your base email template. Imagine you have an unsubscribe link or a logo in the base template. In the "old world"
 you have to think to pass these variables every time. Now, just wrap it up in a base class and that's it!
 
-And that's how you would send the email:
+And that is how you would send the email:
 
 ````
 from django.conf import settings
@@ -66,7 +66,7 @@ the HTML part will be used to render the plain text body.
 
 #### Configuration
 
-You can set a subject prefix so all your emails look more similar when setting the constant ``SUBJECT_PREFIX``.
+You can set a subject prefix, so that all your emails look more similar when setting the constant ``SUBJECT_PREFIX``.
 
 If you wish to define a custom "from" email, you can do so via the ``FROM_EMAIL`` constant. Take care:
 If you do not set it, the ``DEFAULT_FROM_EMAIL`` variable from the django settings is used.
@@ -133,7 +133,7 @@ or one or two minor differences. Handling this with the single email class from 
 That is why this package provides a mail factory! This factory is a wrapper for creating similar emails and providing
 the email class shown above with recipient-specific content.
 
-Take a look at this example:
+Look at this example:
 
 ``````
 class MyFancyMail(BaseEmailService):

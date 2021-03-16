@@ -10,6 +10,9 @@ INSTALLED_APPS = (
 
 SECRET_KEY = 'ASDFjklö123456890'
 
+# Routing
+ROOT_URLCONF = 'testapp.urls'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
