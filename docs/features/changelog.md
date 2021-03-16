@@ -1,4 +1,8 @@
 # Changelog
+* **4.2.0** (2021-03-12)
+  * Added ``GloballyVisibleQuerySet`` including tests and documentation
+  * Added ``BaseViewSetTestMixin`` for the djangorestframework plugin
+  * Fixed some typos in the documentation
 
 * **4.1.2** (2021-03-05)
     * Added kwargs parameter to init-method of `BaseEmailServiceFactory`

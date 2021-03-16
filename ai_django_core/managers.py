@@ -53,3 +53,18 @@ class AbstractUserSpecificManager(Manager, AbstractPermissionMixin):
 
     def deletable_for(self, user):
         return self.get_queryset().deletable_for(user)
+
+
+class GloballyVisibleQuerySet(AbstractUserSpecificQuerySet):
+    """
+    Manager (QuerySet) for classes which do NOT have any visibility restrictions.
+    """
+
+    def visible_for(self, user):
+        return self.all()
+
+    def editable_for(self, user):
+        return self.visible_for(user)
+
+    def deletable_for(self, user):
+        return self.visible_for(user)
