@@ -25,7 +25,11 @@ setup(
     author='Ambient Innovation: GmbH',
     author_email='hello@ambient-innovation.com',
     packages=find_packages(),
-    url='https://ai-django-core.readthedocs.io/en/latest/index.html',
+    url='https://github.com/ambient-innovation/ai-django-core',
+    project_urls={
+        'Documentation': 'https://ai-django-core.readthedocs.io/en/latest/index.html',
+        'Maintained by': 'https://ambient-innovation.com/',
+    },
     include_package_data=True,
     license="The MIT License (MIT)",
     description='Lots of helper functions and useful widgets.',

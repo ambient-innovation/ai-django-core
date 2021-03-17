@@ -23,8 +23,6 @@ This package contains various useful helper functions. You can read up on all th
     )
      ````
 
-- Run migrations
-
 
 # Contribute
 

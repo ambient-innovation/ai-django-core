@@ -1,4 +1,9 @@
 # Changelog
+
+* **4.2.1** (2021-03-17)
+  * Added some links to setup.py for pypi
+  * Added some documentation for setting up the toolbox
+
 * **4.2.0** (2021-03-12)
   * Added ``GloballyVisibleQuerySet`` including tests and documentation
   * Added ``BaseViewSetTestMixin`` for the djangorestframework plugin

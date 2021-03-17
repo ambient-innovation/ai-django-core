@@ -1,6 +1,8 @@
 ai-django-core
 ==============
 
+Welcome to the Ambient Toolbox ``ai-django-core``!
+
 Since 2012 we are gathering tools and useful code snippets to share them across projects. The toolbox ``ai-django-core``
 provides utilities for a wide range of applications. Please have a look at the following chapters to familiarise
 yourself with them.
