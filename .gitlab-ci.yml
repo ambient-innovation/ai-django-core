@@ -16,7 +16,7 @@ services:
   - docker:18.09-dind
 
 lint:
-  image: python:3.8-slim
+  image: python:3.9-slim
   stage: lint
   tags:
     - normal-load
@@ -25,7 +25,7 @@ lint:
     - flake8 .
 
 security check backend:
-  image: python:3.8-slim
+  image: python:3.9-slim
   stage: lint
   tags:
     - low-load

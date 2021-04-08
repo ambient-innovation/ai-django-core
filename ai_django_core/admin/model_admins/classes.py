@@ -22,6 +22,9 @@ class ReadOnlyAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
+    def has_change_permission(self, request, obj=None):
+        return False
+
     def has_delete_permission(self, request, obj=None):
         return False
 
@@ -32,33 +35,15 @@ class EditableOnlyAdmin(admin.ModelAdmin):
     Disables all create and delete functionality so all records can only be edited.
     """
 
-    def has_delete_permission(self, request, obj=None):
-        return False
-
     def get_actions(self, request):
         # Disable delete
         actions = super().get_actions(request)
-        del actions['delete_selected']
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
         return actions
 
     def has_add_permission(self, request):
         return False
 
-
-class ReadOnlyTabularInline(admin.TabularInline):
-    """
-    Class for being extended by TabularInline-classes.
-    Disables all create, delete or edit functionality in the tabular inline admin.
-    """
-    can_delete = False
-
-    def has_add_permission(self, *args, **kwargs):
+    def has_delete_permission(self, request, obj=None):
         return False
-
-    def get_readonly_fields(self, request, obj=None):
-        result = list(set(
-            [field.name for field in self.opts.local_fields] +
-            [field.name for field in self.opts.local_many_to_many]
-        ))
-        result.remove('id')
-        return result

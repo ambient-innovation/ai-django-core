@@ -1,5 +1,5 @@
 ### STAGE 2: Setup ###
-FROM python:3.8
+FROM python:3.9
 
 # Set env variables used in this Dockerfile (add a unique prefix, such as DOCKYARD)
 # Local directory with project source
