@@ -4,10 +4,17 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from ai_django_core.managers import GloballyVisibleQuerySet
+from ai_django_core.models import CommonInfo
 
 
 class MySingleSignalModel(models.Model):
     value = models.PositiveIntegerField(default=0)
+
+    objects = GloballyVisibleQuerySet.as_manager()
+
+
+class ForeignKeyRelatedModel(models.Model):
+    single_signal = models.ForeignKey(MySingleSignalModel, on_delete=models.CASCADE)
 
     objects = GloballyVisibleQuerySet.as_manager()
 
@@ -32,3 +39,7 @@ def send_email(sender, instance, **kwargs):
                                  from_email='test@example.com',
                                  to=['random.dude@example.com'])
     msg.send()
+
+
+class CommonInfoBasedModel(CommonInfo):
+    value = models.PositiveIntegerField(default=0)

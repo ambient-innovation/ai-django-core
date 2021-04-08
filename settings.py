@@ -8,6 +8,10 @@ INSTALLED_APPS = (
     'testapp',
 )
 
+DEBUG = False
+
+ALLOWED_HOSTS = ['localhost:8000']
+
 SECRET_KEY = 'ASDFjklö123456890'
 
 # Routing

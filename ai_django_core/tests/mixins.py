@@ -1,4 +1,6 @@
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import RequestFactory
@@ -55,3 +57,33 @@ class ClassBasedViewTestMixin:
     def delete(self, user=None, data=None, url_params=None, *args, **kwargs):
         """Returns response for a DELETE request."""
         return self._get_response('delete', user, data, url_params, *args, **kwargs)
+
+
+class RequestProviderMixin:
+    """
+    Mixin that provides a method which returns a django request.
+    Supposed to be used in unittests that require a request object.
+    Also adds the message middleware so django messages can be tested.
+    """
+
+    @staticmethod
+    def get_request(user: AbstractBaseUser = None):
+        """
+        Creates and returns a django request.
+        """
+        # Create test request
+        factory = RequestFactory()
+        request = factory.get('/')
+        request.user = user
+
+        # Annotate a request object with a session
+        session_middleware = SessionMiddleware()
+        session_middleware.process_request(request)
+        request.session.save()
+
+        # Annotate a request object with messages
+        message_middleware = MessageMiddleware()
+        message_middleware.process_request(request)
+        request.session.save()
+
+        return request

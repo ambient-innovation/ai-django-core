@@ -1,13 +1,26 @@
 # Changelog
 
+* **5.0.0** (2021-03-26)
+    * *Breaking change:* Moved `ReadOnlyAdmin` and `EditableOnlyAdmin` to package `model_admins.classes`
+      and `ReadOnlyTabularInline` to package `model_admins.inlines` to enable better structuring of new admin components
+    * Fixed some inconsistencies within `ReadOnlyAdmin`, `EditableOnlyAdmin` and `ReadOnlyTabularInline` classes
+    * Added `admin.views` package containing a base crispy form, and a mixin to turn any regular django view into a nice
+      and cozy django admin view
+    * Added an abundance of `model_admins.mixins`: `AdminCreateFormMixin`, `AdminNoInlinesForCreateMixin`
+      ,`AdminRequestInFormMixin`, `FetchParentObjectInlineMixin`, `FetchObjectMixin`, `CommonInfoAdminMixin`
+    * Added `RequestProviderMixin` to easily create a dummy request in unittests
+    * Added support for django 3.2 and dropped support for 2.0, 2.1 and 3.0
+    * Added support for Python 3.9 and dropped support for 3.5
+    * Updated test python version to 3.9
+
 * **4.2.1** (2021-03-17)
-  * Added some links to setup.py for pypi
-  * Added some documentation for setting up the toolbox
+    * Added some links to setup.py for pypi
+    * Added some documentation for setting up the toolbox
 
 * **4.2.0** (2021-03-12)
-  * Added ``GloballyVisibleQuerySet`` including tests and documentation
-  * Added ``BaseViewSetTestMixin`` for the djangorestframework plugin
-  * Fixed some typos in the documentation
+    * Added ``GloballyVisibleQuerySet`` including tests and documentation
+    * Added ``BaseViewSetTestMixin`` for the djangorestframework plugin
+    * Fixed some typos in the documentation
 
 * **4.1.2** (2021-03-05)
     * Added kwargs parameter to init-method of `BaseEmailServiceFactory`
@@ -31,16 +44,20 @@
 
 * **4.0.0** (2020-11-10)
     * *Breaking change:* Moved view mixin ``RequestInFormKwargsMixin`` from ``mixin.forms`` to proper place
-    ``mixin.views``
+      ``mixin.views``
     * *Breaking change:* Removed string helper function ``restore_windows1252controls()``, ``number_to_text()`` and
-    ``replace_link_pattern()``
-    * *Breaking change:* Removed choice converter function ``get_name_by_value()`` in favour of ``get_value_from_tuple_by_key()``
-    * *Breaking change:* Removed date converter function ``get_seconds()`` because Python 3.6 already provides a `total_seconds()` method
-    * *Breaking change:* Removed date converter function ``get_current_datetime()`` because django already provides the `timezone.now()` method
+      ``replace_link_pattern()``
+    * *Breaking change:* Removed choice converter function ``get_name_by_value()`` in favour
+      of ``get_value_from_tuple_by_key()``
+    * *Breaking change:* Removed date converter function ``get_seconds()`` because Python 3.6 already provides
+      a `total_seconds()` method
+    * *Breaking change:* Removed date converter function ``get_current_datetime()`` because django already provides
+      the `timezone.now()` method
     * *Breaking change:* Removed date converter function ``diff_month()`` in favour of ``date_month_delta()``
     * *Breaking change:* Merged ``converter`` package in ``utils`` package
     * *Breaking change:* Moved view-layer-based helpers to extra requirement ``view-layer``: `_FormsetMixin`,
-    `FormsetUpdateViewMixin`, `FormsetCreateViewMixin`, `CrispyLayoutFormMixin`, `CustomPermissionMixin`, `RequestInFormKwargsMixin`
+      `FormsetUpdateViewMixin`, `FormsetCreateViewMixin`, `CrispyLayoutFormMixin`, `CustomPermissionMixin`
+      , `RequestInFormKwargsMixin`
     * Simplified code of function ``float_to_string()``
     * Added type hinting to lots of helper functions
     * Updated and restructured documentation
@@ -54,7 +71,8 @@
     * Bugfix with args and kwargs in ``ClassBasedViewTestMixin``
 
 * **3.5.0** (2020-11-10)
-    * Merged package ``graphene-django-ai`` into this package and enabled graphql-specific installation with `pip install ai_django_core[graphql]`
+    * Merged package ``graphene-django-ai`` into this package and enabled graphql-specific installation
+      with `pip install ai_django_core[graphql]`
     * Added some files for readthedocs.io and updated Readme
 
 * **3.4.0** (2020-10-30)
@@ -63,12 +81,14 @@
     * Added tests for context manager ``TempDisconnectSignal`` with test setup
 
 * **3.3.0** (2020-10-30)
-    * Merged package ``ai-drf-core`` into this package and enabled djangorestframework-specific installation with `pip install ai_django_core[drf]`
+    * Merged package ``ai-drf-core`` into this package and enabled djangorestframework-specific installation
+      with `pip install ai_django_core[drf]`
     * Added ``BaseModelSerializer`` and ``CommonInfoSerializer``
     * Incremented dependencies django and bleach to previous versions latest bugfix release
 
 * **3.2.0** (2020-10-16)
-    * Added ``AbstractPermissionMixin``, ``AbstractUserSpecificQuerySet`` and ``AbstractUserSpecificManager`` abstract managers
+    * Added ``AbstractPermissionMixin``, ``AbstractUserSpecificQuerySet`` and ``AbstractUserSpecificManager`` abstract
+      managers
     * Removed deprecated antivir package
     * Added Sphinx documentation setup to package
 
@@ -138,7 +158,7 @@
 
 * **1.2.8** (2019-12-13)
     * Added custom scrubber class `AbstractScrubbingService` to provide a helper for adding custom scrubbing logic for
-    data anonymisation
+      data anonymisation
 
 * **1.2.7** (2019-07-11)
     * Added email testing class `EmailTestService` to provide a wrapper for better email unittests

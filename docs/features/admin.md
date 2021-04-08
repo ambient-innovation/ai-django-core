@@ -1,45 +1,58 @@
 # Django Admin
 
-## ReadOnlyAdmin
+This toolbox provides an abundance of useful helpers for the django admin site. Please note that you need to install
+the `view-layer` extension of `ai-django-core` to use any form-related helpers:
+
+    pip install ai-django-core[view-layer]
+
+## Admin classes
+
+### ReadOnlyAdmin
 
 If you want to make a model in the django Admin 100% read-only, you can derive your admin class from ``ReadOnlyAdmin``.
 This will ensure that nobody can modify or delete the records of this class in any way.
 
 Either you can register it like this:
+
 ````
 admin.site.register(MyModel, ReadOnlyAdmin)
 ````
 
 Or like this, if you want to customise it further:
+
 ````
 @admin.register(MyModel)
 class MyModelAdmin(ReadOnlyAdmin):
     ...
 ````
 
-## EditableOnlyAdmin
+### EditableOnlyAdmin
 
-If you want to make a model in the django Admin editable, but not create- or deletable, you can simply derive your
-admin class from ``EditableOnlyAdmin``. This will ensure that nobody can modify or delete the records of this class
-in any way.
+If you want to make a model in the django Admin editable, but not create- or deletable, you can simply derive your admin
+class from ``EditableOnlyAdmin``. This will ensure that nobody can modify or delete the records of this class in any
+way.
 
 Either you can register it like this:
+
 ````
 admin.site.register(MyModel, EditableOnlyAdmin)
 ````
 
 Or like this, if you want to customise it further:
+
 ````
 @admin.register(MyModel)
 class MyModelAdmin(EditableOnlyAdmin):
     ...
 ````
 
-## ReadOnlyTabularInline
+## Inlines
 
-If you want to make a model ``MyModel`` 100% read-only, but the model is embedded in its parent, `MyParentModel`,
-you can derive from the ``ReadOnlyTabularInline``. This will ensure that all instances of ``MyModel`` will not be
-editable in any way.
+### ReadOnlyTabularInline
+
+If you want to make a model ``MyModel`` 100% read-only, but the model is embedded in its parent, `MyParentModel`, you
+can derive from the ``ReadOnlyTabularInline``. This will ensure that all instances of ``MyModel`` will not be editable
+in any way.
 
 ````
 from django.contrib import admin
@@ -52,4 +65,105 @@ class MyModelInline(ReadonlyTabularInline):
 class MyParentModelAdmin(admin.ModelAdmin):
     inlines = [MyModelInline]
     ...
+````
+
+## Mixins
+
+### AdminCreateFormMixin
+
+With this mixin you can easily use two different forms for creating and editing an object. The logic is borrowed from
+`django.contrib.auth.admin.UserAdmin`, so it's proven django best practice.
+
+Similar to the user creation where you want to set an email and a password at first and later take care about the other
+variables, you can now use this pattern for every admin:
+
+````
+from django.contrib import admin
+
+@admin.register(MyModel)
+class MyModelAdmin(AdminCreateFormMixin, admin.ModelAdmin):
+    add_form = MyModelAddForm
+    form = MyModelEditForm
+````
+
+### AdminNoInlinesForCreateMixin
+
+This mixin removes all admin inline panels from a given admin class when being in the "create" case. This especially 
+comes in handy when your inlines have inner dependencies based on the parent model (of the admin class).
+
+````
+from django.contrib import admin
+
+@admin.register(MyModel)
+class MyModelAdmin(AdminNoInlinesForCreateMixin, admin.ModelAdmin):
+    inlines = (MyFancyInline, MyOtherFancyInline)
+````
+
+### AdminRequestInFormMixin
+
+This mixin injects the current request in the form when creating or changing an object of the registered admin class.
+Very useful when some data of the form is user-related.
+
+````
+from django.contrib import admin
+
+@admin.register(MyModel)
+class MyModelAdmin(AdminRequestInFormMixin, admin.ModelAdmin):
+    ...
+````
+
+### FetchParentObjectInlineMixin
+
+This mixin injects the parent object of the given inline panel in the formset. Stating the obvious, the parent object is
+the object currently being edited in the parent admin class of the given inline class.
+
+This is helpful, if you want to use the parent object for some kind of filtering or validation.
+
+If you need the parent object for a different use-case, have a look at the example below. Here, the new attribute is used
+to determine if it is possible to add any new objects of the parent models class. If you want to fetch the parent
+object, just call the handy method `get_parent_object_from_request(request)`:
+
+````
+class MyChildModelInline(FetchParentObjectInlineMixin, admin.TabularInline):
+    model = MyChildModel
+    ...
+
+    def has_add_permission(self, request, obj):
+        # Adding is only allowed if the parent object is applicable (all required fields set)
+        parent_object = self.get_parent_object_from_request(request)
+        if parent_object:
+            return MyParentModel.objects.filter(id=parent_object.id).exists()
+        return False
+````
+
+### FetchObjectMixin
+
+If you need the current object, you can derive from this mixin and use the method `get_object_from_request(request)`.
+
+````
+from django.contrib import admin
+
+@admin.register(MyModel)
+class MyModelAdmin(FetchObjectMixin, admin.ModelAdmin):
+    ...
+
+    def my_custom_method(self, request):
+        current_obj = self.get_object_from_request(request)
+        ...
+````
+
+### CommonInfoAdminMixin
+
+If you are deriving your models from our `CommonInfo` class to have creator, last editor and timestamps provided, you
+can register your model admin with this mixin.
+
+It automatically sets the four fields (`created_by`, `created_at`, `lastmodified_by`, `lastmodified_at`) to read-only
+and ensures that on saving the current object, the creator and/or the last editor are stored correctly.
+
+````
+from django.contrib import admin
+
+@admin.register(MyCommonInfoBasedModel)
+class MyCommonInfoBasedModelAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
+    pass
 ````
