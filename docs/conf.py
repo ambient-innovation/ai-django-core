@@ -27,7 +27,8 @@ settings.configure(
         'django.contrib.staticfiles',
         'ai_django_core',
     ],
-    EMAIL_BACKEND_REDIRECT_ADDRESS=''
+    EMAIL_BACKEND_REDIRECT_ADDRESS='',
+    SECRET_KEY='ASDFjklö123456890',
 )
 django.setup()
 
@@ -36,7 +37,7 @@ from ai_django_core import __version__  # noqa: E402
 # -- Project information -----------------------------------------------------
 
 project = 'ai-django-core'
-copyright = '2020, Ambient Innovation: GmbH'
+copyright = '2021, Ambient Innovation: GmbH'
 author = 'Ambient Innovation: GmbH <hello@ambient-innovation.com>'
 version = __version__
 release = __version__
