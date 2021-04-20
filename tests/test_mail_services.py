@@ -1,3 +1,6 @@
+from os.path import basename
+
+from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.test import TestCase, override_settings
 from freezegun import freeze_time
@@ -7,7 +10,6 @@ from ai_django_core.mail.services.base import BaseEmailService, BaseEmailService
 
 
 class BaseEmailServiceFactoryTest(TestCase):
-
     class TestMailService(BaseEmailService):
         subject = 'My subject'
         template_name = 'test_email.html'
@@ -193,6 +195,15 @@ class BaseEmailServiceTest(TestCase):
         service = BaseEmailService()
         self.assertEqual(service.get_translation(), None)
 
+    def test_get_attachments_regular(self):
+        file_path = 'usr/albertus/myfile.csv'
+        service = BaseEmailService(attachment_list=[file_path])
+        self.assertEqual(service.get_attachments(), [file_path])
+
+    def test_get_attachments_empty(self):
+        service = BaseEmailService()
+        self.assertEqual(service.get_attachments(), [])
+
     @freeze_time('2020-06-26')
     def test_build_mail_object_regular(self):
         from_email = 'noreply@example.com'
@@ -221,6 +232,27 @@ class BaseEmailServiceTest(TestCase):
 
         self.assertIn('Friday', msg_obj.alternatives[0][0])
         self.assertIn(my_var, msg_obj.alternatives[0][0])
+
+    def test_build_mail_object_with_attachments(self):
+        from_email = 'noreply@example.com'
+        reply_to_email = 'willreply@example.com'
+        email = 'albertus.magnus@example.com'
+        subject = 'Test email'
+        my_var = 'Lorem ipsum dolor!'
+        file_path = settings.BASE_PATH / 'tests/files/testfile.txt'
+        service = BaseEmailService(recipient_email_list=[email], context_data={'my_var': my_var},
+                                   attachment_list=[file_path])
+        service.FROM_EMAIL = from_email
+        service.REPLY_TO_ADDRESS = reply_to_email
+        service.subject = subject
+        service.template_name = 'test_email.html'
+        msg_obj = service._build_mail_object()
+
+        # Assertions
+        self.assertIsInstance(msg_obj, EmailMultiAlternatives)
+
+        self.assertEqual(len(msg_obj.attachments), 1)
+        self.assertEqual(msg_obj.attachments[0][0], basename(file_path))
 
     def test_setting_txt_templates_works(self):
         my_var = 'Lorem ipsum dolor!'

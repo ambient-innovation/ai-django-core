@@ -47,6 +47,27 @@ class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
     # do your stuff here!
 ````
 
+## Fields
+
+### RecursiveField
+
+In some cases you'll have to define a foreign key from and to the same model. One popular use-case is a simple tree
+structure. If you want to use the same serializer for the parent and all children, you can utilise our `RecursiveField`:
+
+````
+class MyModelSerializer(serializers.ModelSerializer):
+    ...
+    children = RecursiveField(many=True)
+
+    class Meta:
+        model = MyModel
+        fields = [
+            'id',
+            ...
+            'children',
+        ]
+````
+
 ## Testing of ViewSets
 
 If you want to test `ViewSets` you can use the handy mixin `BaseViewSetTestMixin` from this package. It encapsulates

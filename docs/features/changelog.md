@@ -1,5 +1,16 @@
 # Changelog
 
+* **5.1.0** (2021-04-20)
+    * *Breaking change:* Fixed typo in `WhitelistEmailBackend.whitify_mail_adresses` method name. Method is now
+      called `whitify_mail_addresses`
+    * Moved assignment of `WhitelistEmailBackend` settings var to static methods to be able to overwrite them if needed
+    * Added documentation about `WhitelistEmailBackend`
+    * Added some type hinting to `WhitelistEmailBackend`
+    * Added formset mixin `CountChildrenFormsetMixin`
+    * Added djangorestframework field `RecursiveField`
+    * Added `get_attachments()` method to `BaseEmailService` and extended constructor to accept a
+      variable `attachment_list`
+
 * **5.0.0** (2021-03-26)
     * *Breaking change:* Moved `ReadOnlyAdmin` and `EditableOnlyAdmin` to package `model_admins.classes`
       and `ReadOnlyTabularInline` to package `model_admins.inlines` to enable better structuring of new admin components

@@ -1,3 +1,7 @@
+from pathlib import Path
+
+BASE_PATH = Path(__file__).resolve(strict=True).parent
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,3 +54,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+# Mail backend
+EMAIL_BACKEND_DOMAIN_WHITELIST = ''
+EMAIL_BACKEND_REDIRECT_ADDRESS = ''

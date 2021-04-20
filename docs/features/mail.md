@@ -4,7 +4,21 @@
 
 ### WhitelistEmailBackend
 
-Documentation will follow soon. (// todo tbr)
+In some cases it is useful to debug and test email functionality on local or test environments. Additionally, your
+project could contain logic, that triggers email in the background, so it is very important, that you don't send
+emails to other domains, e.g. 'xyz@test.de' or to other test users with another domain, by accident.
+
+This email backend can be used as Django EMAIL_BACKEND to restrict outgoing emails to a set of allowed domains. You can
+define an email address (must be a catchall inbox), where the restricted emails should be redirected to.
+
+Example:
+
+    EMAIL_BACKEND = 'ai_django_core.mail.backends.whitelist_smtp.WhitelistEmailBackend'
+    EMAIL_BACKEND_DOMAIN_WHITELIST = ['ambient-innovation.com']
+    EMAIL_BACKEND_REDIRECT_ADDRESS = '%s@testuser.ambient-innovation.com'
+
+If EMAIL_BACKEND_REDIRECT_ADDRESS is configured, an email to 'albertus.magnus@example.com' will be redirected to:
+albertus.magnus_example.com@testuser.ambient-innovation.com
 
 ## Services
 
@@ -20,9 +34,9 @@ USPs:
 
 There are two scenarios covered by this package:
 
-* **Single mail**: Create a single mail through a class to utilise benefits of object-orientation.
-* **Similar mails**: Create a bunch of similar mails with a factory class, for example if you want to send the same content
-  but with a personal salutation to a number of people.
+* **Single mail**: Create a single email through a class to utilise benefits of object-orientation.
+* **Similar mails**: Create a bunch of similar emails with a factory class, for example if you want to send the same
+  content but with a personal salutation to a number of people.
 
 ### Create a single email
 
@@ -45,8 +59,8 @@ class MyFancyClassBasedMail(BaseEmailService):
         return data
 ````
 
-This is a simple example of how to create an email. We pass or set the recipients in the `__init__()` method and can
-add more data in the `get_context_data()` - or just provide the context on creation as a parameter.
+This is a simple example of how to create an email. We pass or set the recipients in the `__init__()` method and can add
+more data in the `get_context_data()` - or just provide the context on creation as a parameter.
 
 One big advantage is that you can create your own base class which handles all the context data you need to have for
 your base email template. Imagine you have an unsubscribe link or a logo in the base template. In the "old world"
@@ -61,8 +75,8 @@ email_service = MyFancyClassBasedMail(settings.MY_ADMIN_EMAIL_ADDRESS)
 email_service.process()
 ````
 
-Optionally you can set the class attribute ``template_txt_name`` to define a plain text template. If not set,
-the HTML part will be used to render the plain text body.
+Optionally you can set the class attribute ``template_txt_name`` to define a plain text template. If not set, the HTML
+part will be used to render the plain text body.
 
 #### Configuration
 
@@ -114,11 +128,14 @@ If you do not set it, the ``DEFAULT_FROM_EMAIL`` variable from the django settin
   `None`, translation will be deactivated. Translations are needed for localised values like getting the current month
   from a date (in the correct language).
 
+* ``get_attachments()``
+   This method returns a list of paths to a locally-stored file. Can automatically be filled by passing the kwarg
+  `attachment_list` in the constructor. Each file of the given list will be attached to the newly created email.
 
 * ``has_errors()``
   If ``is_valid()`` is called with the keyword argument `raise_exception=False`, the configuration errors are not raised
-  but stored internally. This method checks if any errors occurred. If you need the explicit errors, you can fetch
-  them via the ``errors`` property.
+  but stored internally. This method checks if any errors occurred. If you need the explicit errors, you can fetch them
+  via the ``errors`` property.
 
 
 * ``process()``
@@ -175,12 +192,12 @@ factory and fetch the given action (this might be a project, a report, a record.
 
 The ``get_recipient_list()`` method fetches the recipients based on the action we are looking at right now.
 
-Because we might get mixed results (mostly, not but just to show what is possible), we overwrite the method
-``get_email_from_recipient()`` to be able to handle simple email addresses as a string or user objects. If you pass
-only strings, overwriting this method can be omitted.
+Because we might get mixed results (mostly not, but just to show what is possible), we overwrite the method
+``get_email_from_recipient()`` to be able to handle simple email addresses as a string or user objects. If you pass only
+strings, overwriting this method can be omitted.
 
-We add a sanity check in the ``is_valid()`` method to be sure that nobody tries to create emails like this without
-an action being set.
+We add a sanity check in the ``is_valid()`` method to be sure that nobody tries to create emails like this without an
+action being set.
 
 Finally, we add the action to the context data ``get_context_data()`` so the `MyFancyMail()` class can use it.
 
@@ -192,4 +209,5 @@ required data.
 
 // todo tbr
 
-Link to blog for now: https://medium.com/ambient-innovation/thorough-and-reliable-unit-testing-of-emails-in-django-5f34901b1b16
+Link to blog for
+now: https://medium.com/ambient-innovation/thorough-and-reliable-unit-testing-of-emails-in-django-5f34901b1b16
