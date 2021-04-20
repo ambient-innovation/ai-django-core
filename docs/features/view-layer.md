@@ -19,6 +19,29 @@ If you are using ``pipenv``, you can add the following line to your `Pipfile`:
 
 // todo tbr
 
+## Formsets
+
+### CountChildrenFormsetMixin
+
+This mixin provides a method which returns the current number of children of this formset. It automatically takes care
+of deleted or to-be-deleted children. Have a look at the example use-case below:
+
+````
+class DataFieldFormset(CountChildrenFormsetMixin, BaseInlineFormSet):
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        # Count children
+        number_of_children = self.get_number_of_children()
+
+        # do some magic
+
+        return cleaned_data
+````
+
+Note that the form needs to be validated before you can use this method.
+
 ## Formset Views
 
 // todo tbr

@@ -113,8 +113,13 @@ class BaseEmailService:
     recipient_email_list = []
     cc_email_list = []
     bcc_email_list = []
+    attachment_list = []
 
-    def __init__(self, recipient_email_list: Union[list, str] = None, context_data: dict = None) -> None:
+    def __init__(self,
+                 recipient_email_list: Union[list, str] = None,
+                 context_data: dict = None,
+                 attachment_list: list = None,
+                 **kwargs) -> None:
         """
         Initialisation takes a single or list of email addresses and some context data. This context data
         might be provided from the factory to avoid querying data more than necessary.
@@ -130,6 +135,7 @@ class BaseEmailService:
 
         self.recipient_email_list = recipient_email_list if recipient_email_list else []
         self.context_data = context_data if context_data else {}
+        self.attachment_list = attachment_list if attachment_list else []
 
     def get_context_data(self) -> dict:
         """
@@ -180,6 +186,12 @@ class BaseEmailService:
         except TypeError:
             return None
 
+    def get_attachments(self) -> list:
+        """
+        Method to be overwritten. Returns a list of file-paths which will be attached to the newly created email.
+        """
+        return self.attachment_list
+
     def _build_mail_object(self) -> EmailMultiAlternatives:
         """
         This method creates a mail object. It collects the required variables, sets the subject and makes sure that
@@ -209,6 +221,10 @@ class BaseEmailService:
                                      reply_to=self.get_reply_to_emails(),
                                      to=self.recipient_email_list)
         msg.attach_alternative(html_content, "text/html")
+
+        # Attach attachments (if available)
+        for attachment in self.get_attachments():
+            msg.attach_file(attachment)
 
         # Return mail object
         return msg

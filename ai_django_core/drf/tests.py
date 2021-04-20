@@ -9,6 +9,7 @@ class BaseViewSetTestMixin:
     """
     Base test mixin to lower the pain of testing API calls. Focuses on ViewSets.
     """
+    # todo documentation
     default_api_user = None
     view_class = None
 

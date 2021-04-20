@@ -14,7 +14,8 @@ class MySingleSignalModel(models.Model):
 
 
 class ForeignKeyRelatedModel(models.Model):
-    single_signal = models.ForeignKey(MySingleSignalModel, on_delete=models.CASCADE)
+    single_signal = models.ForeignKey(MySingleSignalModel, on_delete=models.CASCADE,
+                                      related_name='foreign_key_related_models')
 
     objects = GloballyVisibleQuerySet.as_manager()
 
@@ -43,3 +44,11 @@ def send_email(sender, instance, **kwargs):
 
 class CommonInfoBasedModel(CommonInfo):
     value = models.PositiveIntegerField(default=0)
+
+
+class ModelWithFkToSelf(models.Model):
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
+
+
+class ModelWithOneToOneToSelf(models.Model):
+    peer = models.OneToOneField('self', blank=True, null=True, related_name='related_peer', on_delete=models.CASCADE)
