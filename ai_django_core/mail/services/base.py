@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 
-from ..errors import EmailServiceConfigError
+from ..errors import EmailServiceConfigError, EmailServiceAttachmentError
 
 
 class BaseEmailServiceFactory:
@@ -192,6 +192,22 @@ class BaseEmailService:
         """
         return self.attachment_list
 
+    def _add_attachments(self, msg: EmailMultiAlternatives):
+        """
+        Method to encapsulate logic of adding attachments to an email object.
+        """
+        for attachment in self.get_attachments():
+            if isinstance(attachment, dict):
+                try:
+                    msg.attach(attachment['filename'], attachment['file'], attachment.get('mimetype', None))
+                except KeyError as e:
+                    raise EmailServiceAttachmentError(_('Missing or mislabeled data provided for email attachment.')) \
+                        from e
+            else:
+                msg.attach_file(attachment)
+
+        return msg
+
     def _build_mail_object(self) -> EmailMultiAlternatives:
         """
         This method creates a mail object. It collects the required variables, sets the subject and makes sure that
@@ -222,9 +238,8 @@ class BaseEmailService:
                                      to=self.recipient_email_list)
         msg.attach_alternative(html_content, "text/html")
 
-        # Attach attachments (if available)
-        for attachment in self.get_attachments():
-            msg.attach_file(attachment)
+        # Add attachments (if available)
+        msg = self._add_attachments(msg)
 
         # Return mail object
         return msg
