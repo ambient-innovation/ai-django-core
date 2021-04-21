@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.1.1** (2021-04-21)
+    * Extended email attachment functionality to be able to define filename and mimetype
+
 * **5.1.0** (2021-04-20)
     * *Breaking change:* Fixed typo in `WhitelistEmailBackend.whitify_mail_adresses` method name. Method is now
       called `whitify_mail_addresses`

@@ -5,8 +5,8 @@
 ### WhitelistEmailBackend
 
 In some cases it is useful to debug and test email functionality on local or test environments. Additionally, your
-project could contain logic, that triggers email in the background, so it is very important, that you don't send
-emails to other domains, e.g. 'xyz@test.de' or to other test users with another domain, by accident.
+project could contain logic, that triggers emails in the background, so it is very important, that you don't send emails
+to other domains, e.g. 'xyz@test.de' or to other test users with another domain, by accident.
 
 This email backend can be used as Django EMAIL_BACKEND to restrict outgoing emails to a set of allowed domains. You can
 define an email address (must be a catchall inbox), where the restricted emails should be redirected to.
@@ -31,6 +31,7 @@ USPs:
 * No code redundancy for setting up the default mail configuration - all wrapped in the class!
 * The text part of the email can be automatically rendered from the HTML part - no redundant templates anymore!
 * Built-in (and extendable) sanity checks as a validation for forgotten variables!
+* Clean and easy solution for email attachments
 
 There are two scenarios covered by this package:
 
@@ -129,7 +130,7 @@ If you do not set it, the ``DEFAULT_FROM_EMAIL`` variable from the django settin
   from a date (in the correct language).
 
 * ``get_attachments()``
-   This method returns a list of paths to a locally-stored file. Can automatically be filled by passing the kwarg
+  This method returns a list of paths to a locally-stored file. Can automatically be filled by passing the kwarg
   `attachment_list` in the constructor. Each file of the given list will be attached to the newly created email.
 
 * ``has_errors()``
@@ -204,6 +205,31 @@ Finally, we add the action to the context data ``get_context_data()`` so the `My
 Now for every recipient an instance of ``MyFancyMail()`` will be created. Now it is no problem, handling the salutation
 or any other recipient-specific content within the "real" mail class. Only make sure that the factory provides all the
 required data.
+
+### Attachments
+
+If you want to attach a number of files to your emails, you can do this in two ways.
+
+The simple way is passing an absolute file path to the constructor of the service:
+
+````
+email_service = MyMailService(
+  ...
+  attachment_list=[my_file_1, my_file_2]
+)
+````
+
+If you want to customise the filename or even pass a mimetype, you can do as follows:
+
+````
+email_service = MyMailService(
+  ...
+  attachment_list=[{'filename': 'my_fancy_file.json', 'file': file_content, 'mimetype': 'application/json'}]
+)
+````
+
+Please note that here the file content, not the file path, needs to be passed to the attachment list. If anything goes
+sideways, the service will throw an `EmailServiceAttachmentError` exception.
 
 ### Testing emails
 

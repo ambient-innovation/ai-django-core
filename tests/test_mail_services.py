@@ -5,7 +5,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.test import TestCase, override_settings
 from freezegun import freeze_time
 
-from ai_django_core.mail.errors import EmailServiceConfigError
+from ai_django_core.mail.errors import EmailServiceConfigError, EmailServiceAttachmentError
 from ai_django_core.mail.services.base import BaseEmailService, BaseEmailServiceFactory
 
 
@@ -203,6 +203,45 @@ class BaseEmailServiceTest(TestCase):
     def test_get_attachments_empty(self):
         service = BaseEmailService()
         self.assertEqual(service.get_attachments(), [])
+
+    def test_add_attachments_path_as_str(self):
+        # Setup
+        service = BaseEmailService()
+        service.template_name = 'test_email.html'
+        msg_obj = service._build_mail_object()
+
+        file_path = settings.BASE_PATH / 'tests/files/testfile.txt'
+        service.attachment_list = [file_path]
+        msg_obj = service._add_attachments(msg_obj)
+
+        self.assertEqual(len(msg_obj.attachments), 1)
+        self.assertEqual(msg_obj.attachments[0][0], basename(file_path))
+
+    def test_add_attachments_path_as_dict(self):
+        # Setup
+        service = BaseEmailService()
+        service.template_name = 'test_email.html'
+        msg_obj = service._build_mail_object()
+
+        filename = 'awesome_file.txt'
+        file_path = settings.BASE_PATH / 'tests/files/testfile.txt'
+        service.attachment_list = [{'filename': filename, 'file': file_path, 'mimetype': 'text/text'}]
+        msg_obj = service._add_attachments(msg_obj)
+
+        self.assertEqual(len(msg_obj.attachments), 1)
+        self.assertEqual(msg_obj.attachments[0][0], filename)
+
+    def test_add_attachments_path_wrong_dict_data(self):
+        # Setup
+        service = BaseEmailService()
+        service.template_name = 'test_email.html'
+        msg_obj = service._build_mail_object()
+
+        filename = 'awesome_file.txt'
+        service.attachment_list = [{'filename': filename}]
+
+        with self.assertRaises(EmailServiceAttachmentError):
+            service._add_attachments(msg_obj)
 
     @freeze_time('2020-06-26')
     def test_build_mail_object_regular(self):
