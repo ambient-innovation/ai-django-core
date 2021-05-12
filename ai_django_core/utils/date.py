@@ -68,7 +68,7 @@ def get_formatted_date_str(source_date: Union[datetime.date, datetime.datetime])
 
 def get_time_from_seconds(seconds: int) -> str:
     if seconds < 0:
-        raise ValueError(_('Seconds have to be a positive value.'))
+        raise ValueError(_('Seconds must be positive.'))
     hours = seconds // 3600
     minutes = (seconds - (hours * 3600)) // 60
     seconds = seconds - ((hours * 3600) + (minutes * 60))

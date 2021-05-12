@@ -58,6 +58,18 @@ This package contains various useful helper functions. You can read up on all th
 - To build the documentation run: `sphinx-build docs/ docs/_build/html/` or go into the **docs** folder and run: `make html`.
   Open `docs/_build/html/index.html` to see the documentation.
 
+## Translation files
+
+How to create translation file:
+* Navigate to `ai_django_core/ai_django_core` (the inner directory!)
+* `django-admin makemessages -l de`
+* Have a look at the new/changed files within `ai_django_core/ai_django_core/locale`
+
+How to compile translation files:
+* Navigate to `ai_django_core/ai_django_core` (the inner directory!)
+* `django-admin compilemessages`
+* Have a look at the new/changed files within `ai_django_core/ai_django_core/locale`
+
 ## Publish to ReadTheDocs.io
 
 - Fetch the latest changes in github mirror and push them

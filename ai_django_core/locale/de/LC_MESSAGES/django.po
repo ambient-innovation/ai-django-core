@@ -1,0 +1,71 @@
+# Translations for ai-django-core package
+# Copyright (C) 2021 Ambient Innovation: GmbH
+# This file is distributed under the same license as the PACKAGE package.
+# Ronny Vedrilla, 2021
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-12 16:45+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\admin\views\forms.py:11
+msgid "No title defined"
+msgstr "Kein Titel gesetzt"
+
+#: .\admin\views\forms.py:12 .\view_layer\form_mixins.py:16
+msgid "Save"
+msgstr "Speichern"
+
+#: .\mail\services\base.py:40
+msgid "Email factory requires a mail service class."
+msgstr "E-Mailfactory benötigt eine Mailservice-Klasse."
+
+#: .\mail\services\base.py:42
+msgid "Email factory requires a target mail address."
+msgstr "E-Mailfactory benötigt eine Ziel-Mailadresse."
+
+#: .\mail\services\base.py:204
+msgid "Missing or mislabeled data provided for email attachment."
+msgstr "Fehlende oder falsch deklarierte Daten für E-Mailanhänge übergeben."
+
+#: .\mail\services\base.py:253
+msgid "Email service requires a subject."
+msgstr "E-Mailservice benötigt einen Betreff."
+
+#: .\mail\services\base.py:255
+msgid "Email service requires a template."
+msgstr "E-Mailservice benötigt ein Template."
+
+#: .\mail\services\base.py:257
+msgid "Email service requires a target mail address."
+msgstr "E-Mailservice benötigt eine Ziel-Mailadresse."
+
+#: .\models.py:10
+msgid "Created at"
+msgstr "Erstellt am"
+
+#: .\models.py:23
+msgid "Created by"
+msgstr "Erstellt von"
+
+#: .\models.py:25
+msgid "Last modified at"
+msgstr "Zuletzt geändert am"
+
+#: .\models.py:26
+msgid "Last modified by"
+msgstr "Zuletzt geändert von"
+
+#: .\utils\date.py:71
+msgid "Seconds must be positive."
+msgstr "Sekunden müssen eine positive Zahl sein."

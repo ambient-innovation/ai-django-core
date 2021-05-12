@@ -1,3 +1,5 @@
+from typing import Union
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.messages.middleware import MessageMiddleware
@@ -67,7 +69,7 @@ class RequestProviderMixin:
     """
 
     @staticmethod
-    def get_request(user: AbstractBaseUser = None):
+    def get_request(user: Union[AbstractBaseUser, AnonymousUser, None] = None):
         """
         Creates and returns a django request.
         """

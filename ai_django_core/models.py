@@ -7,7 +7,7 @@ from ai_django_core.middleware.current_user import CurrentUserMiddleware
 
 
 class CreatedAtInfo(models.Model):
-    created_at = models.DateTimeField(_("Erstellt am"), default=now, db_index=True)
+    created_at = models.DateTimeField(_("Created at"), default=now, db_index=True)
 
     def save(self, *args, **kwargs):
         # just a fallback for old data
@@ -20,10 +20,10 @@ class CreatedAtInfo(models.Model):
 
 
 class CommonInfo(CreatedAtInfo, models.Model):
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Erstellt von"), blank=True, null=True,
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Created by"), blank=True, null=True,
                                    related_name="%(app_label)s_%(class)s_created", on_delete=models.SET_NULL)
-    lastmodified_at = models.DateTimeField(_("Zuletzt geändert am"), default=now, db_index=True)
-    lastmodified_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Zuletzt geändert von"), blank=True,
+    lastmodified_at = models.DateTimeField(_("Last modified at"), default=now, db_index=True)
+    lastmodified_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Last modified by"), blank=True,
                                         null=True, related_name="%(app_label)s_%(class)s_lastmodified",
                                         on_delete=models.SET_NULL)
 

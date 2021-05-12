@@ -13,7 +13,7 @@ class CrispyLayoutFormMixin:
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal form-bordered form-row-stripped'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit_button', _('Speichern')))
+        self.helper.add_input(Submit('submit_button', _('Save')))
         self.helper.form_tag = True
         self.helper.label_class = 'col-md-3'
         self.helper.field_class = 'col-md-9'
