@@ -118,7 +118,7 @@ Here is an example:
 
 ````
 
-class EchtSmartWorkScrubbingService(AbstractScrubbingService):
+class MyScrubbingService(AbstractScrubbingService):
     post_scrub_functions = [
         'scrub_users',
         ...
