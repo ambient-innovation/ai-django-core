@@ -1,5 +1,9 @@
 # Changelog
 
+* **5.2.1** (2021-05-12)
+   * Translation files were missing in wheel
+   * Bugfix in docs
+
 * **5.2.0** (2021-05-11)
     * Changed all translatable texts to English base version
     * Added German translation file for current translatable
