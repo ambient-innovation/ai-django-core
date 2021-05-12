@@ -1,5 +1,10 @@
 # Changelog
 
+* **5.2.0** (2021-05-11)
+    * Changed all translatable texts to English base version
+    * Added German translation file for current translatable
+    * Updated RequestProviderMixin.get_request() type hinting
+
 * **5.1.1** (2021-04-21)
     * Extended email attachment functionality to be able to define filename and mimetype
 

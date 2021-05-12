@@ -8,8 +8,8 @@ class AdminCrispyForm(forms.Form):
     """
     Base crispy form to be used in custom views within the django admin.
     """
-    section_title = _('Kein Titel gesetzt')
-    button_label = _('Speichern')
+    section_title = _('No title defined')
+    button_label = _('Save')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
