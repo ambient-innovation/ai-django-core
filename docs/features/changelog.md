@@ -4,6 +4,7 @@
     * Changed all translatable texts to English base version
     * Added German translation file for current translatable
     * Updated RequestProviderMixin.get_request() type hinting
+    * Added documentation for database anonymisation / django-scrubber wrapper
 
 * **5.1.1** (2021-04-21)
     * Extended email attachment functionality to be able to define filename and mimetype
