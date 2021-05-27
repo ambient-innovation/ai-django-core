@@ -29,6 +29,7 @@ setup(
     project_urls={
         'Documentation': 'https://ai-django-core.readthedocs.io/en/latest/index.html',
         'Maintained by': 'https://ambient-innovation.com/',
+        'Bugtracker': 'https://github.com/ambient-innovation/ai-django-core/issues',
     },
     include_package_data=True,
     license="The MIT License (MIT)",

@@ -226,8 +226,13 @@ class BaseEmailService:
         html_content = render_to_string(self.template_name, mail_attributes)
 
         # Render TXT body part if a template is explicitly set, otherwise convert HTML template to plain text
-        text_content = html2text.html2text(html_content) if not self.template_txt_name else \
-            render_to_string(self.template_txt_name, mail_attributes)
+        if not self.template_txt_name:
+            h = html2text.HTML2Text()
+            # Set body width to infinite to avoid weird line breaks
+            h.body_width = 0
+            text_content = h.handle(html_content)
+        else:
+            text_content = render_to_string(self.template_txt_name, mail_attributes)
 
         # Build mail object
         msg = EmailMultiAlternatives(self.get_subject(), text_content,
