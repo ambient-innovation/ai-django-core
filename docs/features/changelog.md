@@ -1,11 +1,15 @@
 # Changelog
+
+* **5.3.0** (2021-06-16)
+    * Added `method` kwarg to `RequestProviderMixin.get_request()`
+
 * **5.2.2** (2021-05-27)
-   * Fixed a bug in `BaseEmailService` where txt part was rendered sometimes with weird line breaks
-   * Added Bugtracker link to setup.py
+    * Fixed a bug in `BaseEmailService` where txt part was rendered sometimes with weird line breaks
+    * Added Bugtracker link to setup.py
 
 * **5.2.1** (2021-05-12)
-   * Translation files were missing in wheel
-   * Bugfix in docs
+    * Translation files were missing in wheel
+    * Bugfix in docs
 
 * **5.2.0** (2021-05-11)
     * Changed all translatable texts to English base version

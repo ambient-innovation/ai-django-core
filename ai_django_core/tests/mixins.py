@@ -69,7 +69,7 @@ class RequestProviderMixin:
     """
 
     @staticmethod
-    def get_request(user: Union[AbstractBaseUser, AnonymousUser, None] = None):
+    def get_request(user: Union[AbstractBaseUser, AnonymousUser, None] = None, method: str = 'GET'):
         """
         Creates and returns a django request.
         """
@@ -87,5 +87,8 @@ class RequestProviderMixin:
         message_middleware = MessageMiddleware()
         message_middleware.process_request(request)
         request.session.save()
+
+        # Set request method
+        request.method = method
 
         return request
