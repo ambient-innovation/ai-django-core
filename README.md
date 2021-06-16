@@ -88,7 +88,7 @@ How to compile translation files:
 - Run:
 
     * Make sure you have all the required packages installed
-    `pip install twine wheel`
+    `pip install -U twine wheel`
     * Create a file in your home directory: `~/.pypirc`
     ```
     [distutils]
