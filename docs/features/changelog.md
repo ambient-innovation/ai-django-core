@@ -1,5 +1,10 @@
 # Changelog
 
+* **5.4.0** (2021-06-28)
+    * Added `__len__` and `__iter__` to EmailTestService
+    * EmailTestService uses EmailTestServiceMail instances, which wrap the underlying Django mail objects, and provide
+      additional assertion functions
+
 * **5.3.0** (2021-06-16)
     * Added `method` kwarg to `RequestProviderMixin.get_request()`
 
