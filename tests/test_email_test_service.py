@@ -2,7 +2,7 @@ from django.core import mail
 from django.core.mail import EmailMultiAlternatives
 from django.test import TestCase
 
-from ai_django_core.mail.services.tests import EmailTestService, EmailTestServiceQuerySet
+from ai_django_core.mail.services.tests import EmailTestService, EmailTestServiceQuerySet, EmailTestServiceMail
 
 
 class EmailTestServiceTest(TestCase):
@@ -203,3 +203,23 @@ class EmailTestServiceTest(TestCase):
         mail.outbox.append(email)
 
         self.ets.filter(subject=subject).assert_body_contains(self.content_part)
+
+    def test_can_get_mail_via_item(self):
+        mail_qs = self.ets.all()
+        self.assertIsInstance(mail_qs[0], EmailTestServiceMail)
+
+    def test_can_get_first_email_via_brackets_operator(self):
+        mail_qs = self.ets.all()
+        self.assertEqual(mail_qs[0], mail_qs.first())
+
+    def test_can_get_last_email_via_brackets_operator(self):
+        mail_qs = self.ets.all()
+        self.assertEqual(mail_qs[-1], mail_qs.last())
+
+    def test_can_use_len_operator(self):
+        mail_qs = self.ets.all()
+        self.assertEqual(len(mail_qs), 2)
+
+    def test_assert_to_contains(self):
+        email = self.ets.all()[0]
+        email.assert_to_contains(self.to)

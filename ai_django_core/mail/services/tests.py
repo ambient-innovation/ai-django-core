@@ -1,5 +1,8 @@
+from typing import List
+
 from django.core import mail
 from django.test import TestCase
+import warnings
 
 
 class EmailTestService:
@@ -76,12 +79,101 @@ class EmailTestService:
         return EmailTestServiceQuerySet(matching_list=match_list)
 
 
+class EmailTestServiceMail(mail.EmailMultiAlternatives):
+    """
+    Wrapper around a Django EmailMultiAlternatives object with some helper functions to write clean assertions.
+    """
+    _testcase = TestCase()  # Hacky way to get access to TestCase.assert* methods without deriving from TestCase
+
+    def _get_html_content(self):
+        """
+        Ensure we just have found one element and then return HTML part of the email
+        :return: str
+        """
+        # Search for string
+        if len(self.alternatives) > 0:
+            return self.alternatives[0][0]
+        return None
+
+    def _get_txt_content(self):
+        """
+        Ensure we just have found one element and then return text part of the email
+        :return: str
+        """
+        # Search for string
+        return self.body
+
+    def assert_subject(self, subject, msg=None):
+        """
+        Searches in a given email inside the HTML AND TXT part for a given string
+        :param subject: str
+        :param msg: str
+        """
+
+        # Assert expected subject is equal to the generated one
+        self._testcase.assertEqual(subject, self.subject, msg=msg)
+
+    def assert_body_contains(self, search_str, msg=None):
+        """
+        Searches in a given email inside the HTML AND TXT part for a given string
+        :param search_str: str
+        :param msg: str
+        """
+
+        # Assert string is contained in TXT part
+        self._testcase.assertIn(search_str, self._get_txt_content(), msg=msg)
+        # Assert string is contained in HTML part (if HTML part is set)
+        html_content = self._get_html_content()
+        if html_content is not None:
+            self._testcase.assertIn(search_str, html_content, msg=msg)
+
+    def assert_body_contains_not(self, search_str, msg=None):
+        """
+        Searches in a given email inside the HTML AND TXT part for a given string
+        :param search_str: str
+        :param msg: str
+        """
+
+        # Assert string is contained in HTML part
+        self._testcase.assertNotIn(search_str, self._get_html_content(), msg=msg)
+        # Assert string is contained in TXT part
+        self._testcase.assertNotIn(search_str, self._get_txt_content(), msg=msg)
+
+    def assert_to_contains(self, *emails: List[str]):
+        for email in emails:
+            self._testcase.assertIn(email, self.to)
+
+
 class EmailTestServiceQuerySet(TestCase):
     _match_list = None
 
     def __init__(self, matching_list=None):
         super().__init__()
         self._match_list = matching_list
+        for email in self._match_list or []:
+            # Change the class of every EmailMutliAlternative instance, so that it points to
+            # our subclass, which has some additional assertion-methods.
+            email.__class__ = EmailTestServiceMail
+
+    def _get_html_content(self):
+        """
+        Ensure we just have found one element and then return HTML part of the email
+        :return: str
+        """
+        self._validate_lookup_cache_contains_one_element()
+        # Search for string
+        if len(self[0].alternatives) > 0:
+            return self[0].alternatives[0][0]
+        return None
+
+    def _get_txt_content(self):
+        """
+        Ensure we just have found one element and then return text part of the email
+        :return: str
+        """
+        # Search for string
+        self._validate_lookup_cache_contains_one_element()
+        return self[0].body
 
     def _validate_lookup_cache_contains_one_element(self):
         """
@@ -97,25 +189,8 @@ class EmailTestServiceQuerySet(TestCase):
         Make sure that we queried at least once before working with the results
         """
         if self._match_list is None:
-            raise RuntimeError('Counting of matches called without previous query. Please call find() or all() first.')
-
-    def _get_html_content(self):
-        """
-        Ensure we just have found one element and then return HTML part of the email
-        :return: str
-        """
-        # Search for string
-        if len(self._match_list[0].alternatives) > 0:
-            return self._match_list[0].alternatives[0][0]
-        return None
-
-    def _get_txt_content(self):
-        """
-        Ensure we just have found one element and then return text part of the email
-        :return: str
-        """
-        # Search for string
-        return self._match_list[0].body
+            raise RuntimeError('Counting of matches called without previous query. '
+                               'Please call filter() or all() first.')
 
     def one(self):
         """
@@ -133,7 +208,7 @@ class EmailTestServiceQuerySet(TestCase):
         self._ensure_matching_list_was_populated()
 
         # Count matches
-        return len(self._match_list)
+        return len(self)
 
     def first(self):
         """
@@ -142,8 +217,7 @@ class EmailTestServiceQuerySet(TestCase):
         """
         # Ensure is was queried before using results
         self._ensure_matching_list_was_populated()
-
-        return self._match_list[0] if self.count() > 0 else False
+        return self[0] if self.count() > 0 else False
 
     def last(self):
         """
@@ -152,8 +226,7 @@ class EmailTestServiceQuerySet(TestCase):
         """
         # Ensure is was queried before using results
         self._ensure_matching_list_was_populated()
-
-        return self._match_list[self.count() - 1] if self.count() > 0 else False
+        return self[-1] if self.count() > 0 else False
 
     def assert_one(self, msg=None):
         """
@@ -178,11 +251,10 @@ class EmailTestServiceQuerySet(TestCase):
         :param subject: str
         :param msg: str
         """
+        warnings.warn('EmailTestServiceQuerySet.assert_subject is deprecated. Use queryset[0].assert_subject instead.')
         # Ensure we just have found one element
         self._validate_lookup_cache_contains_one_element()
-
-        # Assert expected subject is equal to the generated one
-        self.assertEqual(subject, self._match_list[0].subject, msg=msg)
+        self[0].assert_subject(subject, msg)
 
     def assert_body_contains(self, search_str, msg=None):
         """
@@ -190,15 +262,11 @@ class EmailTestServiceQuerySet(TestCase):
         :param search_str: str
         :param msg: str
         """
+        warnings.warn('EmailTestServiceQuerySet.assert_body_contains is deprecated. '
+                      'Use queryset[0].assert_body_contains instead.')
         # Ensure we just have found one element
         self._validate_lookup_cache_contains_one_element()
-
-        # Assert string is contained in TXT part
-        self.assertIn(search_str, self._get_txt_content(), msg=msg)
-        # Assert string is contained in HTML part (if HTML part is set)
-        html_content = self._get_html_content()
-        if html_content is not None:
-            self.assertIn(search_str, html_content, msg=msg)
+        self[0].assert_body_contains(search_str, msg)
 
     def assert_body_contains_not(self, search_str, msg=None):
         """
@@ -206,10 +274,14 @@ class EmailTestServiceQuerySet(TestCase):
         :param search_str: str
         :param msg: str
         """
+        warnings.warn('EmailTestServiceQuerySet.assert_body_contains is deprecated. '
+                      'Use queryset[0].assert_body_contains_not instead.')
         # Ensure we just have found one element
         self._validate_lookup_cache_contains_one_element()
+        self[0].assert_body_contains_not(search_str, msg)
 
-        # Assert string is contained in HTML part
-        self.assertNotIn(search_str, self._get_html_content(), msg=msg)
-        # Assert string is contained in TXT part
-        self.assertNotIn(search_str, self._get_txt_content(), msg=msg)
+    def __getitem__(self, item):
+        return self._match_list.__getitem__(item)
+
+    def __len__(self):
+        return self._match_list.__len__()
