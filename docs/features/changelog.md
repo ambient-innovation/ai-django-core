@@ -1,5 +1,10 @@
 # Changelog
 
+* **5.5.0** (2021-08-02)
+    * Added validation for user object in `RequestProviderMixin`
+    * Added link to changelog in setup.py
+    * Moved minimum django version to 2.2
+
 * **5.4.0** (2021-06-28)
     * Added `__len__` and `__iter__` to EmailTestService
     * EmailTestService uses EmailTestServiceMail instances, which wrap the underlying Django mail objects, and provide
