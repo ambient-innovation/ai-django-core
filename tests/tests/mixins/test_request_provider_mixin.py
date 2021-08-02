@@ -1,10 +1,11 @@
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.sessions.backends.base import SessionBase
 from django.http import HttpRequest
 from django.test import TestCase
 
 from ai_django_core.tests.mixins import RequestProviderMixin
+from testapp.models import MySingleSignalModel
 
 
 class RequestProviderMixinTest(RequestProviderMixin, TestCase):
@@ -36,3 +37,22 @@ class RequestProviderMixinTest(RequestProviderMixin, TestCase):
         request.session.modified = True
 
         self.assertEqual(request.session['my_val'], 27)
+
+    def test_passed_user_is_none(self):
+        request = self.get_request(None)
+        self.assertIsNone(request.user)
+
+    def test_passed_user_is_regular_user(self):
+        user = User.objects.create(username='albertus_magnus')
+        request = self.get_request(user)
+        self.assertEqual(request.user, user)
+
+    def test_passed_user_is_anonymous_user(self):
+        anonymous_user = AnonymousUser()
+        request = self.get_request(anonymous_user)
+        self.assertEqual(request.user, anonymous_user)
+
+    def test_passed_user_is_other_type(self):
+        wrong_object = MySingleSignalModel()
+        with self.assertRaises(ValueError):
+            self.get_request(wrong_object)

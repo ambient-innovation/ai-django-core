@@ -6,6 +6,7 @@ from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import RequestFactory
+from django.utils.translation import gettext_lazy as _
 
 
 class ClassBasedViewTestMixin:
@@ -76,7 +77,12 @@ class RequestProviderMixin:
         # Create test request
         factory = RequestFactory()
         request = factory.get('/')
-        request.user = user
+
+        # Set user object if it is of a valid type
+        if user is None or isinstance(user, AbstractBaseUser) or isinstance(user, AnonymousUser):
+            request.user = user
+        else:
+            raise ValueError(_('Please pass a user object to RequestProviderMixin.'))
 
         # Annotate a request object with a session
         session_middleware = SessionMiddleware()

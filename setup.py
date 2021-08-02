@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 
 # Dependencies
 requirements = [
-    'Django>=2.0.13',
+    'Django>=2.2.24',
     'bleach>=1.4.3',
     'python-dateutil>=2.5.3',
     'html2text>=2020.1.16',
@@ -30,6 +30,7 @@ setup(
         'Documentation': 'https://ai-django-core.readthedocs.io/en/latest/index.html',
         'Maintained by': 'https://ambient-innovation.com/',
         'Bugtracker': 'https://github.com/ambient-innovation/ai-django-core/issues',
+        'Changelog': 'https://ai-django-core.readthedocs.io/en/latest/features/changelog.html',
     },
     include_package_data=True,
     license="The MIT License (MIT)",
