@@ -3,17 +3,19 @@
 [![Documentation Status](https://readthedocs.org/projects/ai-django-core/badge/?version=latest)](https://ai-django-core.readthedocs.io/en/latest/?badge=latest)
 
 # Overview:
+
 This package contains various useful helper functions. You can read up on all the fancy things at
 [readthedocs.io](https://ai-django-core.readthedocs.io/en/latest/index.html).
 
 # Installation:
+
 - Install the package via pip:
 
-    `pip install ai-django-core`
+  `pip install ai-django-core`
 
-   or via pipenv:
+  or via pipenv:
 
-    `pipenv install ai-django-core`
+  `pipenv install ai-django-core`
 
 - Add module to `INSTALLED_APPS`:
 
@@ -23,7 +25,6 @@ This package contains various useful helper functions. You can read up on all th
         'ai_django_core',
     )
      ````
-
 
 # Contribute
 
@@ -38,7 +39,7 @@ This package contains various useful helper functions. You can read up on all th
 - Ensure the code passes the tests
 - Run:
 
-    `python setup.py develop`
+  `python setup.py develop`
 
 - Create a pull request
 
@@ -46,26 +47,30 @@ This package contains various useful helper functions. You can read up on all th
 
 - Check coverage
 
-    `pytest --cov=.`
+  `pytest --cov=.`
 
 - Run tests
 
-    `pytest`
+  `pytest`
 
 ## Update documentation
 
-- To generate new auto-docs for new modules run: `sphinx-apidoc -o ./docs/modules/ ./ai_django_core/` (in the current setup an auto doc for the anti virus module is not supported due to installation and import problems. Since it might be removed in the future, that should be fine for now).
-- To build the documentation run: `sphinx-build docs/ docs/_build/html/` or go into the **docs** folder and run: `make html`.
-  Open `docs/_build/html/index.html` to see the documentation.
+- To generate new auto-docs for new modules run: `sphinx-apidoc -o ./docs/modules/ ./ai_django_core/` (in the current
+  setup an auto doc for the anti virus module is not supported due to installation and import problems. Since it might
+  be removed in the future, that should be fine for now).
+- To build the documentation run: `sphinx-build docs/ docs/_build/html/` or go into the **docs** folder and
+  run: `make html`. Open `docs/_build/html/index.html` to see the documentation.
 
 ## Translation files
 
 How to create translation file:
+
 * Navigate to `ai_django_core/ai_django_core` (the inner directory!)
 * `django-admin makemessages -l de`
 * Have a look at the new/changed files within `ai_django_core/ai_django_core/locale`
 
 How to compile translation files:
+
 * Navigate to `ai_django_core/ai_django_core` (the inner directory!)
 * `django-admin compilemessages`
 * Have a look at the new/changed files within `ai_django_core/ai_django_core/locale`
@@ -88,7 +93,7 @@ How to compile translation files:
 - Run:
 
     * Make sure you have all the required packages installed
-    `pip install -U twine wheel`
+      `pip install -U twine wheel`
     * Create a file in your home directory: `~/.pypirc`
     ```
     [distutils]
@@ -106,9 +111,9 @@ How to compile translation files:
     ```
     * Empty `dist` directory
     * Create distribution
-    `python setup.py sdist bdist_wheel`
+      `python setup.py sdist bdist_wheel`
     * Upload to Test-PyPi
-    `twine upload --repository testpypi dist/*`
+      `twine upload --repository testpypi dist/*`
     * Check at Test-PyPi if it looks nice
     * Upload to real PyPi
-    `twine upload dist/*`
+      `twine upload dist/*`

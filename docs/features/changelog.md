@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.5.1** (2021-08-24)
+    * Added explicit declaration of bleacher field list attribute `BLEACH_FIELD_LIST` in `BleacherMixin`
+
 * **5.5.0** (2021-08-02)
     * Added validation for user object in `RequestProviderMixin`
     * Added link to changelog in setup.py

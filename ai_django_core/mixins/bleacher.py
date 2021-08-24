@@ -29,6 +29,8 @@ class BleacherMixin:
       * img: alt, src
     """
 
+    BLEACH_FIELD_LIST = []
+
     DEFAULT_ALLOWED_ATTRIBUTES = {
         '*': ['class', 'style', 'id'],
         'a': ['href', 'rel'],
