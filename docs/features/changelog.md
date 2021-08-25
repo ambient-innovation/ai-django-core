@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.5.2** (2021-08-24)
+    * Added documentation about `BleacherMixin`
+
 * **5.5.1** (2021-08-24)
     * Added explicit declaration of bleacher field list attribute `BLEACH_FIELD_LIST` in `BleacherMixin`
 
