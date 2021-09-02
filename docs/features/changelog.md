@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.6.0** (2021-09-01)
+    * Extracted embedded form valid logic to separate method with super call in `_FormsetMixin`
+
 * **5.5.2** (2021-08-24)
     * Added documentation about `BleacherMixin`
 

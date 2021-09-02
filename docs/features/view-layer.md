@@ -44,7 +44,52 @@ Note that the form needs to be validated before you can use this method.
 
 ## Formset Views
 
-// todo tbr
+This package provides two mixins supporting class-based views combined with formsets. The `FormsetCreateViewMixin` is
+to be used with a `generic.CreateView`, the `FormsetUpdateViewMixin` together with `generic.UpdateView`.
+
+The idea behind these mixins to make handling formset less pain and provide the comfy feeling you are used from regular
+forms.
+
+Here is an example for a create view:
+
+```
+class MyModelCreateView(FormsetCreateViewMixin, generic.CreateView):
+    model = MyModel
+    template_name = 'my_app/my_model_edit.html'
+    form_class = MyModelEditForm
+    formset_class = inlineformset_factory(MyModel, MyModelChild,
+                                          form=MyModelChildForm,
+                                          formset=MyModelChildFormset)
+
+    def get_formset_kwargs(self):
+        # this is optional!
+        kwargs = super().get_formset_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+```
+
+You just define - similar to the regular form - a `formset_class` as a class attribute. All the required handling like
+validation will happen magically. If you need to pass additional values to your formset, just extend the method
+`get_formset_kwargs()` as you would for djangos `get_form_kwargs()`.
+
+If you want to update a model and its children, here is an example for the edit-case:
+
+```
+class MyModelEditView(FormsetUpdateViewMixin, generic.UpdateView):
+    model = MyModel
+    template_name = 'my_app/my_model_edit.html'
+    form_class = MyModelEditForm
+    formset_class = inlineformset_factory(MyModel, MyModelChild,
+                                          form=MyModelChildForm,
+                                          formset=MyModelChildFormset)
+
+    def get_formset_kwargs(self):
+        # this is optional!
+        kwargs = super().get_formset_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+```
+
 
 ## View mixins
 
