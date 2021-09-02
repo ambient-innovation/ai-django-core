@@ -1,11 +1,16 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 
 
 class _FormsetMixin:
     """
-    Do NOT use directly. Do use FormsetUpdateViewMixin or FormsetCreateViewMixin
-    todo find more suitable name for this mixin and write about what it does
+    Mixin for handling a django form with with a formset. Extends the form handling logic to handle a formset object.
+
+    Attention: Do NOT use directly. Do use FormsetUpdateViewMixin or FormsetCreateViewMixin
     """
+
+    formset_class = None
+    object = None
+
     def get_formset_kwargs(self):
         # may be overridden or extended
         return dict(instance=self.object)
@@ -15,27 +20,36 @@ class _FormsetMixin:
         context['formset'] = self.formset_class(**self.get_formset_kwargs())
         return context
 
+    def form_valid(self, form, formset):
+        # Updates `self.object` internally and returns a redirect response instance
+        response = super().form_valid(form=form)
+
+        # Update formset
+        formset.instance = self.object
+        formset.save()
+
+        if hasattr(self, 'additional_is_valid'):
+            self.additional_is_valid(form, formset)
+
+        # Return response (a redirect)
+        return response
+
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = form_class(**self.get_form_kwargs())
         formset = self.formset_class(request.POST, request.FILES, **self.get_formset_kwargs())
 
+        # Form and formset valid?
         if form.is_valid() and formset.is_valid():
-            self.object = form.save()
-            formset.instance = self.object
-            formset.save()
+            return self.form_valid(form=form, formset=formset)
 
-            if hasattr(self, 'additional_is_valid'):
-                self.additional_is_valid(form, formset)
-
-            return redirect(self.get_success_url())
         # Get all context data
         context = self.get_context_data()
+
         # Update form and formset variables
-        # todo this should go into `get_context_data()`, shouldn't it? Or does this overwrite the other stuff on
-        #  purpose?
         context['form'] = form
         context['formset'] = formset
+
         # Pass all data to template
         return render(request, self.get_template_names(), context)
 
