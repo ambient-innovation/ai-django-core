@@ -1,5 +1,9 @@
 # Changelog
 
+* **5.7.0** (2021-10-15)
+    * Added admin mixin `DeactivatableChangeViewAdminMixin`
+    * Added `response` parameter to testing middlewares
+
 * **5.6.0** (2021-09-01)
     * Extracted embedded form valid logic to separate method with super call in `_FormsetMixin`
     * Added documentation about `FormsetCreateViewMixin` and `FormsetUpdateViewMixin`

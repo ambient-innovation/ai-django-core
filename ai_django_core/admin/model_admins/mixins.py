@@ -1,4 +1,5 @@
-from django.urls import resolve
+from django.http import HttpResponseRedirect
+from django.urls import resolve, reverse
 
 
 class AdminCreateFormMixin:
@@ -90,3 +91,41 @@ class CommonInfoAdminMixin:
             form.instance.lastmodified_by = request.user
 
         return super().save_form(request, form, change)
+
+
+class DeactivatableChangeViewAdminMixin:
+    """
+    Mixin to be used in model admins to disable the detail page / change view.
+    """
+    enable_change_view = True
+
+    def can_see_change_view(self, request) -> bool:
+        """
+        This method determines if the change view is disabled or visible.
+        """
+        return self.enable_change_view
+
+    def get_list_display_links(self, request, list_display):
+        """
+        When we don't want to show the change view, there is no need for having a link to it
+        """
+        if not self.can_see_change_view(request=request):
+            return None
+        return super().get_list_display_links(request, list_display)
+
+    def change_view(self, request, *args, **kwargs):
+        """
+        The 'change' admin view for this model.
+
+        We override this to redirect back to the changelist unless the view is
+        specifically enabled by the "enable_change_view" property.
+        """
+        if self.can_see_change_view(request=request):
+            return super().change_view(request, *args, **kwargs)
+        else:
+            opts = self.model._meta
+            url = reverse('admin:{app}_{model}_changelist'.format(
+                app=opts.app_label,
+                model=opts.model_name,
+            ))
+            return HttpResponseRedirect(url)

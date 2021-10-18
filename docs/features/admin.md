@@ -88,7 +88,7 @@ class MyModelAdmin(AdminCreateFormMixin, admin.ModelAdmin):
 
 ### AdminNoInlinesForCreateMixin
 
-This mixin removes all admin inline panels from a given admin class when being in the "create" case. This especially 
+This mixin removes all admin inline panels from a given admin class when being in the "create" case. This especially
 comes in handy when your inlines have inner dependencies based on the parent model (of the admin class).
 
 ````
@@ -119,8 +119,8 @@ the object currently being edited in the parent admin class of the given inline 
 
 This is helpful, if you want to use the parent object for some kind of filtering or validation.
 
-If you need the parent object for a different use-case, have a look at the example below. Here, the new attribute is used
-to determine if it is possible to add any new objects of the parent models class. If you want to fetch the parent
+If you need the parent object for a different use-case, have a look at the example below. Here, the new attribute is
+used to determine if it is possible to add any new objects of the parent models class. If you want to fetch the parent
 object, just call the handy method `get_parent_object_from_request(request)`:
 
 ````
@@ -167,3 +167,36 @@ from django.contrib import admin
 class MyCommonInfoBasedModelAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     pass
 ````
+
+### DeactivatableChangeViewAdminMixin
+
+Sometimes when working with groups and permissions, it can happen that you want to show a certain user only the list
+view of a model and do not let him/her go to the detail/change view. To avoid unnecessary troubles, this mixin
+encapsulates all the stuff you need to achieve this easily.
+
+There are two ways to handle the locking of the change view.
+
+First you can set the boolean class attribute `enable_change_view` to enable or disable the view permanently.
+
+````
+@admin.register(MyModel)
+class MyModelNoDetailPageAdmin(DeactivatableChangeViewAdminMixin, admin.ModelAdmin):
+    enable_change_view = False
+````
+
+If you need a dynamic way to toggle the detail view, you can overwrite the class method `can_see_change_view()`. The
+following example only allows access to the detail page for superusers:
+
+````
+@admin.register(MyModel)
+class MyModelSuperuserDetailPageAdmin(DeactivatableChangeViewAdminMixin, admin.ModelAdmin):
+
+    def can_see_change_view(self, request) -> bool:
+        """
+        Superusers can access the detail view, others don't.
+        """
+        return request.user.is_superuser
+````
+
+This mixin automatically disables all links and furthermore the route to the change view so you don't have to worry
+about users trying to guess the route.
