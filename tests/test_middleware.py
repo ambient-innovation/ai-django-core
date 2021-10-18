@@ -2,6 +2,7 @@ import threading
 import time
 from unittest.mock import Mock
 
+from django.http import HttpResponse
 from django.test import TestCase
 
 from ai_django_core.middleware.current_user import CurrentUserMiddleware
@@ -45,7 +46,7 @@ class CurrentUserMiddlewareTest(TestCase):
 def set_current_user(user=None, delay_before_request=0, delay_after_request=0, current_users=None):
     request = Mock()
     request.user = user
-    middleware = CurrentUserMiddleware()
+    middleware = CurrentUserMiddleware(get_response=HttpResponse(status=200))
 
     if delay_before_request:
         time.sleep(delay_before_request)

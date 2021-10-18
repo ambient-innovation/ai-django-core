@@ -5,6 +5,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.http import HttpResponse
 from django.test import RequestFactory
 from django.utils.translation import gettext_lazy as _
 
@@ -32,22 +33,22 @@ class ClassBasedViewTestMixin:
         req_kwargs = {}
         if data:
             req_kwargs.update({'data': data})
-        req = getattr(factory, method)('/', **req_kwargs)
+        request = getattr(factory, method)('/', **req_kwargs)
 
         # Annotate a request object with a session
-        middleware = SessionMiddleware()
-        middleware.process_request(req)
-        req.session.save()
+        middleware = SessionMiddleware(get_response=HttpResponse(status=200))
+        middleware.process_request(request)
+        request.session.save()
 
         # Authenticate user
-        self._authentication(req, user)
+        self._authentication(request, user)
 
         # Setup messages
-        messages = FallbackStorage(req)
-        setattr(req, '_messages', messages)
+        messages = FallbackStorage(request)
+        setattr(request, '_messages', messages)
 
         # Call view
-        return self.view_class.as_view()(req, *args, **url_params)
+        return self.view_class.as_view()(request, *args, **url_params)
 
     def get(self, user=None, data=None, url_params=None, *args, **kwargs):
         """Returns response for a GET request."""
@@ -85,12 +86,12 @@ class RequestProviderMixin:
             raise ValueError(_('Please pass a user object to RequestProviderMixin.'))
 
         # Annotate a request object with a session
-        session_middleware = SessionMiddleware()
+        session_middleware = SessionMiddleware(get_response=HttpResponse(status=200))
         session_middleware.process_request(request)
         request.session.save()
 
         # Annotate a request object with messages
-        message_middleware = MessageMiddleware()
+        message_middleware = MessageMiddleware(get_response=HttpResponse(status=200))
         message_middleware.process_request(request)
         request.session.save()
 
