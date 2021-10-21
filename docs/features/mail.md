@@ -231,9 +231,6 @@ email_service = MyMailService(
 Please note that here the file content, not the file path, needs to be passed to the attachment list. If anything goes
 sideways, the service will throw an `EmailServiceAttachmentError` exception.
 
-### Testing emails
+## Testing emails
 
-// todo tbr
-
-Link to blog for
-now: https://medium.com/ambient-innovation/thorough-and-reliable-unit-testing-of-emails-in-django-5f34901b1b16
+If you are curious about how to properly test your emails, have a look at the testing section.

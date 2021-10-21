@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.7.1** (2021-10-18)
+    * Added missing documentation about email testing
+
 * **5.7.0** (2021-10-15)
     * Added admin mixin `DeactivatableChangeViewAdminMixin`
     * Added `response` parameter to testing middlewares
