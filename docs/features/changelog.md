@@ -1,7 +1,14 @@
 # Changelog
 
-* **5.7.1** (2021-10-18)
+* **5.7.3** (2021-10-22)
     * Added missing documentation about email testing
+    * Updated Readme file
+
+* **5.7.2** (2021-10-21)
+    * Fixed `flit` configuration
+
+* **5.7.1** (2021-10-21)
+    * Setup `flit` for release management
 
 * **5.7.0** (2021-10-15)
     * Added admin mixin `DeactivatableChangeViewAdminMixin`

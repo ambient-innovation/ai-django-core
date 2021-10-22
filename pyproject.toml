@@ -1,0 +1,72 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "ai-django-core"
+authors = [{name = "Ambient Innovation: GmbH", email = "hello@ambient-innovation.com"}]
+readme = "README.md"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 2.2",
+    "Framework :: Django :: 3.1",
+    "Framework :: Django :: 3.2",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Utilities",
+]
+dynamic = ["version", "description"]
+license = {"file" = "LICENSE.md"}
+dependencies = [
+    'Django>=2.2.24',
+    'bleach>=1.4.3',
+    'python-dateutil>=2.5.3',
+    'html2text>=2020.1.16',
+]
+
+[project.optional-dependencies]
+dev = [
+    'freezegun',
+    'pytest-cov',
+    'pytest-django',
+    'pytest-mock',
+    'gevent',
+    'sphinx',
+    'recommonmark',
+    'sphinx-rtd-theme',
+    'm2r2',
+        ]
+docs = [
+    'recommonmark',
+    'sphinx-rtd-theme',
+    'm2r2',
+]
+drf = [
+    'djangorestframework>=3.8.2',
+]
+graphql = [
+    'graphene-django>=2.2.0',
+    'django-graphql-jwt>=0.2.1',
+]
+view-layer= [
+    'django-crispy-forms>=1.4.0',
+]
+
+[tool.flit.module]
+name = "ai_django_core"
+
+[project.urls]
+'Documentation' = 'https://ai-django-core.readthedocs.io/en/latest/index.html'
+'Maintained by' = 'https://ambient.digital/'
+'Bugtracker' = 'https://github.com/ambient-innovation/ai-django-core/issues'
+'Changelog' = 'https://ai-django-core.readthedocs.io/en/latest/features/changelog.html'

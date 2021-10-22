@@ -2,12 +2,12 @@
 [![Downloads](https://pepy.tech/badge/ai-django-core)](https://pepy.tech/project/ai-django-core)
 [![Documentation Status](https://readthedocs.org/projects/ai-django-core/badge/?version=latest)](https://ai-django-core.readthedocs.io/en/latest/?badge=latest)
 
-# Overview:
+# Overview
 
 This package contains various useful helper functions. You can read up on all the fancy things at
 [readthedocs.io](https://ai-django-core.readthedocs.io/en/latest/index.html).
 
-# Installation:
+# Installation
 
 - Install the package via pip:
 
@@ -17,7 +17,7 @@ This package contains various useful helper functions. You can read up on all th
 
   `pipenv install ai-django-core`
 
-- Add module to `INSTALLED_APPS`:
+- Add module to `INSTALLED_APPS` within the main django `settings.py`:
 
     ````
     INSTALLED_APPS = (
@@ -33,25 +33,21 @@ This package contains various useful helper functions. You can read up on all th
 - Clone the project locally
 - Create a new branch for your feature
 - Change the dependency in your requirements.txt to a local (editable) one that points to your local file system:
-    ```
-    -e /Users/awesome-developer/Documents/workspace/ai-django-core
-    ```
+  `-e /Users/workspace/ai-django-core` or via pip  `pip install -e /Users/workspace/ai-django-core`
 - Ensure the code passes the tests
-- Run:
-
-  `python setup.py develop`
-
 - Create a pull request
 
 ## Run tests
 
 - Check coverage
-
-  `pytest --cov=.`
+  ````
+  pytest --cov=.
+  ````
 
 - Run tests
-
-  `pytest`
+  ````
+  pytest
+  ````
 
 ## Update documentation
 
@@ -90,30 +86,14 @@ How to compile translation files:
 
 - Create pull request / merge to master
 
-- Run:
+- This project uses the flit package to publish to PyPI. Thus publishing should be as easy as running:
+  ```
+  flit publish
+  ```
 
-    * Make sure you have all the required packages installed
-      `pip install -U twine wheel`
-    * Create a file in your home directory: `~/.pypirc`
-    ```
-    [distutils]
-    index-servers=
-        pypi
-        testpypi
+  To publish to TestPyPI use the following ensure that you have set up your .pypirc as
+  shown [here](https://flit.readthedocs.io/en/latest/upload.html#using-pypirc) and use the following command:
 
-    [pypi]
-    repository: https://upload.pypi.org/legacy/
-    username: ambient-innovation
-
-    [testpypi]
-    repository: https://test.pypi.org/legacy/
-    username: ambient-innovation
-    ```
-    * Empty `dist` directory
-    * Create distribution
-      `python setup.py sdist bdist_wheel`
-    * Upload to Test-PyPi
-      `twine upload --repository testpypi dist/*`
-    * Check at Test-PyPi if it looks nice
-    * Upload to real PyPi
-      `twine upload dist/*`
+  ```
+  flit publish --repository testpypi
+  ```
