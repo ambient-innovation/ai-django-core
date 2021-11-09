@@ -2,8 +2,8 @@
 
 ## Introduction
 
-If you are using django in a fullstack way, meaning with django views and templates, you surely
-want to use this extra requirement.
+If you are using django in a fullstack way, meaning with django views and templates, you surely want to use this extra
+requirement.
 
 Just install the package like this:
 
@@ -15,9 +15,26 @@ If you are using ``pipenv``, you can add the following line to your `Pipfile`:
 
 ## Forms
 
-### Mixins
+### CrispyLayoutFormMixin
 
-// todo tbr
+This neat mixin provides a basic setup to turn a regular Django form into a nice bootstrapy crispy form.
+
+````
+class MyForm(CrispyLayoutFormMixin, forms.Form):
+    pass
+````
+
+The form will have the following properties:
+
+| Attribute     | Default configuration                           |
+| ------------- | ----------------------------------------------- |
+| Form tag      | Yes                                             |
+| Form class    | form-horizontal form-bordered form-row-stripped |
+| Method        | POST                                            |
+| Submit button | Set, called "Save"                              |
+| Label class   | col-md-3                                        |
+| Field class   | col-md-9                                        |
+| Label size    | col-md-offset-3                                 |
 
 ## Formsets
 
@@ -44,8 +61,8 @@ Note that the form needs to be validated before you can use this method.
 
 ## Formset Views
 
-This package provides two mixins supporting class-based views combined with formsets. The `FormsetCreateViewMixin` is
-to be used with a `generic.CreateView`, the `FormsetUpdateViewMixin` together with `generic.UpdateView`.
+This package provides two mixins supporting class-based views combined with formsets. The `FormsetCreateViewMixin` is to
+be used with a `generic.CreateView`, the `FormsetUpdateViewMixin` together with `generic.UpdateView`.
 
 The idea behind these mixins to make handling formset less pain and provide the comfy feeling you are used from regular
 forms.
@@ -90,13 +107,12 @@ class MyModelEditView(FormsetUpdateViewMixin, generic.UpdateView):
         return kwargs
 ```
 
-
 ## View mixins
 
 ### CustomPermissionMixin
 
-If you want to handle some custom permission check for which you cannot use the regular django permissions,
-just derive your class-based view from `CustomPermissionMixin` and add the method `validate_permissions()`
+If you want to handle some custom permission check for which you cannot use the regular django permissions, just derive
+your class-based view from `CustomPermissionMixin` and add the method `validate_permissions()`
 with your custom logic. Notice that it has to return a boolean value.
 
 For example, you want to allow only the "owner" of an object to view its detail page:
@@ -116,7 +132,6 @@ class MyModelDetailView(CustomPermissionMixin, generics.DetailView):
 
 If the method returns `False`, the regular dispatch will just simply render your `403` page and skip all the other
 things within the view.
-
 
 ### RequestInFormKwargsMixin
 
