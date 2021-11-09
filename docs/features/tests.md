@@ -148,7 +148,29 @@ self.email_test_service.filter(to='foo@bar.com').assert_body_contains('inheritan
 
 ### ClassBasedViewTestMixin
 
-// todo tbr
+This test case mixin helps out when unit-testing a view. It provides methods for the three main ways to request a
+view: `get`, `post` and `delete`. Authentication and the creation of the request is handled internally.
+
+````
+class MyViewTestCase(ClassBasedViewTestMixin, TestCase):
+    view_class = views.MyView
+
+    def test_get_call_authenticated(self):
+        response = self.get(user=self.user, url_params={'pk': 17})
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_call_not_authenticated(self):
+        response = self.get(user=None, url_params={'pk': 17})
+        self.assertEqual(response.status_code, 403)
+
+    def test_post_call(self):
+        response = self.post(user=self.user, data={'foo': 'bar'}, url_params={'pk': 17})
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_call(self):
+        response = self.delete(user=self.user, url_params={'pk': 17})
+        self.assertEqual(response.status_code, 202)
+````
 
 ### RequestProviderMixin
 

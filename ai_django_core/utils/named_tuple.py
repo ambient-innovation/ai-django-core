@@ -3,7 +3,6 @@ from typing import Any
 
 
 def get_namedtuple_choices(name, choices_tuple):
-    # todo copied code -> test if it works
     """
     Made by Ross Crawford-d'Heureuse.
 

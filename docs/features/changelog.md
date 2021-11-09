@@ -1,5 +1,12 @@
 # Changelog
 
+* **5.7.4** (2021-11-08)
+    * Added missing documentation about semantic database anonymisation
+    * Added missing documentation about string utils
+    * Added missing documentation about `get_namedtuple_choices()` helper
+    * Added missing documentation about `CrispyLayoutFormMixin`
+    * Added missing documentation about `ClassBasedViewTestMixin`
+
 * **5.7.3** (2021-10-22)
     * Added missing documentation about email testing
     * Updated Readme file

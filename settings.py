@@ -21,6 +21,8 @@ SECRET_KEY = 'ASDFjklö123456890'
 # Routing
 ROOT_URLCONF = 'testapp.urls'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -58,3 +60,5 @@ MIDDLEWARE = (
 # Mail backend
 EMAIL_BACKEND_DOMAIN_WHITELIST = ''
 EMAIL_BACKEND_REDIRECT_ADDRESS = ''
+
+TIME_ZONE = 'UTC'
