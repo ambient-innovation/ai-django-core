@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Optional
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
@@ -71,13 +71,18 @@ class RequestProviderMixin:
     """
 
     @staticmethod
-    def get_request(user: Union[AbstractBaseUser, AnonymousUser, None] = None, method: str = 'GET'):
+    def get_request(user: Union[AbstractBaseUser, AnonymousUser, None] = None,
+                    method: str = 'GET',
+                    url: Optional[str] = None):
         """
         Creates and returns a django request.
         """
+        # Determine URL
+        url = url if url else '/'
+
         # Create test request
         factory = RequestFactory()
-        request = factory.get('/')
+        request = factory.get(url)
 
         # Set user object if it is of a valid type
         if user is None or isinstance(user, AbstractBaseUser) or isinstance(user, AnonymousUser):

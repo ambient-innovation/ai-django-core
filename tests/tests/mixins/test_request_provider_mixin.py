@@ -56,3 +56,11 @@ class RequestProviderMixinTest(RequestProviderMixin, TestCase):
         wrong_object = MySingleSignalModel()
         with self.assertRaises(ValueError):
             self.get_request(wrong_object)
+
+    def test_default_url_used(self):
+        request = self.get_request()
+        self.assertEqual(request.get_raw_uri(), 'http://testserver/')
+
+    def test_passed_url_used(self):
+        request = self.get_request(url='my-url')
+        self.assertEqual(request.get_raw_uri(), 'http://testserver/my-url')

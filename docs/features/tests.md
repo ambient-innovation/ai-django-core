@@ -179,7 +179,9 @@ of course try to avoid looping the request object through all services - but fro
 well written method which takes the request as a parameter.
 
 For these cases the toolbox provides a handy mixin, from which you can easily derive your test class. Then you will be
-able to use a method called `get_request(user=None)`. If you specify a user, he/she will be the request user.
+able to use a method called `get_request(user=None)`. If you specify a user, he/she will be the request user. In most
+cases you won't need to set an explicit url, so `/` will be taken as a default. If you do need it, just pass set
+the `url` parameter.
 
 ````
 from django.test import TestCase
@@ -195,6 +197,11 @@ class MyAwesomeTest(RequestProviderMixin, TestCase):
     def test_something_with_a_request_having_a_user(self):
         ...
         request = self.get_request(user=my_user)
+        ...
+
+    def test_something_with_a_request_with_set_url(self):
+        ...
+        request = self.get_request(url='/path/to/something')
         ...
 
 ````
