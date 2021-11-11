@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.8.0** (2021-11-11)
+    * Added `url` parameter to `RequestProviderMixin`
+
 * **5.7.4** (2021-11-08)
     * Added missing documentation about semantic database anonymisation
     * Added missing documentation about string utils
