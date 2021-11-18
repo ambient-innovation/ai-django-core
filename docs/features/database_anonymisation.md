@@ -2,9 +2,9 @@
 
 ## Why we scrub
 
-Nowadays, it is more important than ever to take care of data protection concerns. Especially in the European Union
-and when you wish to be compliant to the [GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation), you
-have to take care of how you work with sensitive data.
+Nowadays, it is more important than ever to take care of data protection concerns. Especially in the European Union and
+when you wish to be compliant to the [GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation), you have
+to take care of how you work with sensitive data.
 
 During daily business it is often required to work with a production-like database dump - let's say, to fix a specific
 bug. Creating a production-like dataset is far from trivial, and the most obvious approach is just dumping the
@@ -76,7 +76,8 @@ Create the file within one of your apps (`apps/core/management/commands/custom_s
 
 ### Pre-processing
 
-A common use-case for pre-processing is the removal of big chunks of data to minimise the runtime of the scrubbing process.
+A common use-case for pre-processing is the removal of big chunks of data to minimise the runtime of the scrubbing
+process.
 
 Another example could be that your data contains some kind of complicated business logic, and your system will break if
 the data is anonymised in a trivial way. To prevent a mess, just do some magic on your dataset, and you are good to go.
@@ -98,6 +99,13 @@ nicer for everybody to work with smaller database dumps, so reducing the size as
 
 By default, the logs of django admin are cleared when running the custom scrubber. If you want to avoid this, you can
 set the attribute `keep_django_admin_log=True` within your scrubber class.
+
+### Cleaning up django session data
+
+By default, this service will remove all records from djangos session table `django_session`. Session data might contain
+sensitive information and moreover a valid session key acts like a password. Furthermore, all users are anonymised so
+the session data can't be accessed anyway. If you want to keep your session data, just disable it by setting the
+attribute `keep_session_data=True`.
 
 ### Cleaning up scrubbing data
 
@@ -155,7 +163,8 @@ SCRUBBER_DOMAIN = 'example.com'
 
 Notes:
 
-`LOCAL_APPS` is a list of all your local apps excluding third-party ones. Local apps and third-party apps are combined in
+`LOCAL_APPS` is a list of all your local apps excluding third-party ones. Local apps and third-party apps are combined
+in
 `INSTALLED_APPS`.
 
 `SCRUBBER_DOMAIN` is used for post-processing the users (see *"Helper method for user credentials"*).

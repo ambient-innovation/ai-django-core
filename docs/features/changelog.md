@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.9.0** (2021-11-18)
+    * Added default truncate of django session table to `AbstractScrubbingService`
+
 * **5.8.0** (2021-11-11)
     * Added `url` parameter to `RequestProviderMixin`
 
