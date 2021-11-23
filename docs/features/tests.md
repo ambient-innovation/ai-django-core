@@ -118,7 +118,7 @@ self.email_test_service.filter(to='foo@bar.com').assert_quantity(expected_number
 3. Do you want to check the subject?
 
 ````
-self.email_test_service.filter(to='foo@bar.com').assert_subject('Reset password')
+self.email_test_service.filter(to='foo@bar.com')[0].assert_subject('Reset password')
 ````
 
 Finally, we have a look at the content of the email. As you probably know, an email object consists of two parts. A
@@ -128,20 +128,20 @@ fails if the given string is missing in one of them.
 4. You want to check if a certain string is included in the body?
 
 ````
-self.email_test_service.filter(to='foo@bar.com').assert_body_contains('inheritance')
+self.email_test_service.filter(to='foo@bar.com')[0].assert_body_contains('inheritance')
 ````
 
 5. Sometimes you want to check if something is NOT part of the body…
 
 ````
-self.email_test_service.filter(to='foo@bar.com').assert_body_contains_not('scam')
+self.email_test_service.filter(to='foo@bar.com')[0].assert_body_contains_not('scam')
 ````
 
 To make your life a little easier and happier, each of these methods takes an optional parameter msg which is passed to
 the assertion and will be shown if it goes sideways. Here is an example:
 
 ````
-self.email_test_service.filter(to='foo@bar.com').assert_body_contains('inheritance', msg='Missing words!')
+self.email_test_service.filter(to='foo@bar.com')[0].assert_body_contains('inheritance', msg='Missing words!')
 ````
 
 ## Mixins
