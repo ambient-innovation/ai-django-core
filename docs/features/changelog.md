@@ -1,5 +1,10 @@
 # Changelog
 
+* **5.9.1** (2021-11-25)
+  * Fixed typo in custom scrubber class logging
+  * Rewrote permission manager docs and added better best practice
+  * Update in email testing docs
+
 * **5.9.0** (2021-11-18)
     * Added default truncate of django session table to `AbstractScrubbingService`
 
