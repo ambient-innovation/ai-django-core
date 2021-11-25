@@ -26,7 +26,7 @@ class AbstractScrubbingService:
 
     def _validation(self):
         if not settings.DEBUG:
-            self._logger.warning('Attention! Needs to be run in DEBUG mode!')
+            self._logger.warning('Attention! Has to run in DEBUG mode!')
             return False
 
         if 'django_scrubber' not in settings.INSTALLED_APPS:

@@ -4,9 +4,9 @@
 
 ### Motivation
 
-A frequent requirement for information system database records are often not publicly visible. There are
-strict rules who can view what. The django permission system allows to restrict access to a whole model but in a lot of
-cases the visibility needs to be determined on object level. Let's say we have this data structure:
+A frequent requirement for information system database records are often not publicly visible. There are strict rules
+who can view what. The django permission system allows restricting access to a whole model but in a lot of cases the
+visibility needs to be determined on object level. Let's say we have this data structure:
 
 ````
 # models.py
@@ -22,9 +22,9 @@ class Project(models.Model):
     company = models.ForeignKey(Company)
 ````
 
-We have a multi-tenant system which helps organising projects for different companies. As an employee of company A I
-am only allowed to see all projects belonging to company A. If we would restrict access with the django permissions
-to the project model, this would not suit our purpose.
+We have a multi-tenant system which helps to organise projects for different companies. As an employee of company "A" I
+am only allowed to see all projects belonging to company "A". If we restrict access with the django permissions to the
+project model, this would not suit our purpose.
 
 ### Custom manager
 
@@ -32,7 +32,7 @@ To tackle this problem, this library provides an abstract class (actually, there
 these access levels in a reproducible, understandable and DRY way.
 
 If you derive your managers from ``AbstractUserSpecificManager``, you will expose three methods: `visible_for()`,
-`editable_for()` and `deletable_for()`. Each methods needs to be implemented per manager class like this:
+`editable_for()` and `deletable_for()`. Each method needs to be implemented per manager class like this:
 
 ````
 # managers.py
@@ -68,15 +68,52 @@ def project_list(request):
     return render(request, 'project/project_list.html', {'project_list': project_list})
 ````
 
-Obviously, if you are not listing your projects but want to validate if the user is allowed to create/edit or
-delete the given object, you should use the other two methods.
+Obviously, if you are not listing your projects but want to validate if the user is allowed to create/edit or delete the
+given object, you should use the other two methods.
 
 ### Best practice
 
-#### General
+#### Custom manager and custom queryset
 
-As a nice tweak, you can skip the manger and use directly a ``QuerySet`` class and use this as a manager. Therefore this
-package provides the class ``AbstractUserSpecificQuerySet``.
+In most cases you want to implement a custom manager to put your model-related methods into and register a custom
+queryset class to handle the permissions.
+
+````
+# managers.py
+class ProjectQuerySet(AbstractUserSpecificQuerySet):
+
+    def visible_for(self, user):
+        return self.filter(company=user.company)
+
+    def editable_for(self, user):
+        return self.filter(company=user.company)
+
+    def deletable_for(self, user):
+        return self.filter(company=user.company)
+
+class ProjectManager(models.Manager):
+
+    def get_queryset(self):
+        return ProjectQuerySet(self.model, using=self._db)
+````
+
+In the model, you'll register only the manager as usual.
+
+````
+# models.py
+class Project(models.Model):
+    name = models.CharField(max_length=100)
+    company = models.ForeignKey(Company)
+
+    objects = ProjectManager()
+````
+
+#### Directly use custom QuerySet class
+
+Under some circumstances, you could skip the manger and directly use a `QuerySet` class as a manager. Therefore, this
+package provides the class `AbstractUserSpecificQuerySet`. Usually these circumstances are "small"
+models where you don't have custom manager methods. Note that you'll have to refactor your code when you start
+implementing custom manger methods!
 
 At first, use a custom queryset class like this:
 
@@ -105,20 +142,19 @@ class Project(models.Model):
     objects = ProjectQuerySet.as_manager()
 ````
 
-Then you'll save the ``.all()`` and can directly use the exposed methods:
+Then you'll save the `.all()` and can directly use the exposed methods:
 
 ````
 project_list = Project.objects.visible_for(request.user)
 ````
 
-
 #### GloballyVisibleManager
 
-It is advisable to use this manager for every class. This way, you can ensure that if some permissions are added to
-a model, they are put in the right place (the `visible_for()` method) and not somewhere in the code.
+It is advisable to use this manager for every class. This way, you can ensure that if some permissions are added to a
+model, they are put in the right place (the `visible_for()` method) and not somewhere in the code.
 
-Secondly you do not have to decide every time you need the manger if you need to use `visible_for()` or not - just
-use it all the time.
+Secondly you do not have to decide every time you need the manger if you need to use `visible_for()` or not - just use
+it all the time.
 
 If you have the case that a certain model does not require any user-level permissions, you can use the
 ``GloballyVisibleManager``. This manager just returns all records when calling any of its base methods:
@@ -129,4 +165,4 @@ If you have the case that a certain model does not require any user-level permis
 ````
 
 Usually you would use this manager for metadata like categories. As pointed out above, you could use the base manager
-class BUT if you have to add some user-level permissions later on, you reduce the risk of bad pattern in your code.
+class BUT if you have to add some user-level permissions later on, you reduce the risk of bad patterns in your code.
