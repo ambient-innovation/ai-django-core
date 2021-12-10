@@ -3,6 +3,7 @@ from typing import Union
 import html2text
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.db.models import QuerySet
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
@@ -19,7 +20,7 @@ class BaseEmailServiceFactory:
     service_class = None
     recipient_email_list = []
 
-    def __init__(self, recipient_email_list: list = None, **kwargs) -> None:
+    def __init__(self, recipient_email_list: Union[list, QuerySet] = None, **kwargs) -> None:
         """
         Initialisation takes optionally a list of recipients. Doesn't have to be a list of strings because
         fetching the actual email from a complex data structure can be done in the method `get_email_from_recipient()`

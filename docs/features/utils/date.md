@@ -122,7 +122,7 @@ and Sunday of a given calendar week:
 from ai_django_core.utils import get_start_and_end_date_from_calendar_week
 
 monday, sunday = get_start_and_end_date_from_calendar_week(2020, 38)
-# Monday = datetime.date(2020, 09, 14); Sunday = datetime.date(2020, 9, 20)
+# monday = datetime.date(2020, 09, 14); sunday = datetime.date(2020, 9, 20)
 ````
 
 ### Get next calendar week

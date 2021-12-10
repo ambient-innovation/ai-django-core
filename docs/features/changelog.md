@@ -1,5 +1,10 @@
 # Changelog
 
+* **5.10.0** (2021-12-10)
+  * Added helper method for sentry to GDPR-compliant remove sensitive user data from event
+  * Updated type hints in `BaseEmailServiceFactory` init method
+  * Improved docs for method `get_start_and_end_date_from_calendar_week`
+
 * **5.9.1** (2021-11-25)
   * Fixed typo in custom scrubber class logging
   * Rewrote permission manager docs and added better best practice
