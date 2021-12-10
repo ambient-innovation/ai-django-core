@@ -28,7 +28,7 @@ classifiers = [
 dynamic = ["version", "description"]
 license = {"file" = "LICENSE.md"}
 dependencies = [
-    'Django>=2.2.24',
+    'Django>=2.2.24,<4.0.0',
     'bleach>=1.4.3',
     'python-dateutil>=2.5.3',
     'html2text>=2020.1.16',
