@@ -41,15 +41,15 @@ dev = [
     'pytest-django',
     'pytest-mock',
     'gevent',
-    'sphinx',
-    'recommonmark',
-    'sphinx-rtd-theme',
-    'm2r2',
+    'sphinx==4.2.0',
+    'recommonmark==0.7.1',
+    'sphinx-rtd-theme==1.0.0',
+    'm2r2==0.3.1',
         ]
 docs = [
-    'recommonmark',
-    'sphinx-rtd-theme',
-    'm2r2',
+    'recommonmark==0.7.1',
+    'sphinx-rtd-theme==1.0.0',
+    'm2r2==0.3.1',
 ]
 drf = [
     'djangorestframework>=3.8.2',
