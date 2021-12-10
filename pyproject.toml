@@ -41,9 +41,7 @@ dev = [
     'pytest-django',
     'pytest-mock',
     'gevent',
-    'sphinx==4.2.0',
-    'sphinx-rtd-theme==1.0.0',
-        ]
+]
 docs = [
     'sphinx==4.2.0',
     'sphinx-rtd-theme==1.0.0',
