@@ -4,6 +4,7 @@ import datetime
 import pytz
 from django.test import TestCase
 from django.test.utils import override_settings
+from django.utils.timezone import make_aware
 from freezegun import freeze_time
 
 from ai_django_core.utils.date import date_month_delta, get_start_and_end_date_from_calendar_week, tz_today, \
@@ -84,10 +85,11 @@ class DateUtilTest(TestCase):
             date_month_delta(start_date, end_date)
 
     @override_settings(USE_TZ=True)
-    def test_tz_today_as_object_tz_active(self):
-        frozen_date = datetime.datetime(year=2019, month=9, day=19, hour=10)
+    def test_tz_today_as_object_tz_active_is_tz_aware(self):
+        frozen_date = make_aware(datetime.datetime(year=2019, month=9, day=19))
         with freeze_time(frozen_date):
-            self.assertEqual(tz_today(), frozen_date.date())
+            self.assertTrue(isinstance(tz_today(), datetime))
+            self.assertEqual(tz_today(), frozen_date)
 
     def test_tz_today_as_object_tz_not_active(self):
         frozen_date = datetime.datetime(year=2019, month=9, day=19, hour=10)

@@ -31,7 +31,7 @@ def tz_today(str_format=None):
     :return:
     """
     if settings.USE_TZ:
-        date = timezone.now().date()
+        date = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
     else:
         date = datetime.datetime.now().date()
 
