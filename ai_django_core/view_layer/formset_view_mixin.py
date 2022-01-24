@@ -59,13 +59,13 @@ class FormsetUpdateViewMixin(_FormsetMixin):
     Can be used to validate and save a formset.
     Usage is similar to regular UpdateView:
 
-    class MyObjectUpdateView(FormsetUpdateViewMixin, generic.UpdateView):
-        form_class = MyObjectSettingsForm
-        template_name = 'myapp/my_object_edit.html'
-        formset_class = inlineformset_factory(MyObject, MyFkRelatedObject, form=MyFkRelatedObjectForm, extra=0, \
+    class MyModelUpdateView(FormsetUpdateViewMixin, generic.UpdateView):
+        form_class = MyModelSettingsForm
+        template_name = 'myapp/my_model_edit.html'
+        formset_class = inlineformset_factory(MyModel, MyFkRelatedModel, form=MyFkRelatedModelForm, extra=0, \
                                               can_delete=False)
-        model = MyObject
-        success_url = reverse_lazy('my_object:edit')
+        model = MyModel
+        success_url = reverse_lazy('my_model:edit')
 
         def additional_is_valid(self, form, formset):
             messages.add_message(self.request, messages.INFO, 'Update was successful.')

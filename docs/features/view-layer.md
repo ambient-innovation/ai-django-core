@@ -175,3 +175,28 @@ class MyModelForm(ModelForm):
 ````
 
 That's it.
+
+## Generic views
+
+### ToggleView
+
+Django provides a neat way of enabling the update of a given object through the `generic.UpdateView`. This method will
+validate the user data using a given form. But sometimes an update is required which doesn't need any user data being
+sent, like toggling a flag or updating a timestamp. For these cases, just use the `ToggleView` - it works basically the
+same as the `UpdateView` - except that "POST" is required and that no form has to be defined.
+
+```
+from ai_django_core.view_layer.views import ToggleView
+
+class ToggleActiveStateView(ToggleView):
+    model = MyModel
+    template_name = 'myapp/my_model_edit.html'
+
+    def post(self, request, *args, **kwargs):
+        # Update object
+        obj = self.get_object()
+        obj.is_active = not obj.is_active
+        obj.save()
+
+        return render(self.request, self.template_name, {'object': obj})
+```

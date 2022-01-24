@@ -1,5 +1,9 @@
 # Changelog
 
+* **5.11.1** (2022-01-24)
+  * Added docs for `ToggleView`
+  * Fixed some typos in `Readme.md` and `changelog.md`
+
 * **5.11.0** (2022-01-24)
   * Added generic `ToggleView`
   * Updated some docstrings in `formset_view_mixin`
@@ -70,7 +74,7 @@
 
 * **5.2.2** (2021-05-27)
     * Fixed a bug in `BaseEmailService` where txt part was rendered sometimes with weird line breaks
-    * Added Bugtracker link to setup.py
+    * Added Bugtracker link to `setup.py`
 
 * **5.2.1** (2021-05-12)
     * Translation files were missing in wheel
@@ -185,7 +189,7 @@
 * **3.2.0** (2020-10-16)
     * Added ``AbstractPermissionMixin``, ``AbstractUserSpecificQuerySet`` and ``AbstractUserSpecificManager`` abstract
       managers
-    * Removed deprecated antivir package
+    * Removed deprecated `antivir` package
     * Added Sphinx documentation setup to package
 
 * **3.1.0** (2020-10-14)
@@ -194,8 +198,8 @@
 
 * **3.0.2** (2020-10-15)
     * Imports all utils into the modules scope
-    * Retranslated some docstrings into English
-    * Adds tests for the log_whodid util function
+    * Re-translated some docstrings into English
+    * Added tests for the `log_whodid` util function
 
 * **3.0.1** (2020-10-12)
     * Added missing ``__init__.py`` file to package mail.services
@@ -263,7 +267,7 @@
     * Added helper class `tz_today()` to provide an easy getter for a timezone-aware today
 
 * **1.2.5** (2019-06-25)
-    * Added helper class `DateHelper` to provide constants to use in djangos ORM lookup `__week_day`
+    * Added helper class `DateHelper` to provide constants to use in django's ORM lookup `__week_day`
 
 * **1.2.4** (2019-05-20)
     * More refactoring on `CurrentUserMiddleware` to make it more easy to override internal functions
@@ -291,7 +295,7 @@
     * Formset mixins added
 
 * **1.1.6**
-    * Modifications to anti-virus field
+    * Modifications to antivirus field
 
 * **1.1.5**
     * Updated setup.py with newer information
