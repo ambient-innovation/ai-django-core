@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 class _FormsetMixin:
     """
-    Mixin for handling a django form with with a formset. Extends the form handling logic to handle a formset object.
+    Mixin for handling a django form with a formset. Extends the form handling logic to handle a formset object.
 
     Attention: Do NOT use directly. Do use FormsetUpdateViewMixin or FormsetCreateViewMixin
     """
@@ -59,17 +59,16 @@ class FormsetUpdateViewMixin(_FormsetMixin):
     Can be used to validate and save a formset.
     Usage is similar to regular UpdateView:
 
-    class MandantSettingsUpdate(FormsetUpdateViewMixin, generic.UpdateView):
-        form_class = MandantSettingsForm
-        template_name = 'mandant/mandantsettings_form.html'
-        formset_class = inlineformset_factory(Mandant, MandantProdukttyp, form=MandantProdukttypForm, extra=0, \
+    class MyObjectUpdateView(FormsetUpdateViewMixin, generic.UpdateView):
+        form_class = MyObjectSettingsForm
+        template_name = 'myapp/my_object_edit.html'
+        formset_class = inlineformset_factory(MyObject, MyFkRelatedObject, form=MyFkRelatedObjectForm, extra=0, \
                                               can_delete=False)
-        model = Mandant
-        success_url = reverse_lazy('mandant:edit-settings')
+        model = MyObject
+        success_url = reverse_lazy('my_object:edit')
 
         def additional_is_valid(self, form, formset):
-            messages.add_message(self.request, messages.INFO, 'Einstellungen wurden erfolgreich aktualisiert.')
-
+            messages.add_message(self.request, messages.INFO, 'Update was successful.')
     """
 
     def post(self, request, *args, **kwargs):

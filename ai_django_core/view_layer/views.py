@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from django.views.defaults import ERROR_403_TEMPLATE_NAME
+from django.views.generic.detail import SingleObjectMixin
 
 
 class CustomPermissionMixin(generic.View):
@@ -30,3 +31,15 @@ class RequestInFormKwargsMixin:
         kwargs = super().get_form_kwargs()
         kwargs.update({'request': self.request})
         return kwargs
+
+
+class ToggleView(SingleObjectMixin, generic.View):
+    """
+    Generic view for updating an object without any user data being sent. Therefore, we don't need a form to validate
+    user input.
+    Most common use-case is toggling a flag inside an object.
+    """
+    http_method_names = ('post',)
+
+    def post(self, request, *args, **kwargs):
+        raise NotImplementedError

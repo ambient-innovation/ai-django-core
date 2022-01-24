@@ -1,8 +1,12 @@
 # Changelog
 
+* **5.11.0** (2022-01-24)
+  * Added generic `ToggleView`
+  * Updated some docstrings in `formset_view_mixin`
+
 * **5.10.1** (2021-12-10)
   * Added docs about GDPR-compliant use of sentry with user data
-  * Fixes some versions to make Sphinx build work again
+  * Fixed some versions to make Sphinx build work again
 
 * **5.10.0** (2021-12-10)
   * Added helper method for sentry to GDPR-compliant remove sensitive user data from event
