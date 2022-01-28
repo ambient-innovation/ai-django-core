@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.12.0** (2022-01-28)
+  * Added Gitlab code coverage compare service `CoverageService` with documentation
+
 * **5.11.1** (2022-01-24)
   * Added docs for `ToggleView`
   * Fixed some typos in `Readme.md` and `changelog.md`

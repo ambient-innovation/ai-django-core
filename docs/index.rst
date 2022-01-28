@@ -20,6 +20,7 @@ The package is published at pypi under the following link: `https://pypi.org/pro
    features/context_processors.md
    features/database_anonymisation.md
    features/djangorestframework.md
+   features/gitlab.md
    features/graphql.md
    features/managers.md
    features/mail.md
