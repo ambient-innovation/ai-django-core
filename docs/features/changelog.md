@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.12.1** (2022-01-31)
+  * Fixed bug in Gitlab code coverage compare service documentation
+
 * **5.12.0** (2022-01-28)
   * Added Gitlab code coverage compare service `CoverageService` with documentation
 

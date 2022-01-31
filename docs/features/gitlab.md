@@ -41,7 +41,7 @@ check coverage:
     - develop
     - master
   before_script:
-    - pip install -U pip httpx
+    - pip install -U pip httpx ai_django_core
   script:
     - python scripts/validate_coverage.py
 ```
