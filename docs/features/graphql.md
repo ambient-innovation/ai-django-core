@@ -1,7 +1,7 @@
 # Graphene extension
 // todo Needs to be rewritten
 
-### GraphQL based on django ModelForms
+## GraphQL based on django ModelForms
 
 Here is a simple Django model in `my_app/models.py`:
 
@@ -62,7 +62,7 @@ class UserMutation(graphene.ObjectType):
  If you register now your `UserMutation` in your schema you have a working model-based and DRY API
  endpoint. Congratulations!
 
-### DeleteMutation for django-model objects
+## DeleteMutation for django-model objects
 
 If you want to delete an object you can easily use the `DeleteMutation` like this:
 
@@ -105,9 +105,7 @@ class MyModelDeleteMutation(LoginRequiredDeleteMutation):
         return self.model.objects.filter(created_by=request.user)
 ```
 
-
-### JWT secure mutations
-
+## JWT secure mutations
 
 If you derive your mutation from `LoginRequiredDjangoModelFormMutation` you don't have to manually take
 care about securing the login with the decorators.

@@ -1,5 +1,8 @@
 # Changelog
 
+* **15.13.1** (2022-02-04)
+  * GraphQL docs bugfix
+
 * **15.13.0** (2022-02-03)
   * Added a view which allows logging errors to Sentry normally while using Graphene.
 
