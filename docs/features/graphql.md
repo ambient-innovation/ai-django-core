@@ -199,3 +199,31 @@ class MyFancyTestCase(GraphQLTestCase):
        ...
 
 ```
+
+## Graphql with Sentry
+
+In some cases you might want to include Sentry while using a GraphQL API. This will probably lead to issues
+while using Graphene. This happens because Sentry sends the errors to Sentry as a string and not as error
+objects. Because of that all errors are combined and cannot be analyzed. You can use `SentryGraphQLView` for this case.
+
+> **Note**: You must use the following versions of libraries to use this feature!
+> * sentry_sdk >= 0.13.0
+> * graphene_django >=2.9.1, <3.0
+
+Usage:
+
+```python
+# urls.py
+import os
+from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
+from ai_django_core.graphql.views import SentryGraphQLView
+from ai_django_core.graphql.utils import ignore_graphene_logger
+
+ignore_graphene_logger()    # <-- add this line at global level
+
+# change this line:
+path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
+# to this:
+path("graphql", csrf_exempt(SentryGraphQLView.as_view(graphiql=True))),
+```
