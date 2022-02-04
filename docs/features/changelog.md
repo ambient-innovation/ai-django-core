@@ -1,7 +1,7 @@
 # Changelog
 
 * **15.13.0** (2022-02-03)
-  * Added a view which allows to log errors to Sentry normally while using Graphene.
+  * Added a view which allows logging errors to Sentry normally while using Graphene.
 
 * **5.12.1** (2022-01-31)
   * Fixed bug in Gitlab code coverage compare service documentation
