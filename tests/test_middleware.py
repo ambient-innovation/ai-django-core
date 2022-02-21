@@ -42,11 +42,19 @@ class CurrentUserMiddlewareTest(TestCase):
         self.assertEqual(current_users[1], user1)
         self.assertEqual(current_users[1].user_name, 'user1')
 
+    def test_user_is_cleared_after_request(self):
+        user = Mock(user_name='test_user')
+        request = Mock(user=user)
+        middleware = CurrentUserMiddleware(get_response=lambda request: HttpResponse(status=200))
+        response = middleware(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNone(CurrentUserMiddleware.get_current_user())
+
 
 def set_current_user(user=None, delay_before_request=0, delay_after_request=0, current_users=None):
     request = Mock()
     request.user = user
-    middleware = CurrentUserMiddleware(get_response=HttpResponse(status=200))
+    middleware = CurrentUserMiddleware(get_response=lambda request: HttpResponse(status=200))
 
     if delay_before_request:
         time.sleep(delay_before_request)
