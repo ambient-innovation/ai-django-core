@@ -18,6 +18,14 @@ class CurrentUserMiddleware(MiddlewareMixin):
     def process_request(self, request):
         _user.value = request.user
 
+    def process_response(self, request, response):
+        # this cleanup is required eg. when running tests single-threaded
+        try:
+            del _user.value
+        except AttributeError:
+            pass
+        return response
+
     @staticmethod
     def get_current_user():
         if hasattr(_user, 'value') and _user.value:
