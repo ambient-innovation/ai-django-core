@@ -19,7 +19,7 @@ class CurrentUserMiddleware(MiddlewareMixin):
         _user.value = request.user
 
     def process_response(self, request, response):
-        # this cleanup is required eg. when running tests single-threaded
+        # this cleanup is required e.g. when running tests single-threaded
         try:
             del _user.value
         except AttributeError:

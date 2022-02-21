@@ -1,9 +1,13 @@
 # Changelog
 
-* **15.13.1** (2022-02-04)
+* **5.13.2** (2022-02-21)
+  * `CurrentUserMiddleware` bugfix, cleaning up user variable for single-threaded tests after request processing
+  * Fixed version typo in changelog
+
+* **5.13.1** (2022-02-04)
   * GraphQL docs bugfix
 
-* **15.13.0** (2022-02-03)
+* **5.13.0** (2022-02-03)
   * Added a view which allows logging errors to Sentry normally while using Graphene.
 
 * **5.12.1** (2022-01-31)
