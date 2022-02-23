@@ -59,8 +59,8 @@ class RequestProviderMixinTest(RequestProviderMixin, TestCase):
 
     def test_default_url_used(self):
         request = self.get_request()
-        self.assertEqual(request.get_raw_uri(), 'http://testserver/')
+        self.assertEqual(request.build_absolute_uri(), 'http://testserver/')
 
     def test_passed_url_used(self):
         request = self.get_request(url='my-url')
-        self.assertEqual(request.get_raw_uri(), 'http://testserver/my-url')
+        self.assertEqual(request.build_absolute_uri(), 'http://testserver/my-url')

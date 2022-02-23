@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "ai-django-core"
-authors = [{name = "Ambient Innovation: GmbH", email = "hello@ambient-innovation.com"}]
+authors = [{name = "Ambient Innovation: GmbH", email = "hello@ambient.digital"}]
 readme = "README.md"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -13,6 +13,7 @@ classifiers = [
     "Framework :: Django :: 2.2",
     "Framework :: Django :: 3.1",
     "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
@@ -23,12 +24,13 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Utilities",
 ]
 dynamic = ["version", "description"]
 license = {"file" = "LICENSE.md"}
 dependencies = [
-    'Django>=2.2.24,<4.0.0',
+    'Django>=2.2.24',
     'bleach>=1.4.3',
     'python-dateutil>=2.5.3',
     'html2text>=2020.1.16',
@@ -67,3 +69,29 @@ name = "ai_django_core"
 'Maintained by' = 'https://ambient.digital/'
 'Bugtracker' = 'https://github.com/ambient-innovation/ai-django-core/issues'
 'Changelog' = 'https://ai-django-core.readthedocs.io/en/latest/features/changelog.html'
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py{36,37,38,39,310}-django{22,30,31,32,40}
+isolated_build = True
+
+[testenv]
+deps =
+    django22: Django>=2.2.24,<3.0
+    django30: Django>=3.0,<3.1
+    django31: Django>=3.1,<3.2
+    django32: Django>=3.2,<3.3
+    django40: Django>=4.0,<4.1
+extras = dev,drf,graphql,view-layer
+commands =
+    pytest --ds settings tests
+
+[gh-actions]
+python =
+    3.6: py36
+    3.7: py37
+    3.8: py38
+    3.9: py39
+    3.10: py310
+"""

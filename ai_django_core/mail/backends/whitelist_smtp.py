@@ -10,18 +10,18 @@ class WhitelistEmailBackend(SMTPEmailBackend):
     If not, you can configure a redirect to an inbox via CATCHALL.
 
     EMAIL_BACKEND = 'ai_django_core.mail.backends.whitelist_smtp.WhitelistEmailBackend'
-    EMAIL_BACKEND_DOMAIN_WHITELIST = ['ambient-innovation.com']
-    EMAIL_BACKEND_REDIRECT_ADDRESS = '%s@testuser.ambient-innovation.com'
+    EMAIL_BACKEND_DOMAIN_WHITELIST = ['ambient.digital']
+    EMAIL_BACKEND_REDIRECT_ADDRESS = '%s@testuser.ambient.digital'
 
     If `EMAIL_BACKEND_REDIRECT_ADDRESS` is set, a mail to `john.doe@example.com` will be redirected to
-    `john.doe_example.com@testuser.ambient-innovation.com`
+    `john.doe_example.com@testuser.ambient.digital`
     """
 
     @staticmethod
     def get_domain_whitelist() -> list:
         """
         Getter for configuration variable from the settings.
-        Will return a list of domains: ['ambient-innovation.com', 'ambient.digital']
+        Will return a list of domains: ['ambient.digital', 'ambient.digital']
         """
         return getattr(settings, 'EMAIL_BACKEND_DOMAIN_WHITELIST', [])
 
