@@ -3,6 +3,8 @@
 * **5.13.3** (2022-02-23)
   * Added GitHub action matrix for running tests on django/python combinations
   * Updated Ambient email addresses to new domain
+  * Removed django <4.0 restriction
+  * Fixed tests for django 4.0
 
 * **5.13.2** (2022-02-21)
   * `CurrentUserMiddleware` bugfix, cleaning up user variable for single-threaded tests after request processing
