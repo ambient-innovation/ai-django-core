@@ -20,9 +20,11 @@ Example:
 If EMAIL_BACKEND_REDIRECT_ADDRESS is configured, an email to 'albertus.magnus@example.com' will be redirected to:
 albertus.magnus_example.com@testuser.ambient.digital
 
-## Services
+## Class-based Emails
 
-To avoid fiddling around with functions and all the repeating things you have to take care of.
+This package contains an approach called "class-based emails". Similar to class-based views in django (in comparison to
+function-based ones), you can now implement your email as a class and use all the benefits of object-orientated
+programming like fiddling around with functions and all the non-DRY repetition of code you'll usually end up with.
 
 USPs:
 

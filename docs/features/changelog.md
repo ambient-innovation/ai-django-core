@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.13.5** (2022-02-28)
+  * Improved motivation in class-based email docs
+
 * **5.13.4** (2022-02-28)
   * Added Script for updating mirror
   * Fixed typo in documentation
