@@ -1,5 +1,9 @@
 # Changelog
 
+* **5.13.4** (2022-02-28)
+  * Added Script for updating mirror
+  * Fixed typo in documentation
+
 * **5.13.3** (2022-02-23)
   * Added GitHub action matrix for running tests on django/python combinations
   * Updated Ambient email addresses to new domain

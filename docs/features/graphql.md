@@ -198,7 +198,7 @@ class MyFancyTestCase(GraphQLTestCase):
 
 ```
 
-## Graphql with Sentry
+## GraphQL with Sentry
 
 In some cases you might want to include Sentry while using a GraphQL API. This will probably lead to issues
 while using Graphene. This happens because Sentry sends the errors to Sentry as a string and not as error
