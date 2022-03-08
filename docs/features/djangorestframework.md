@@ -65,7 +65,7 @@ from ai_django_core.drf.serializers import CommonInfoSerializer
 
 class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
     created_by = serializers.CharField(source='created_by.username', read_only=True)
-    lastmodified_by = serializers.CharField(source='created_by.username', read_only=True)
+    lastmodified_by = serializers.CharField(source='lastmodified_by.username', read_only=True)
     
     class Meta:
         model = MyOwnershipRelevantModel
