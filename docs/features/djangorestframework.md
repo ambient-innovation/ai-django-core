@@ -36,10 +36,14 @@ validation.
 
 ````
 # models.py
+from ai_django_core.models import CommonInfo
+
 class MyOwnershipRelevantModel(CommonInfo):
     ...
 
 # serializers.py
+from ai_django_core.drf.serializers import CommonInfoSerializer
+
 class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
     class Meta:
         model = MyOwnershipRelevantModel
