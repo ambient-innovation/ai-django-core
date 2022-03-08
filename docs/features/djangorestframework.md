@@ -58,6 +58,36 @@ class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
         fields = ['id', 'name', 'created_at', 'lastmodified_at']
         
     # do your stuff here!
+    
+# access 'verbose' related commoninfo (meaning display name instead of ids)
+# can be acheive as such
+from ai_django_core.drf.serializers import CommonInfoSerializer
+
+class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
+    created_by = serializers.CharField(source='created_by.username', read_only=True)
+    lastmodified_by = serializers.CharField(source='created_by.username', read_only=True)
+    
+    class Meta:
+        model = MyOwnershipRelevantModel
+        
+        # use __all__ to show all fields including the common ones
+        fields = '__all__' 
+
+        # or access them directly with 
+        # 'created_at', 'lastmodified_at',
+        # 'created_by', 'lastmodified_by'
+        # for instance
+        fields = [
+            'id', 
+            'name', 
+            'created_at', 
+            'lastmodified_at', 
+            'created_by', 
+            'lastmodified_by'
+            ]
+        
+    # do your stuff here!
+
 ````
 
 ## Fields
