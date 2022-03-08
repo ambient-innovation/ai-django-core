@@ -47,7 +47,16 @@ from ai_django_core.drf.serializers import CommonInfoSerializer
 class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
     class Meta:
         model = MyOwnershipRelevantModel
+        
+        # use __all__ to show all fields including the common ones
+        fields = '__all__' 
 
+        # or access them directly with 
+        # 'created_at', 'lastmodified_at',
+        # 'created_by', 'lastmodified_by'
+        # for instance
+        fields = [ 'id', 'name', 'created_at', 'lastmodified_at']
+        
     # do your stuff here!
 ````
 
