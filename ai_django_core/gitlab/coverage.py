@@ -59,7 +59,7 @@ class CoverageService:
         jobs_url = f'{self.base_api_url}/projects/{self.project_id}/pipelines/{pipeline_id}/jobs'
         jobs_with_token_url = f'{jobs_url}?private_token={self.token}'
 
-        print(f'Jobs URL: {jobs_url}')
+        print(f'Jobs-API-URL: {jobs_url}')
         jobs_response = httpx.get(jobs_with_token_url)
         jobs_status_code = jobs_response.status_code
 
@@ -67,13 +67,14 @@ class CoverageService:
             raise ConnectionError(f'Call to jobs api endpoint failed with status code {jobs_status_code}')
 
         jobs = json.loads(jobs_response.content)
-        coverages = {job['name']: float(job['coverage']) for job in jobs if job.get('coverage')}
+        coverages = {
+            job['name']: {'coverage': float(job['coverage']), 'url': job['web_url']}
+            for job in jobs
+            if job.get('coverage')
+        }
 
-        pipeline_url = (
-            f'{self.base_api_url}/projects/{self.project_id}/pipelines/{pipeline_id}'
-        )
+        pipeline_url = f'{self.base_api_url}/projects/{self.project_id}/pipelines/{pipeline_id}'
         pipeline_with_token_url = f'{pipeline_url}?private_token={self.token}'
-        print(f'Pipeline URL: {pipeline_url}')
         pipeline_response = httpx.get(pipeline_with_token_url)
         pipeline_status_code = pipeline_response.status_code
 
@@ -82,10 +83,16 @@ class CoverageService:
 
         pipeline = json.loads(pipeline_response.content)
         coverages_total = float(pipeline['coverage'] if pipeline['coverage'] else 0.0)
+        print(f'Pipeline-API-URL: {pipeline_url}')
+        print(f'Pipeline-URL: {pipeline["web_url"]}')
 
         if job_name == '':
             return coverages_total, coverages_total
-        return coverages.get(job_name) if coverages.get(job_name) else 0.0, coverages_total
+
+        coverage_job = coverages.get(job_name)
+
+        print(f'Job-URL: {coverage_job["web_url"]}')
+        return coverage_job['coverage'] if coverage_job else 0.0, coverages_total
 
     @staticmethod
     def color_text(sign: int, prefix: str, target: float, current: float, diff: float):
@@ -136,7 +143,7 @@ class CoverageService:
             print("Didn't work. Using default branch for comparison.")
             response = httpx.get(self.pipelines_url_with_token)
             status_code = response.status_code
-            print(f'Pipelines-URL: {self.pipelines_url}')
+            print(f'Pipelines-API-URL: {self.pipelines_url}')
 
             # Ensure call did not go sideways
             if status_code != 200:
@@ -159,7 +166,7 @@ class CoverageService:
         # numeric value of the coverage diff sign
         sign_job_coverage = (current_job_coverage > target_job_coverage) - (current_job_coverage < target_job_coverage)
         sign_total_coverage = (current_total_coverage > target_total_coverage) - (
-                current_total_coverage < target_total_coverage
+            current_total_coverage < target_total_coverage
         )
 
         # difference between current and target coverage
