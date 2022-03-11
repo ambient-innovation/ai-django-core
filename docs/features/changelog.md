@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.13.6** (2022-02-28)
+  * Improved console logging for coverage validator
+
 * **5.13.5** (2022-02-28)
   * Improved motivation in class-based email docs
 
