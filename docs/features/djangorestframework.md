@@ -88,7 +88,7 @@ class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
             'created_at', 
             'lastmodified_at', 
             'created_by', 
-            'lastmodified_by'
+            'lastmodified_by',
             ]
         
     # do your stuff here!
