@@ -49,7 +49,7 @@ class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
         model = MyOwnershipRelevantModel
         
         # use __all__ to show all fields including the common ones
-        fields = '__all__' 
+        # fields = '__all__' 
 
         # or access them directly with 
         # 'created_at', 'lastmodified_at',
@@ -76,7 +76,7 @@ class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
         model = MyOwnershipRelevantModel
         
         # use __all__ to show all fields including the common ones
-        fields = '__all__' 
+        # fields = '__all__' 
 
         # or access them directly with 
         # 'created_at', 'lastmodified_at',
