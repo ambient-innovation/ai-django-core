@@ -55,7 +55,7 @@ class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
         # 'created_at', 'lastmodified_at',
         # 'created_by', 'lastmodified_by'
         # for instance
-        fields = ['id', 'name', 'created_at', 'lastmodified_at']
+        # fields = ['id', 'name', 'created_at', 'lastmodified_at']
         
     # do your stuff here!
     
@@ -82,14 +82,14 @@ class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
         # 'created_at', 'lastmodified_at',
         # 'created_by', 'lastmodified_by'
         # for instance
-        fields = [
-            'id', 
-            'name', 
-            'created_at', 
-            'lastmodified_at', 
-            'created_by', 
-            'lastmodified_by',
-            ]
+        # fields = [
+        #    'id', 
+        #    'name', 
+        #    'created_at', 
+        #    'lastmodified_at', 
+        #    'created_by', 
+        #    'lastmodified_by',
+        #    ]
         
     # do your stuff here!
 
