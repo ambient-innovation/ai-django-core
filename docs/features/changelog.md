@@ -1,6 +1,9 @@
 # Changelog
 
-* **5.13.6** (2022-02-28)
+* **5.13.7** (2022-03-14)
+  * Fixed typo in coverage validator
+
+* **5.13.6** (2022-03-11)
   * Improved console logging for coverage validator
 
 * **5.13.5** (2022-02-28)
