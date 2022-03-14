@@ -68,7 +68,7 @@ class CoverageService:
 
         jobs = json.loads(jobs_response.content)
         coverages = {
-            job['name']: {'coverage': float(job['coverage']), 'url': job['web_url']}
+            job['name']: {'coverage': float(job['coverage']), 'web_url': job['web_url']}
             for job in jobs
             if job.get('coverage')
         }
