@@ -60,7 +60,7 @@ class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
     # do your stuff here!
     
 # access 'verbose' related commoninfo (meaning display name instead of ids)
-# can be acheive as such
+# can be achieved as such
 from ai_django_core.drf.serializers import CommonInfoSerializer
 
 class MyOwnershipRelevantModelSerializer(CommonInfoSerializer)
