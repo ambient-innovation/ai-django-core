@@ -1,3 +1,5 @@
+import re
+
 from django.core import mail
 from django.core.mail import EmailMultiAlternatives
 from django.test import TestCase
@@ -118,6 +120,18 @@ class EmailTestServiceTest(TestCase):
     def test_filter_to_cc_bcc_subject_invalid(self):
         qs = self.ets.filter(to=self.to, cc=self.cc, bcc=self.bcc, subject='Not my subject')
         self.assertEqual(qs.count(), 0)
+
+    def test_filter_subject_regex_invalid(self):
+        qs = self.ets.filter(subject=re.compile('Not my subject'))
+        self.assertEqual(qs.count(), 0)
+
+    def test_filter_subject_regex_valid_single(self):
+        qs = self.ets.filter(subject=re.compile('definitely not'))
+        self.assertEqual(qs.count(), 1)
+
+    def test_filter_subject_regex_valid_multiple(self):
+        qs = self.ets.filter(subject=re.compile('other|spam', flags=re.IGNORECASE))
+        self.assertEqual(qs.count(), 2)
 
     def test_all(self):
         # Assertion

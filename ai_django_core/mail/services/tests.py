@@ -1,8 +1,9 @@
+import re
 from typing import List
+import warnings
 
 from django.core import mail
 from django.test import TestCase
-import warnings
 
 
 class EmailTestService:
@@ -36,11 +37,17 @@ class EmailTestService:
         :param to: str
         :param cc: str
         :param bcc: str
-        :param subject: str
+        :param subject: str | re.Pattern
         :return: EmailTestService
         """
         # Ensure that outbox is up-to-date
         self.reload()
+
+        if not any([to, cc, bcc, subject]):
+            raise ValueError('EmailTestService.filter called without parameters')
+
+        if subject and not isinstance(subject, re.Pattern):
+            subject = re.compile(f"^{re.escape(subject)}$")
 
         match_list = []
         for email in self._outbox:
@@ -52,10 +59,8 @@ class EmailTestService:
                 match = False
             if bcc and bcc not in email.bcc:
                 match = False
-            if subject and not email.subject == subject:
+            if subject and not re.search(subject, email.subject):
                 match = False
-            if not to and not cc and not bcc and not subject:
-                raise ValueError('EmailTestService finder called without parameters')
 
             # Add email if all set conditions are valid
             if match:
