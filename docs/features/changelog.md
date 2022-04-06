@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.14.0** (2022-04-06)
+  * `EmailTestService` can now filter for subjects using regular expressions
+
 * **5.13.7** (2022-03-14)
   * Fixed typo in coverage validator
 
