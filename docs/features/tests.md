@@ -37,11 +37,18 @@ The easiest thing to do is get all emails:
 
     list_of_emails = self.email_test_service.all()
 
-Maybe you want a specific one? You can filter for a given subject or a recipient, meaning the to, cc and bcc attributes:
+Maybe you want a specific one? You can filter for a given subject by using
+a string or a regular expression. Additionally, you can filter for a recipient,
+the to, cc and bcc attributes:
 
 ````
+import re
+
 # Get all mails with given subject
 my_email = self.email_test_service.filter(subject='Nigerian prince')
+
+# Get all mails with given subject using a regular expression
+my_email = self.email_test_service.filter(subject=re.compile('Ni(.*) prince'))
 
 # Get all mails with given to-recipient
 my_email = self.email_test_service.filter(to='foo@bar.com')
@@ -79,7 +86,6 @@ last_mail = self.email_test_service.filter(subject='Nigerian prince').last()
 
 It is very common that you expect one specific email, and you want to know if your mail queryset contains exactly this
 element. So there is a helper function for this, too:
-
 ````
 # Returns `True` if the queryset contains exactly one item
 self.email_test_service.filter(subject='Nigerian prince').one()
