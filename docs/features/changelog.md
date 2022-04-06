@@ -1,5 +1,8 @@
 # Changelog
 
+* **5.14.1** (2022-04-06)
+  * Dropped support for deprecated Python 3.6
+
 * **5.14.0** (2022-04-06)
   * `EmailTestService` can now filter for subjects using regular expressions
 
