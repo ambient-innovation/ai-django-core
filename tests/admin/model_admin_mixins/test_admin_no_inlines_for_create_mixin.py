@@ -16,7 +16,6 @@ class TestAdminNoInlinesForCreateMixinAdmin(AdminNoInlinesForCreateMixin, admin.
 
 
 class AdminNoInlinesForCreateMixinTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -34,11 +33,12 @@ class AdminNoInlinesForCreateMixinTest(RequestProviderMixin, TestCase):
     def test_inlines_are_removed_on_create(self):
         model_admin = TestAdminNoInlinesForCreateMixinAdmin(model=MySingleSignalModel, admin_site=admin.site)
 
-        self.assertEqual(model_admin.get_inline_instances(
-            self.get_request(self.super_user), obj=None), [])
+        self.assertEqual(model_admin.get_inline_instances(self.get_request(self.super_user), obj=None), [])
 
     def test_inlines_are_not_removed_on_edit(self):
         model_admin = TestAdminNoInlinesForCreateMixinAdmin(model=MySingleSignalModel, admin_site=admin.site)
 
-        self.assertEqual(len(model_admin.get_inline_instances(
-            self.get_request(self.super_user), obj=MySingleSignalModel(value=1))), 1)
+        self.assertEqual(
+            len(model_admin.get_inline_instances(self.get_request(self.super_user), obj=MySingleSignalModel(value=1))),
+            1,
+        )

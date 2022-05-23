@@ -6,9 +6,8 @@ from ai_django_core.admin.views.forms import AdminCrispyForm
 
 
 class AdminFormTest(TestCase):
-
     def test_admin_crispy_form_regular(self):
-        # Form provides mostly styling so we just validate that it renders
+        # Form provides mostly styling, so we just validate that it renders
         form = AdminCrispyForm()
 
         self.assertIsInstance(form.helper, FormHelper)

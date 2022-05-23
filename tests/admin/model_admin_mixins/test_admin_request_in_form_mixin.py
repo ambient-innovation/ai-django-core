@@ -13,7 +13,6 @@ class TestAdminRequestInFormMixinAdmin(AdminRequestInFormMixin, admin.ModelAdmin
 
 
 class AdminRequestInFormMixinTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()

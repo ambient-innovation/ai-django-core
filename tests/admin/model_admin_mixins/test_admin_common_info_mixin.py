@@ -21,7 +21,6 @@ class TestCommonInfoAdminMixinAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
 
 
 class CommonInfoAdminMixinTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()

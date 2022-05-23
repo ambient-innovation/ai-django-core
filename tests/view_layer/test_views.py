@@ -7,7 +7,6 @@ from ai_django_core.view_layer.views import ToggleView
 
 
 class ToggleViewTest(RequestProviderMixin, TestCase):
-
     def test_http_method_set_correctly(self):
         self.assertEqual(ToggleView.http_method_names, ('post',))
 

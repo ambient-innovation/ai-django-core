@@ -49,6 +49,31 @@ This package contains various useful helper functions. You can read up on all th
   pytest
   ````
 
+## Git hooks (via pre-commit)
+
+We use pre-push hooks to ensure that only linted code reaches our remote repository and pipelines aren't triggered in
+vain.
+
+To enable the configured pre-push hooks, you need to [install](https://pre-commit.com/) pre-commit and run once:
+
+    pre-commit install -t pre-push -t pre-commit --install-hooks
+
+This will permanently install the git hooks for both, frontend and backend, in your local
+[`.git/hooks`](./.git/hooks) folder.
+The hooks are configured in the [`.pre-commit-config.yaml`](.pre-commit-config.yaml).
+
+You can check whether hooks work as intended using the [run](https://pre-commit.com/#pre-commit-run) command:
+
+    pre-commit run [hook-id] [options]
+
+Example: run single hook
+
+    pre-commit run flake8 --all-files --hook-stage push
+
+Example: run all hooks of pre-push stage
+
+    pre-commit run --all-files --hook-stage push
+
 ## Update documentation
 
 - To generate new auto-docs for new modules run: `sphinx-apidoc -o ./docs/modules/ ./ai_django_core/` (in the current

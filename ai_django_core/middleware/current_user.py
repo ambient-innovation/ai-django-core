@@ -15,6 +15,7 @@ class CurrentUserMiddleware(MiddlewareMixin):
     Middleware which stores request's user into global thread-safe variable.
     Must be introduced AFTER `django.contrib.auth.middleware.AuthenticationMiddleware`.
     """
+
     def process_request(self, request):
         _user.value = request.user
 

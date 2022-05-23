@@ -5,7 +5,6 @@ from testapp.models import MySingleSignalModel
 
 
 class UtilModelTest(TestCase):
-
     def test_object_to_dict_regular(self):
         obj = MySingleSignalModel.objects.create(value=17)
         self.assertEqual(object_to_dict(obj), {'value': obj.value})

@@ -20,12 +20,23 @@ class CreatedAtInfo(models.Model):
 
 
 class CommonInfo(CreatedAtInfo, models.Model):
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Created by"), blank=True, null=True,
-                                   related_name="%(app_label)s_%(class)s_created", on_delete=models.SET_NULL)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_("Created by"),
+        blank=True,
+        null=True,
+        related_name="%(app_label)s_%(class)s_created",
+        on_delete=models.SET_NULL,
+    )
     lastmodified_at = models.DateTimeField(_("Last modified at"), default=now, db_index=True)
-    lastmodified_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Last modified by"), blank=True,
-                                        null=True, related_name="%(app_label)s_%(class)s_lastmodified",
-                                        on_delete=models.SET_NULL)
+    lastmodified_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_("Last modified by"),
+        blank=True,
+        null=True,
+        related_name="%(app_label)s_%(class)s_lastmodified",
+        on_delete=models.SET_NULL,
+    )
 
     @staticmethod
     def get_current_user():

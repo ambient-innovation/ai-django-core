@@ -5,7 +5,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.test import TestCase, override_settings
 from freezegun import freeze_time
 
-from ai_django_core.mail.errors import EmailServiceConfigError, EmailServiceAttachmentError
+from ai_django_core.mail.errors import EmailServiceAttachmentError, EmailServiceConfigError
 from ai_django_core.mail.services.base import BaseEmailService, BaseEmailServiceFactory
 
 
@@ -88,7 +88,6 @@ class BaseEmailServiceFactoryTest(TestCase):
 
 
 class BaseEmailServiceTest(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -279,8 +278,9 @@ class BaseEmailServiceTest(TestCase):
         subject = 'Test email'
         my_var = 'Lorem ipsum dolor!'
         file_path = settings.BASE_PATH / 'tests/files/testfile.txt'
-        service = BaseEmailService(recipient_email_list=[email], context_data={'my_var': my_var},
-                                   attachment_list=[file_path])
+        service = BaseEmailService(
+            recipient_email_list=[email], context_data={'my_var': my_var}, attachment_list=[file_path]
+        )
         service.FROM_EMAIL = from_email
         service.REPLY_TO_ADDRESS = reply_to_email
         service.subject = subject
@@ -295,8 +295,9 @@ class BaseEmailServiceTest(TestCase):
 
     def test_setting_txt_templates_works(self):
         my_var = 'Lorem ipsum dolor!'
-        service = BaseEmailService(recipient_email_list=['albertus.magnus@example.com'],
-                                   context_data={'my_var': my_var})
+        service = BaseEmailService(
+            recipient_email_list=['albertus.magnus@example.com'], context_data={'my_var': my_var}
+        )
         service.FROM_EMAIL = 'noreply@example.com'
         service.subject = 'Test mail'
         service.template_name = 'test_email.html'

@@ -1,4 +1,4 @@
-from django.db.models import QuerySet, Manager
+from django.db.models import Manager, QuerySet
 
 
 class AbstractPermissionMixin:
@@ -20,9 +20,10 @@ class AbstractPermissionMixin:
 
 
 class AbstractUserSpecificQuerySet(QuerySet, AbstractPermissionMixin):
-    """"
+    """
     Extend this queryset in your model if you want to implement a visible_for functionality.
     """
+
     def default(self, user):
         return self
 

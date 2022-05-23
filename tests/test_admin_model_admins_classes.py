@@ -2,9 +2,9 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from ai_django_core.admin.model_admins.classes import ReadOnlyAdmin, EditableOnlyAdmin
+from ai_django_core.admin.model_admins.classes import EditableOnlyAdmin, ReadOnlyAdmin
 from ai_django_core.tests.mixins import RequestProviderMixin
-from testapp.models import MySingleSignalModel, MyMultipleSignalModel
+from testapp.models import MyMultipleSignalModel, MySingleSignalModel
 
 
 class TestReadOnlyAdmin(ReadOnlyAdmin):
@@ -16,7 +16,6 @@ class TestEditableOnlyAdmin(EditableOnlyAdmin):
 
 
 class AdminClassesTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()

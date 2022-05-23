@@ -15,6 +15,7 @@ class DateHelper:
     Constants to use for django ORMs `__weekday` lookup to avoid usage of integers directly.
     Unfortunately python's calendar weekdays are not equivalent to the database ones.
     """
+
     ORM_SUNDAY = 1
     ORM_MONDAY = 2
     ORM_TUESDAY = 3
@@ -40,13 +41,15 @@ def tz_today(str_format=None):
     return date
 
 
-def add_months(source_date: Union[datetime.date, datetime.datetime], months: Union[int, float]) -> \
-        Union[datetime.date, datetime.datetime]:
+def add_months(
+    source_date: Union[datetime.date, datetime.datetime], months: Union[int, float]
+) -> Union[datetime.date, datetime.datetime]:
     return source_date + relativedelta(months=months)
 
 
-def add_days(source_date: Union[datetime.date, datetime.datetime], days: int) -> \
-        Union[datetime.date, datetime.datetime]:
+def add_days(
+    source_date: Union[datetime.date, datetime.datetime], days: int
+) -> Union[datetime.date, datetime.datetime]:
     return source_date + datetime.timedelta(days=days)
 
 

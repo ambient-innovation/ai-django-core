@@ -2,7 +2,6 @@ from rest_framework.serializers import ModelSerializer
 
 
 class BaseModelSerializer(ModelSerializer):
-
     def validate(self, data):
         """
         Call Model's clean() method to ensure model-level-validation

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.reverse import reverse
@@ -32,20 +32,19 @@ class MySingleSignalModelApiViewTest(BaseApiTest):
                 method='post',
                 url=reverse('my-single-signal-model-list'),
                 viewset_kwargs={'post': 'create'},
-                user=self.default_api_user)
+                user=self.default_api_user,
+            )
 
     def test_list_authentication_required(self):
-        self.validate_authentication_required(
-            url=reverse('my-single-signal-model-list'),
-            method='get',
-            view='list')
+        self.validate_authentication_required(url=reverse('my-single-signal-model-list'), method='get', view='list')
 
     def test_list_regular(self):
         response = self.execute_request(
             method='get',
             url=reverse('my-single-signal-model-list'),
             viewset_kwargs={'get': 'list'},
-            user=self.default_api_user)
+            user=self.default_api_user,
+        )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), len(self.object_list))

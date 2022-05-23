@@ -7,6 +7,7 @@ class AdminCreateFormMixin:
     Mixin to easily use a different form for the create case (in comparison to "edit") in the django admin
     Logic copied from `django.contrib.auth.admin.UserAdmin`
     """
+
     add_form = None
 
     def get_form(self, request, obj=None, **kwargs):
@@ -44,6 +45,7 @@ class FetchParentObjectInlineMixin:
     Fetches the parent object via the URL resolver and makes it available throughout the entire class.
     Attention: Use only in inline admin classes.
     """
+
     parent_object = None
 
     @staticmethod
@@ -81,8 +83,12 @@ class CommonInfoAdminMixin:
     """
 
     def get_readonly_fields(self, request, obj=None):
-        return super().get_readonly_fields(request, obj) + ('created_by', 'lastmodified_by', 'created_at',
-                                                            'lastmodified_at')
+        return super().get_readonly_fields(request, obj) + (
+            'created_by',
+            'lastmodified_by',
+            'created_at',
+            'lastmodified_at',
+        )
 
     def save_form(self, request, form, change):
         if form.instance and request.user:
@@ -97,6 +103,7 @@ class DeactivatableChangeViewAdminMixin:
     """
     Mixin to be used in model admins to disable the detail page / change view.
     """
+
     enable_change_view = True
 
     def can_see_change_view(self, request) -> bool:
@@ -124,8 +131,10 @@ class DeactivatableChangeViewAdminMixin:
             return super().change_view(request, *args, **kwargs)
         else:
             opts = self.model._meta
-            url = reverse('admin:{app}_{model}_changelist'.format(
-                app=opts.app_label,
-                model=opts.model_name,
-            ))
+            url = reverse(
+                'admin:{app}_{model}_changelist'.format(
+                    app=opts.app_label,
+                    model=opts.model_name,
+                )
+            )
             return HttpResponseRedirect(url)

@@ -6,7 +6,7 @@ from django.test import TestCase
 
 from ai_django_core.admin.model_admins.mixins import FetchParentObjectInlineMixin
 from ai_django_core.tests.mixins import RequestProviderMixin
-from testapp.models import MySingleSignalModel, ForeignKeyRelatedModel
+from testapp.models import ForeignKeyRelatedModel, MySingleSignalModel
 
 
 class ForeignKeyRelatedModelTabularInline(FetchParentObjectInlineMixin, admin.TabularInline):
@@ -22,7 +22,6 @@ class MockResolverResponse:
 
 
 class FetchParentObjectInlineMixinTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()

@@ -1,0 +1,29 @@
+# you find the full pre-commit-tools docu under:
+# https://pre-commit.com/
+
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        args: [ --check, --diff, --config, ./pyproject.toml ]
+        language_version: python3.10
+        stages: [ push ]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: isort
+        args: [ --profile, black, --check, --diff ]
+        language_version: python3.10
+        stages: [ push ]
+
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        additional_dependencies: [ pep8-naming ]
+        args: [ --config=./setup.cfg, -v, --count ]
+        language_version: python3.10
+        stages: [ push ]

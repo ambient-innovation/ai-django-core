@@ -29,7 +29,6 @@ class TestManyFalseSerializer(serializers.ModelSerializer):
 
 
 class RecursiveFieldTest(TestCase):
-
     def test_many_true_regular(self):
         serializer = TestManyTrueSerializer()
 

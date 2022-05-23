@@ -9,15 +9,11 @@ def gen_test_file(tmp_path):
         test_file = tmp_path / 'test_file.txt'
         test_file.write_text(content)
         return test_file
+
     return inner
 
 
-@pytest.mark.parametrize(
-    'test_func', [
-        crc,
-        md5_checksum
-    ]
-)
+@pytest.mark.parametrize('test_func', [crc, md5_checksum])
 def test_closes_file(mocker, test_func):
     """
     Tests if the CRC and MD5 checksum functions use a context manager to open the file, to guarantee that the opened
@@ -32,11 +28,12 @@ def test_closes_file(mocker, test_func):
 
 
 @pytest.mark.parametrize(
-    'content, crc_result, md5_result', [
+    'content, crc_result, md5_result',
+    [
         ('The answer to life, the universe, and everything.\n', '0988D2CD', '4efb6393969f501be5c1ba7571f0c09f'),
         ('The quick brown fox jumps over the lazy dog', '414FA339', '9e107d9d372bb6826bd81d3542a419d6'),
-        ('', '00000000', 'd41d8cd98f00b204e9800998ecf8427e')
-    ]
+        ('', '00000000', 'd41d8cd98f00b204e9800998ecf8427e'),
+    ],
 )
 def test_crc_and_md5(gen_test_file, content, crc_result, md5_result):
     """Generates the CRC and MD5 of a test file and checks its result"""

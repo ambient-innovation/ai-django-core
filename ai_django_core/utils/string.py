@@ -70,8 +70,9 @@ def date_to_string(value: Optional[datetime.date], replacement: str = "-", str_f
     return value.strftime(str_format) if value is not None else replacement
 
 
-def datetime_to_string(value: Optional[datetime.datetime], replacement: str = "-",
-                       str_format: str = "%d.%m.%Y %H:%M") -> str:
+def datetime_to_string(
+    value: Optional[datetime.datetime], replacement: str = "-", str_format: str = "%d.%m.%Y %H:%M"
+) -> str:
     """
     Converts a given datetime "value" to a string formatted with `str_format`.
     If the passed "value" is None, it will return `replacement`.

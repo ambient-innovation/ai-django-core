@@ -31,8 +31,9 @@ class WhitelistEmailBackend(SMTPEmailBackend):
         Getter for configuration variable from the settings.
         Will return a RegEX to match email whitelisted domains.
         """
-        return r'^[\w\-\.]+@(%s)$' % '|'.join(x for x in
-                                              WhitelistEmailBackend.get_domain_whitelist()).replace('.', r'\.')
+        return r'^[\w\-\.]+@(%s)$' % '|'.join(x for x in WhitelistEmailBackend.get_domain_whitelist()).replace(
+            '.', r'\.'
+        )
 
     @staticmethod
     def get_backend_redirect_address() -> str:

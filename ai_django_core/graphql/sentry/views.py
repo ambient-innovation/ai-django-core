@@ -15,6 +15,7 @@ class SentryGraphQLView(GraphQLView):
         * sentry_sdk >= 0.13.0
         * graphene_django >=2.9.1, <3.0
     """
+
     def execute_graphql_request(self, *args, **kwargs):
         """Extract any exceptions and send them to Sentry"""
         result = super().execute_graphql_request(*args, **kwargs)

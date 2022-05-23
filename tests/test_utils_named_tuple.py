@@ -2,11 +2,10 @@ from collections import OrderedDict
 
 from django.test import TestCase
 
-from ai_django_core.utils import get_value_from_tuple_by_key, get_key_from_tuple_by_value, get_namedtuple_choices
+from ai_django_core.utils import get_key_from_tuple_by_value, get_namedtuple_choices, get_value_from_tuple_by_key
 
 
 class UtilsNamedTupleTest(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -21,10 +20,13 @@ class UtilsNamedTupleTest(TestCase):
             (cls.MY_CHOICE_THREE, "Choice 3"),
         )
 
-        cls.colors_choices = get_namedtuple_choices('COLORS', (
-            (1, 'black', 'Black'),
-            (2, 'white', 'White'),
-        ))
+        cls.colors_choices = get_namedtuple_choices(
+            'COLORS',
+            (
+                (1, 'black', 'Black'),
+                (2, 'white', 'White'),
+            ),
+        )
 
     def test_get_namedtuple_choices_regular(self):
         self.assertEqual(self.colors_choices.black, 1)

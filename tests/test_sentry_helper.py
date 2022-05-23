@@ -4,7 +4,6 @@ from ai_django_core.sentry.helpers import strip_sensitive_data_from_sentry_event
 
 
 class SentryHelperTest(TestCase):
-
     def test_strip_sensitive_data_from_sentry_event_regular(self):
         event = {'user': {'email': 'mymail@example.com', 'ip_address': '127.0.0.1', 'username': 'my-user'}}
 

@@ -1,12 +1,13 @@
 import json
 
-from django.test import TestCase, Client
+from django.test import Client, TestCase
 
 
 class GraphQLTestCase(TestCase):
     """
     Provides a best-practice wrapper for easily testing GraphQL endpoints.
     """
+
     # URL to graphql endpoint
     GRAPHQL_URL = '/graphql/'
     # Here you need to set your graphql schema for the tests
@@ -36,8 +37,7 @@ class GraphQLTestCase(TestCase):
         if input_data:
             body['variables'] = {'input': input_data}
 
-        resp = self._client.post(self.GRAPHQL_URL, json.dumps(body),
-                                 content_type='application/json')
+        resp = self._client.post(self.GRAPHQL_URL, json.dumps(body), content_type='application/json')
         return resp
 
     def assertResponseNoErrors(self, resp):

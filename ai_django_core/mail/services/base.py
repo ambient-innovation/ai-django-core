@@ -8,13 +8,14 @@ from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 
-from ..errors import EmailServiceConfigError, EmailServiceAttachmentError
+from ..errors import EmailServiceAttachmentError, EmailServiceConfigError
 
 
 class BaseEmailServiceFactory:
     """
     Factory for creating emails of the same type but with recipient-dependent content.
     """
+
     _errors = []
 
     service_class = None
@@ -90,8 +91,10 @@ class BaseEmailServiceFactory:
         counter = 0
         if self.is_valid(raise_exception=raise_exception):
             for recipient in self.get_recipient_list():
-                email_object = self.service_class(recipient_email_list=[self.get_email_from_recipient(recipient)],
-                                                  context_data={'recipient': recipient, **self.get_context_data()})
+                email_object = self.service_class(
+                    recipient_email_list=[self.get_email_from_recipient(recipient)],
+                    context_data={'recipient': recipient, **self.get_context_data()},
+                )
                 email_object.process()
                 counter += 1
 
@@ -102,6 +105,7 @@ class BaseEmailService:
     """
     Class for wrapping all required things for email creation.
     """
+
     SUBJECT_PREFIX = None
     FROM_EMAIL = None
     REPLY_TO_ADDRESS = []
@@ -116,11 +120,13 @@ class BaseEmailService:
     bcc_email_list = []
     attachment_list = []
 
-    def __init__(self,
-                 recipient_email_list: Union[list, str] = None,
-                 context_data: dict = None,
-                 attachment_list: list = None,
-                 **kwargs) -> None:
+    def __init__(
+        self,
+        recipient_email_list: Union[list, str] = None,
+        context_data: dict = None,
+        attachment_list: list = None,
+        **kwargs,
+    ) -> None:
         """
         Initialisation takes a single or list of email addresses and some context data. This context data
         might be provided from the factory to avoid querying data more than necessary.
@@ -202,8 +208,9 @@ class BaseEmailService:
                 try:
                     msg.attach(attachment['filename'], attachment['file'], attachment.get('mimetype', None))
                 except KeyError as e:
-                    raise EmailServiceAttachmentError(_('Missing or mislabeled data provided for email attachment.')) \
-                        from e
+                    raise EmailServiceAttachmentError(
+                        _('Missing or mislabeled data provided for email attachment.')
+                    ) from e
             else:
                 msg.attach_file(attachment)
 
@@ -236,12 +243,15 @@ class BaseEmailService:
             text_content = render_to_string(self.template_txt_name, mail_attributes)
 
         # Build mail object
-        msg = EmailMultiAlternatives(self.get_subject(), text_content,
-                                     from_email=self.get_from_email(),
-                                     cc=self.get_cc_emails(),
-                                     bcc=self.get_bcc_emails(),
-                                     reply_to=self.get_reply_to_emails(),
-                                     to=self.recipient_email_list)
+        msg = EmailMultiAlternatives(
+            self.get_subject(),
+            text_content,
+            from_email=self.get_from_email(),
+            cc=self.get_cc_emails(),
+            bcc=self.get_bcc_emails(),
+            reply_to=self.get_reply_to_emails(),
+            to=self.recipient_email_list,
+        )
         msg.attach_alternative(html_content, "text/html")
 
         # Add attachments (if available)

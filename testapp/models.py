@@ -4,6 +4,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from ai_django_core.managers import GloballyVisibleQuerySet
+from ai_django_core.mixins.validation import CleanOnSaveMixin
 from ai_django_core.models import CommonInfo
 
 
@@ -14,8 +15,9 @@ class MySingleSignalModel(models.Model):
 
 
 class ForeignKeyRelatedModel(models.Model):
-    single_signal = models.ForeignKey(MySingleSignalModel, on_delete=models.CASCADE,
-                                      related_name='foreign_key_related_models')
+    single_signal = models.ForeignKey(
+        MySingleSignalModel, on_delete=models.CASCADE, related_name='foreign_key_related_models'
+    )
 
     objects = GloballyVisibleQuerySet.as_manager()
 
@@ -36,9 +38,9 @@ def increase_value_with_dispatch_uid(sender, instance, **kwargs):
 
 @receiver(post_save, sender=MyMultipleSignalModel)
 def send_email(sender, instance, **kwargs):
-    msg = EmailMultiAlternatives('Test Mail', 'I am content',
-                                 from_email='test@example.com',
-                                 to=['random.dude@example.com'])
+    msg = EmailMultiAlternatives(
+        'Test Mail', 'I am content', from_email='test@example.com', to=['random.dude@example.com']
+    )
     msg.send()
 
 
@@ -52,3 +54,8 @@ class ModelWithFkToSelf(models.Model):
 
 class ModelWithOneToOneToSelf(models.Model):
     peer = models.OneToOneField('self', blank=True, null=True, related_name='related_peer', on_delete=models.CASCADE)
+
+
+class ModelWithCleanMixin(CleanOnSaveMixin, models.Model):
+    def clean(self):
+        return True
