@@ -15,7 +15,16 @@ variables:
 services:
   - docker:18.09-dind
 
-lint:
+black and isort:
+  image: python:3.9-slim
+  stage: lint
+  tags:
+    - normal-load
+  script:
+    - pip install black isort typing-extensions
+    - black --check --diff --color . && isort . --profile black --check --diff
+
+flake8:
   image: python:3.9-slim
   stage: lint
   tags:

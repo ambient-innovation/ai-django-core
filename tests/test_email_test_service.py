@@ -4,11 +4,10 @@ from django.core import mail
 from django.core.mail import EmailMultiAlternatives
 from django.test import TestCase
 
-from ai_django_core.mail.services.tests import EmailTestService, EmailTestServiceQuerySet, EmailTestServiceMail
+from ai_django_core.mail.services.tests import EmailTestService, EmailTestServiceMail, EmailTestServiceQuerySet
 
 
 class EmailTestServiceTest(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -39,8 +38,9 @@ class EmailTestServiceTest(TestCase):
         mail.outbox.append(email)
 
         # Create second email per test case
-        email = EmailMultiAlternatives(self.other_mail_subject, self.text_content, to=['to@world.com'],
-                                       cc=['cc@world.com'], bcc=['bcc@world.com'])
+        email = EmailMultiAlternatives(
+            self.other_mail_subject, self.text_content, to=['to@world.com'], cc=['cc@world.com'], bcc=['bcc@world.com']
+        )
         email.attach_alternative(self.html_content, "text/html")
         mail.outbox.append(email)
 
@@ -52,8 +52,9 @@ class EmailTestServiceTest(TestCase):
     def test_outbox_is_updated(self):
         self.assertEqual(self.ets.all().count(), 2)
         # Create third mail
-        email = EmailMultiAlternatives(self.other_mail_subject, self.text_content, to=['to@world.com'],
-                                       cc=['cc@world.com'], bcc=['bcc@world.com'])
+        email = EmailMultiAlternatives(
+            self.other_mail_subject, self.text_content, to=['to@world.com'], cc=['cc@world.com'], bcc=['bcc@world.com']
+        )
         email.attach_alternative(self.html_content, "text/html")
         mail.outbox.append(email)
         self.assertEqual(self.ets.all().count(), 3)
@@ -144,8 +145,7 @@ class EmailTestServiceTest(TestCase):
 
     def test_validate_lookup_cache_contains_one_element_false(self):
         self.assertEqual(self.ets.filter(subject=self.subject).count(), 1)
-        self.assertEqual(self.ets.filter(subject=self.subject)._validate_lookup_cache_contains_one_element(),
-                         None)
+        self.assertEqual(self.ets.filter(subject=self.subject)._validate_lookup_cache_contains_one_element(), None)
 
     def test_ensure_matching_list_was_populated_false(self):
         self.assertRaises(RuntimeError, EmailTestServiceQuerySet()._ensure_matching_list_was_populated)

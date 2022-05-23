@@ -3,12 +3,20 @@ import datetime
 import pytz
 from django.test import TestCase
 
-from ai_django_core.utils.string import slugify_file_name, distinct, smart_truncate, float_to_string, date_to_string, \
-    datetime_to_string, number_to_string, string_or_none_to_string, encode_to_xml
+from ai_django_core.utils.string import (
+    date_to_string,
+    datetime_to_string,
+    distinct,
+    encode_to_xml,
+    float_to_string,
+    number_to_string,
+    slugify_file_name,
+    smart_truncate,
+    string_or_none_to_string,
+)
 
 
 class UtilsStringTest(TestCase):
-
     def test_distinct_regular(self):
         not_distinct_list = ['Beer', 'Wine', 'Whiskey', 'Beer']
         distinct_list = distinct(not_distinct_list)
@@ -78,12 +86,12 @@ class UtilsStringTest(TestCase):
         self.assertEqual(date_to_string(None, 'no date'), 'no date')
 
     def test_datetime_to_string_regular(self):
-        self.assertEqual(datetime_to_string(datetime.datetime(2020, 9, 19, 8, tzinfo=pytz.UTC)),
-                         '19.09.2020 08:00')
+        self.assertEqual(datetime_to_string(datetime.datetime(2020, 9, 19, 8, tzinfo=pytz.UTC)), '19.09.2020 08:00')
 
     def test_datetime_to_string_other_format(self):
-        self.assertEqual(datetime_to_string(datetime.datetime(2020, 9, 19, 8, tzinfo=pytz.UTC), str_format='%Y-%m-%d'),
-                         '2020-09-19')
+        self.assertEqual(
+            datetime_to_string(datetime.datetime(2020, 9, 19, 8, tzinfo=pytz.UTC), str_format='%Y-%m-%d'), '2020-09-19'
+        )
 
     def test_datetime_to_string_replacement_undefined(self):
         self.assertEqual(datetime_to_string(None), '-')

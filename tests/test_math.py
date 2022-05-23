@@ -4,7 +4,6 @@ from ai_django_core.utils.math import round_to_decimal, round_up_decimal
 
 
 class MathTest(TestCase):
-
     def test_round_to_decimal_no_precision(self):
         self.assertEqual(round_to_decimal(5.2, 1), 5)
 

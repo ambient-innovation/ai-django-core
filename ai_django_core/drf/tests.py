@@ -9,6 +9,7 @@ class BaseViewSetTestMixin:
     """
     Base test mixin to lower the pain of testing API calls. Focuses on ViewSets.
     """
+
     default_api_user = None
     view_class = None
 
@@ -35,15 +36,22 @@ class BaseViewSetTestMixin:
         """
         Helper method to quickly ensure that a given view needs authorisation.
         """
-        response = self.execute_request(
-            method=method,
-            url=url,
-            viewset_kwargs={method: view})
+        response = self.execute_request(method=method, url=url, viewset_kwargs={method: view})
 
         self.assertIn(response.status_code, [status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN])
 
-    def execute_request(self, *, url, view_kwargs=None, method='get', data=None, view_class=None, user=None,
-                        viewset_kwargs=None, data_format='json') -> Response:
+    def execute_request(
+        self,
+        *,
+        url,
+        view_kwargs=None,
+        method='get',
+        data=None,
+        view_class=None,
+        user=None,
+        viewset_kwargs=None,
+        data_format='json',
+    ) -> Response:
         """
         Helper method which wraps all relevant setup to execute a request to the backends api
 

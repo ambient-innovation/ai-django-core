@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from ai_django_core.admin.model_admins.inlines import ReadOnlyTabularInline
 from ai_django_core.tests.mixins import RequestProviderMixin
-from testapp.models import MySingleSignalModel, ForeignKeyRelatedModel
+from testapp.models import ForeignKeyRelatedModel, MySingleSignalModel
 
 
 class TestReadOnlyTabularInline(ReadOnlyTabularInline):
@@ -12,7 +12,6 @@ class TestReadOnlyTabularInline(ReadOnlyTabularInline):
 
 
 class AdminInlineTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()

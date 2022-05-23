@@ -18,7 +18,6 @@ class MockResolverResponse:
 
 
 class FetchObjectMixinTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()

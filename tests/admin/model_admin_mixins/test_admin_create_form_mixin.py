@@ -18,7 +18,6 @@ class TestAdminCreateFormMixinAdmin(AdminCreateFormMixin, admin.ModelAdmin):
 
 
 class AdminCreateFormMixinTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -45,8 +44,9 @@ class AdminCreateFormMixinTest(RequestProviderMixin, TestCase):
     def test_add_form_not_used_in_edit_case(self):
         model_admin = TestAdminCreateFormMixinAdmin(model=ForeignKeyRelatedModel, admin_site=admin.site)
 
-        form = model_admin.get_form(self.get_request(self.super_user),
-                                    obj=ForeignKeyRelatedModel(single_signal=MySingleSignalModel(value=1)))
+        form = model_admin.get_form(
+            self.get_request(self.super_user), obj=ForeignKeyRelatedModel(single_signal=MySingleSignalModel(value=1))
+        )
 
         with self.assertRaises(AttributeError):
             self.assertFalse(form.Meta.custom_add_form)

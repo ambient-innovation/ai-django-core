@@ -8,6 +8,7 @@ class DeleteMutation(graphene.ClientIDMutation):
     """
     Provides a mutation for handling common delete cases. Exposes methods for custom validation and queryset filtering.
     """
+
     success = graphene.Boolean()
     model = None
 
@@ -63,5 +64,6 @@ class LoginRequiredDeleteMutation(DeleteMutation):
     Deletes an object from the database.
     Ensures user is authenticated with GraphQL-JWT
     """
+
     class Meta:
         abstract = True

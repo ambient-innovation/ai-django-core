@@ -6,9 +6,21 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from freezegun import freeze_time
 
-from ai_django_core.utils.date import date_month_delta, get_start_and_end_date_from_calendar_week, tz_today, \
-    get_next_calendar_week, next_weekday, add_months, add_days, add_minutes, get_next_month, first_day_of_month, \
-    get_formatted_date_str, get_time_from_seconds, datetime_format
+from ai_django_core.utils.date import (
+    add_days,
+    add_minutes,
+    add_months,
+    date_month_delta,
+    datetime_format,
+    first_day_of_month,
+    get_formatted_date_str,
+    get_next_calendar_week,
+    get_next_month,
+    get_start_and_end_date_from_calendar_week,
+    get_time_from_seconds,
+    next_weekday,
+    tz_today,
+)
 
 
 class DateUtilTest(TestCase):
@@ -35,12 +47,16 @@ class DateUtilTest(TestCase):
         self.assertEqual(get_next_calendar_week(datetime.date(year=2020, month=12, day=31)), 1)
 
     def test_next_weekday_any_weekday(self):
-        self.assertEqual(next_weekday(datetime.date(year=2020, month=9, day=19), calendar.FRIDAY),
-                         datetime.date(year=2020, month=9, day=25))
+        self.assertEqual(
+            next_weekday(datetime.date(year=2020, month=9, day=19), calendar.FRIDAY),
+            datetime.date(year=2020, month=9, day=25),
+        )
 
     def test_next_weekday_same_weekday(self):
-        self.assertEqual(next_weekday(datetime.date(year=2020, month=9, day=19), calendar.SATURDAY),
-                         datetime.date(year=2020, month=9, day=26))
+        self.assertEqual(
+            next_weekday(datetime.date(year=2020, month=9, day=19), calendar.SATURDAY),
+            datetime.date(year=2020, month=9, day=26),
+        )
 
     def test_date_month_delta(self):
         start_date = datetime.date(year=self.TEST_CURRENT_YEAR, month=2, day=1)
@@ -126,18 +142,21 @@ class DateUtilTest(TestCase):
 
     def test_add_minutes_one_minute(self):
         source_datetime = datetime.datetime(year=2020, month=6, day=26, hour=8, minute=0)
-        self.assertEqual(add_minutes(source_datetime, 1),
-                         datetime.datetime(year=2020, month=6, day=26, hour=8, minute=1))
+        self.assertEqual(
+            add_minutes(source_datetime, 1), datetime.datetime(year=2020, month=6, day=26, hour=8, minute=1)
+        )
 
     def test_add_minutes_many_minutes(self):
         source_datetime = datetime.datetime(year=2020, month=6, day=26, hour=8, minute=0)
-        self.assertEqual(add_minutes(source_datetime, 10),
-                         datetime.datetime(year=2020, month=6, day=26, hour=8, minute=10))
+        self.assertEqual(
+            add_minutes(source_datetime, 10), datetime.datetime(year=2020, month=6, day=26, hour=8, minute=10)
+        )
 
     def test_add_minutes_negative_minutes(self):
         source_datetime = datetime.datetime(year=2020, month=6, day=26, hour=8, minute=0)
-        self.assertEqual(add_minutes(source_datetime, -2),
-                         datetime.datetime(year=2020, month=6, day=26, hour=7, minute=58))
+        self.assertEqual(
+            add_minutes(source_datetime, -2), datetime.datetime(year=2020, month=6, day=26, hour=7, minute=58)
+        )
 
     @freeze_time('2020-06-26')
     def test_get_next_month_regular(self):

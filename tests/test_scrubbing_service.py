@@ -4,7 +4,6 @@ from ai_django_core.services.custom_scrubber import AbstractScrubbingService
 
 
 class AbstractScrubbingServiceTest(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

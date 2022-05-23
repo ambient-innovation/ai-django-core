@@ -1,5 +1,11 @@
 # Changelog
 
+* **6.0.0** (2022-05-19)
+  * *Breaking change:* Removed `ffmpeg` helper methods `generate_video_thumbnail()` and `get_video_length()`
+  * Added `CleanOnSaveMixin`
+  * black and isort linting integrated
+  * Added pre-commit hooks for linting
+
 * **5.14.1** (2022-04-06)
   * Dropped support for deprecated Python 3.6
 

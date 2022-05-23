@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.sessions.backends.base import SessionBase
 from django.http import HttpRequest
 from django.test import TestCase
@@ -9,7 +9,6 @@ from testapp.models import MySingleSignalModel
 
 
 class RequestProviderMixinTest(RequestProviderMixin, TestCase):
-
     def test_request_is_request(self):
         request = self.get_request(None)
         self.assertIsInstance(request, HttpRequest)

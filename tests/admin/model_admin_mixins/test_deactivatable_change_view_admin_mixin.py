@@ -1,13 +1,12 @@
 from unittest import mock
 
+from django.contrib import admin
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.test import TestCase
 
 from ai_django_core.admin.model_admins.mixins import DeactivatableChangeViewAdminMixin
 from ai_django_core.tests.mixins import RequestProviderMixin
-from django.contrib import admin
-from django.http import HttpResponseRedirect
-
-from django.test import TestCase
 
 
 class TestAdmin(DeactivatableChangeViewAdminMixin, admin.ModelAdmin):
@@ -15,7 +14,6 @@ class TestAdmin(DeactivatableChangeViewAdminMixin, admin.ModelAdmin):
 
 
 class DeactivatableChangeViewAdminMixinTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -44,14 +42,16 @@ class DeactivatableChangeViewAdminMixinTest(RequestProviderMixin, TestCase):
 
     def test_get_list_display_links_can_see_method_positive_flag(self):
         field_tuple = ('first_name',)
-        self.assertEqual(list(field_tuple),
-                         self.admin.get_list_display_links(request=self.get_request(user=self.user),
-                                                           list_display=field_tuple))
+        self.assertEqual(
+            list(field_tuple),
+            self.admin.get_list_display_links(request=self.get_request(user=self.user), list_display=field_tuple),
+        )
 
     def test_get_list_display_links_can_see_method_negative_flag(self):
         self.admin.enable_change_view = False
-        self.assertIsNone(self.admin.get_list_display_links(request=self.get_request(user=self.user),
-                                                            list_display=('first_name',)))
+        self.assertIsNone(
+            self.admin.get_list_display_links(request=self.get_request(user=self.user), list_display=('first_name',))
+        )
 
     def test_change_view_can_see_method_called_because_of_positive_flag(self):
         with mock.patch.object(self.admin, 'can_see_change_view', return_value=True) as mocked_can_see_method:

@@ -16,7 +16,6 @@ class TestView(AdminViewMixin, generic.TemplateView):
 
 
 class AdminViewMixinTest(RequestProviderMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()

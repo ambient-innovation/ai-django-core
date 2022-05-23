@@ -2,7 +2,7 @@ from django.utils.decorators import method_decorator
 from graphene_django.forms.mutation import DjangoModelFormMutation
 from graphql import GraphQLError
 from graphql_jwt.decorators import login_required
-from promise import is_thenable, Promise
+from promise import Promise, is_thenable
 
 
 class DjangoValidatedModelFormMutation(DjangoModelFormMutation):
@@ -24,11 +24,7 @@ class DjangoValidatedModelFormMutation(DjangoModelFormMutation):
             try:
                 payload.client_mutation_id = input.get("client_mutation_id")
             except Exception:
-                raise Exception(
-                    "Cannot set client_mutation_id in the payload object {}".format(
-                        repr(payload)
-                    )
-                )
+                raise Exception("Cannot set client_mutation_id in the payload object {}".format(repr(payload)))
             return payload
 
         result = cls.mutate_and_get_payload(root, info, **input)
@@ -51,5 +47,6 @@ class LoginRequiredDjangoModelFormMutation(DjangoValidatedModelFormMutation):
     """
     Ensures that you need to be logged in with GraphQL JWT (json web token) authentication
     """
+
     class Meta:
         abstract = True

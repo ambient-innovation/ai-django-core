@@ -1,15 +1,15 @@
 from django.core.mail import EmailMultiAlternatives
-from django.test import TestCase
-from django.test import override_settings
+from django.test import TestCase, override_settings
 
 from ai_django_core.mail.backends.whitelist_smtp import WhitelistEmailBackend
 
 
-@override_settings(EMAIL_BACKEND='ai_django_core.mail.backends.whitelist_smtp.WhitelistEmailBackend',
-                   EMAIL_BACKEND_DOMAIN_WHITELIST=['valid.domain'],
-                   EMAIL_BACKEND_REDIRECT_ADDRESS='%s@testuser.valid.domain')
+@override_settings(
+    EMAIL_BACKEND='ai_django_core.mail.backends.whitelist_smtp.WhitelistEmailBackend',
+    EMAIL_BACKEND_DOMAIN_WHITELIST=['valid.domain'],
+    EMAIL_BACKEND_REDIRECT_ADDRESS='%s@testuser.valid.domain',
+)
 class MailBackendWhitelistBackendTest(TestCase):
-
     def test_whitify_mail_addresses_replace(self):
         email_1 = 'albertus.magnus@example.com'
         email_2 = 'thomas_von_aquin@example.com'
@@ -34,8 +34,9 @@ class MailBackendWhitelistBackendTest(TestCase):
         self.assertEqual(len(processed_list), 0)
 
     def test_process_recipients_regular(self):
-        mail = EmailMultiAlternatives('Test subject', 'Here is the message.', 'from@example.com', ['to@example.com'],
-                                      connection=None)
+        mail = EmailMultiAlternatives(
+            'Test subject', 'Here is the message.', 'from@example.com', ['to@example.com'], connection=None
+        )
 
         backend = WhitelistEmailBackend()
         message_list = backend._process_recipients([mail])

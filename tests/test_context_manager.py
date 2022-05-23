@@ -3,12 +3,16 @@ from django.db.models import signals
 from django.test import TestCase
 
 from ai_django_core.context_manager import TempDisconnectSignal
-from testapp.models import MySingleSignalModel, increase_value_no_dispatch_uid, increase_value_with_dispatch_uid, \
-    MyMultipleSignalModel, send_email
+from testapp.models import (
+    MyMultipleSignalModel,
+    MySingleSignalModel,
+    increase_value_no_dispatch_uid,
+    increase_value_with_dispatch_uid,
+    send_email,
+)
 
 
 class TempDisconnectSignalTest(TestCase):
-
     def test_single_signal_executed_regular(self):
         obj = MySingleSignalModel.objects.create()
         self.assertEqual(obj.value, 1)

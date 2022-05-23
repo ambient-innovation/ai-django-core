@@ -39,6 +39,7 @@ class ToggleView(SingleObjectMixin, generic.View):
     user input.
     Most common use-case is toggling a flag inside an object.
     """
+
     http_method_names = ('post',)
 
     def post(self, request, *args, **kwargs):

@@ -69,3 +69,18 @@ BLEACH_ALLOWED_TAGS = ['span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 
 As the mixin works by extending the models `safe()`-method, bleaching **will not** be applied on all storage operations
 done directly by the database, like `MyModel.objects.all().update(my_html_field='I am malicious content!')`.
+
+## Validation
+
+### CleanOnSaveMixin
+
+If you are following the fat-model approach, it might be convenient to put some low-level validation in the models "
+clean" method which will be automatically called when using forms (or therefore, django admin). Unfortunately, it is not
+called on a regular model save. Just derive your model from the `CleanOnSaveMixin` mixin and your clean will be called
+on every save. Note that it won't be called on bulk operations not targeting model save.
+
+````python
+class ModelWithCleanMixin(CleanOnSaveMixin, models.Model):
+    def clean(self):
+        # to your magic here
+````

@@ -1,6 +1,6 @@
 import re
-from typing import List
 import warnings
+from typing import List
 
 from django.core import mail
 from django.test import TestCase
@@ -88,6 +88,7 @@ class EmailTestServiceMail(mail.EmailMultiAlternatives):
     """
     Wrapper around a Django EmailMultiAlternatives object with some helper functions to write clean assertions.
     """
+
     _testcase = TestCase()  # Hacky way to get access to TestCase.assert* methods without deriving from TestCase
 
     def _get_html_content(self):
@@ -194,8 +195,9 @@ class EmailTestServiceQuerySet(TestCase):
         Make sure that we queried at least once before working with the results
         """
         if self._match_list is None:
-            raise RuntimeError('Counting of matches called without previous query. '
-                               'Please call filter() or all() first.')
+            raise RuntimeError(
+                'Counting of matches called without previous query. ' 'Please call filter() or all() first.'
+            )
 
     def one(self):
         """
@@ -267,8 +269,10 @@ class EmailTestServiceQuerySet(TestCase):
         :param search_str: str
         :param msg: str
         """
-        warnings.warn('EmailTestServiceQuerySet.assert_body_contains is deprecated. '
-                      'Use queryset[0].assert_body_contains instead.')
+        warnings.warn(
+            'EmailTestServiceQuerySet.assert_body_contains is deprecated. '
+            'Use queryset[0].assert_body_contains instead.'
+        )
         # Ensure we just have found one element
         self._validate_lookup_cache_contains_one_element()
         self[0].assert_body_contains(search_str, msg)
@@ -279,8 +283,10 @@ class EmailTestServiceQuerySet(TestCase):
         :param search_str: str
         :param msg: str
         """
-        warnings.warn('EmailTestServiceQuerySet.assert_body_contains is deprecated. '
-                      'Use queryset[0].assert_body_contains_not instead.')
+        warnings.warn(
+            'EmailTestServiceQuerySet.assert_body_contains is deprecated. '
+            'Use queryset[0].assert_body_contains_not instead.'
+        )
         # Ensure we just have found one element
         self._validate_lookup_cache_contains_one_element()
         self[0].assert_body_contains_not(search_str, msg)

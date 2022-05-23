@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Optional, Union
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
@@ -14,6 +14,7 @@ class ClassBasedViewTestMixin:
     """
     Helper mixin for easy testing of Django views
     """
+
     factory_class = RequestFactory
     view_class = None
 
@@ -71,9 +72,9 @@ class RequestProviderMixin:
     """
 
     @staticmethod
-    def get_request(user: Union[AbstractBaseUser, AnonymousUser, None] = None,
-                    method: str = 'GET',
-                    url: Optional[str] = None):
+    def get_request(
+        user: Union[AbstractBaseUser, AnonymousUser, None] = None, method: str = 'GET', url: Optional[str] = None
+    ):
         """
         Creates and returns a django request.
         """

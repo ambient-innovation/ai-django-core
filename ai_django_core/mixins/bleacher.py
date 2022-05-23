@@ -37,8 +37,21 @@ class BleacherMixin:
         'img': ['alt', 'src'],
     }
 
-    DEFAULT_ALLOWED_TAGS = bleach.ALLOWED_TAGS + ['span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5',
-                                                  'h6', 'img', 'div', 'u', 'br', 'blockquote']
+    DEFAULT_ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
+        'span',
+        'p',
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'img',
+        'div',
+        'u',
+        'br',
+        'blockquote',
+    ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

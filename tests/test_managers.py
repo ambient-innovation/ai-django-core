@@ -5,7 +5,6 @@ from testapp.models import MySingleSignalModel
 
 
 class GloballyVisibleQuerySetTest(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
