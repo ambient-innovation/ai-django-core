@@ -12,13 +12,13 @@ class MetaDjangoPermissionRequiredMixinTest(RequestProviderMixin, TestCase):
         pass
 
     class TestViewSinglePerm(DjangoPermissionRequiredMixin, generic.View):
-        permission_list = ['auth.view_user']
+        permission_list = ['auth.change_user']
 
         def get(self, *args, **kwargs):
             return HttpResponse(status=200)
 
     class TestViewMultiplePerms(DjangoPermissionRequiredMixin, generic.View):
-        permission_list = ['auth.view_user', 'auth.add_user']
+        permission_list = ['auth.change_user', 'auth.add_user']
 
         def get_login_url(self):
             return 'login/'
@@ -27,8 +27,11 @@ class MetaDjangoPermissionRequiredMixinTest(RequestProviderMixin, TestCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.user = User.objects.create(username='test_user', email='test.user@ai-django-core.com')
-        cls.permission = Permission.objects.get_by_natural_key(app_label='auth', codename='view_user', model='user')
+        cls.permission = Permission.objects.get_by_natural_key(app_label='auth', codename='change_user', model='user')
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.user = User.objects.create(username='test_user', email='test.user@ai-django-core.com')
 
     def test_get_login_url(self):
         self.assertEqual(self.TestViewMultiplePerms().get_login_url(), 'login/')

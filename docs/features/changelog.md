@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.1.1** (2022-06-29)
+  * Fixed unittest for django<3.2
+
 * **6.1.0** (2022-06-29)
   * Added `DjangoPermissionRequiredMixin` for Django views and supporting test mixin `BaseViewPermissionTestMixin`
   * Increased minimal required bugfix version for Django 2.2
