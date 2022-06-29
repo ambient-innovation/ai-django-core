@@ -1,0 +1,59 @@
+{% load i18n static %}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>403 - Forbidden</title>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Helvetica, sans-serif;
+            color: #595959;
+            font-size: 1.2em;
+        }
+
+        h1 {
+            display: none;
+        }
+
+        .container {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        .image-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .image-container > p {
+            position: absolute;
+            width: auto;
+            white-space: nowrap;
+        }
+
+        .image-container > p.error-msg {
+            left: 19em;
+            bottom: 5em;
+        }
+    </style>
+</head>
+
+<body>
+{% block body %}
+    <div class="container">
+        <h1>{% trans "Fehler 403" %}</h1>
+        <div class="image-container">
+            <p class="error-msg">You don't have access to this page.</p>
+        </div>
+    </div>
+{% endblock %}
+</body>

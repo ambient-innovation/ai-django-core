@@ -43,7 +43,7 @@ The form will have the following properties:
 This mixin provides a method which returns the current number of children of this formset. It automatically takes care
 of deleted or to-be-deleted children. Have a look at the example use-case below:
 
-````
+````python
 class DataFieldFormset(CountChildrenFormsetMixin, BaseInlineFormSet):
 
     def clean(self):
@@ -69,7 +69,7 @@ forms.
 
 Here is an example for a create view:
 
-```
+````python
 class MyModelCreateView(FormsetCreateViewMixin, generic.CreateView):
     model = MyModel
     template_name = 'my_app/my_model_edit.html'
@@ -83,7 +83,7 @@ class MyModelCreateView(FormsetCreateViewMixin, generic.CreateView):
         kwargs = super().get_formset_kwargs()
         kwargs['request'] = self.request
         return kwargs
-```
+````
 
 You just define - similar to the regular form - a `formset_class` as a class attribute. All the required handling like
 validation will happen magically. If you need to pass additional values to your formset, just extend the method
@@ -91,7 +91,7 @@ validation will happen magically. If you need to pass additional values to your 
 
 If you want to update a model and its children, here is an example for the edit-case:
 
-```
+````python
 class MyModelEditView(FormsetUpdateViewMixin, generic.UpdateView):
     model = MyModel
     template_name = 'my_app/my_model_edit.html'
@@ -105,7 +105,7 @@ class MyModelEditView(FormsetUpdateViewMixin, generic.UpdateView):
         kwargs = super().get_formset_kwargs()
         kwargs['request'] = self.request
         return kwargs
-```
+````
 
 ## View mixins
 
@@ -117,17 +117,18 @@ with your custom logic. Notice that it has to return a boolean value.
 
 For example, you want to allow only the "owner" of an object to view its detail page:
 
-````
+````python
 from django.views import generic
+
 
 class MyModelDetailView(CustomPermissionMixin, generics.DetailView):
     ...
 
-        def validate_permissions(self):
-            object = super().get_object()
-            if self.request.user.employee:
-                return False
-            return True
+    def validate_permissions(self):
+        object = super().get_object()
+        if self.request.user.employee:
+            return False
+        return True
 ````
 
 If the method returns `False`, the regular dispatch will just simply render your `403` page and skip all the other
@@ -140,14 +141,16 @@ need for example the current request user within the form, you need to have the 
 
 Just add the mixin to the parents of your class-based view class:
 
-````
+````python
 from django.views import generic
+
 
 class MyModelEditView(RequestInFormKwargsMixin, generic.CreateView):
     model = MyModel
     template_name = 'myapp/mymodel_edit.html'
     form_class = MyModelForm
     ...
+
 
 class MyModelEditView(RequestInFormKwargsMixin, generic.UpdateView):
     model = MyModel
@@ -159,22 +162,101 @@ class MyModelEditView(RequestInFormKwargsMixin, generic.UpdateView):
 Make sure that you overwrite the ``__init__`` method of your form and move the `request` to the class. Otherwise
 the ``super()`` will detect an unrecognised parameter within the kwargs and raise an error:
 
-````
+````python
 from django.forms.models import ModelForm
+
 
 class MyModelForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
-
         # Get request from kwargs
         self.request = kwargs.pop('request', None)
 
         # Call the parent method
         super().__init__(*args, **kwargs)
-
 ````
 
 That's it.
+
+### DjangoPermissionRequiredMixin
+
+#### General setup
+
+In most cases your Django views will require a login and some permissions to access it. Ensuring this manually is
+tedious and error-prone. Therefore, we implemented a neat mixin which ensures by default ("security by design" pattern)
+that the user needs to be logged in and has the defined permissions.
+
+````python
+from ai_django_core.view_layer.mixins import DjangoPermissionRequiredMixin
+from django.views import generic
+
+
+class MyModelListView(DjangoPermissionRequiredMixin, generic.ListView):
+    model = MyModel
+    permission_list = ('account.view_my_model',)
+    ...
+````
+
+When you extend from this mixin, you can set the class attribute `permission_list` which has to be a list or tuple.
+
+Note, that you have to define the url to your login view, so the mixin can redirect your unauthenticated users
+correctly. It defaults to `redirect('login-view')`.
+
+````python
+from ai_django_core.view_layer.mixins import DjangoPermissionRequiredMixin
+from django.views import generic
+
+
+class MyModelListView(DjangoPermissionRequiredMixin, generic.ListView):
+    model = MyModel
+    permission_list = ('account.view_my_model',)
+
+    def get_login_url(self):
+        return reverse('my-login-view')
+````
+
+#### Public endpoints
+
+If you require an open view endpoint, just set the class flag `login_required` to False.
+
+````python
+from ai_django_core.view_layer.mixins import DjangoPermissionRequiredMixin
+from django.views import generic
+
+
+class PublicLandingPageView(DjangoPermissionRequiredMixin, generic.TemplateView):
+    login_required = False
+    permission_list = ()
+    ...
+````
+
+#### Testing
+
+As stated above, ensuring that every single view is protected is tedious and error-prone. Therefore, this package
+provides a test mixin to ensure the following things:
+
+1. Your view is inheriting from the `DjangoPermissionRequiredMixin` mixin
+2. You didn't accidentally break the logic by overwriting important parts, so it ensures that the login barrier and the
+   permission test methods are called
+3. The permissions are set correctly
+
+The following test case will create a bunch of default test cases covering the points 1-3.
+
+````python
+from ai_django_core.view_layer.tests.mixins import BaseViewPermissionTestMixin
+from django.test import TestCase
+from my_project.my_app import views
+
+
+class MyModelListViewTest(BaseViewPermissionTestMixin, TestCase):
+    view_class = views.MyModelListView
+    permission_list = ['account.view_my_model']
+````
+
+Note, that the permissions are defined redundantly. This approach reduces the risk that you make a copy/paste error when
+adding the permissions.
+
+If you have implemented more custom logic, feel free to just add more test cases of your own.
 
 ## Generic views
 
@@ -185,8 +267,9 @@ validate the user data using a given form. But sometimes an update is required w
 sent, like toggling a flag or updating a timestamp. For these cases, just use the `ToggleView` - it works basically the
 same as the `UpdateView` - except that "POST" is required and that no form has to be defined.
 
-```
+```python
 from ai_django_core.view_layer.views import ToggleView
+
 
 class ToggleActiveStateView(ToggleView):
     model = MyModel

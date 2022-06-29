@@ -1,5 +1,10 @@
 # Changelog
 
+* **6.1.0** (2022-06-29)
+  * Added `DjangoPermissionRequiredMixin` for Django views and supporting test mixin `BaseViewPermissionTestMixin`
+  * Increased minimal required bugfix version for Django 2.2
+  * Updated Readme file
+
 * **6.0.0** (2022-05-19)
   * *Breaking change:* Removed `ffmpeg` helper methods `generate_video_thumbnail()` and `get_video_length()`
   * Added `CleanOnSaveMixin`
