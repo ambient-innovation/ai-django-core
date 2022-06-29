@@ -87,13 +87,13 @@ Example: run all hooks of pre-push stage
 How to create translation file:
 
 * Navigate to `ai_django_core/ai_django_core` (the inner directory!)
-* `django-admin makemessages -l de`
+* `python manage.py makemessages -l de`
 * Have a look at the new/changed files within `ai_django_core/ai_django_core/locale`
 
 How to compile translation files:
 
 * Navigate to `ai_django_core/ai_django_core` (the inner directory!)
-* `django-admin compilemessages`
+* `python manage.py compilemessages`
 * Have a look at the new/changed files within `ai_django_core/ai_django_core/locale`
 
 ## Publish to ReadTheDocs.io

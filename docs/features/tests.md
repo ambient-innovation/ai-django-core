@@ -15,7 +15,7 @@ At first, initialise the class in your testing class. Because the class itself b
 can do this in the `setupTestData()`. It will be executed only once per test class and — compared to `setUp()` — not for
 every test.
 
-````
+````python
 from ai_django_core.mail.services.tests import EmailTestService
 from django.test import TestCase
 
@@ -41,7 +41,7 @@ Maybe you want a specific one? You can filter for a given subject by using
 a string or a regular expression. Additionally, you can filter for a recipient,
 the to, cc and bcc attributes:
 
-````
+````python
 import re
 
 # Get all mails with given subject
@@ -56,7 +56,7 @@ my_email = self.email_test_service.filter(to='foo@bar.com')
 
 Of course, you can connect filters as well:
 
-````
+````python
 my_email = self.email_test_service.filter(
     subject='Nigerian prince',
     to='spambot@bar.com',
@@ -69,14 +69,14 @@ Once you have a queryset of emails — meaning the result of one of the queries 
 
 You can count the results, especially good for assertions:
 
-````
+````python
 # Count the number of results
 quantity = self.email_test_service.all().count()
 ````
 
 Do you need the first or last element in the list?
 
-````
+````python
 # Get first item in list
 first_mail = self.email_test_service.filter(subject='Nigerian prince').first()
 
@@ -86,14 +86,15 @@ last_mail = self.email_test_service.filter(subject='Nigerian prince').last()
 
 It is very common that you expect one specific email, and you want to know if your mail queryset contains exactly this
 element. So there is a helper function for this, too:
-````
+
+````python
 # Returns `True` if the queryset contains exactly one item
 self.email_test_service.filter(subject='Nigerian prince').one()
 ````
 
 If you want to access a specific index, you can access it like a queryset:
 
-````
+````python
 # Fetch the second email
 self.email_test_service.filter(subject='Nigerian prince')[1]
 
@@ -110,20 +111,20 @@ That’s why the class provides some shortcuts which wrap the assertion.
 
 1. You want to check for exactly one result?
 
-````
+````python
 self.email_test_service.filter(to='foo@bar.com').assert_one()
 ````
 
 2. Do you want to check the quantity of found emails?
 
-````
+````python
 expected_number_of_emails = 1
 self.email_test_service.filter(to='foo@bar.com').assert_quantity(expected_number_of_emails)
 ````
 
 3. Do you want to check the subject?
 
-````
+````python
 self.email_test_service.filter(to='foo@bar.com')[0].assert_subject('Reset password')
 ````
 
@@ -133,20 +134,20 @@ fails if the given string is missing in one of them.
 
 4. You want to check if a certain string is included in the body?
 
-````
+````python
 self.email_test_service.filter(to='foo@bar.com')[0].assert_body_contains('inheritance')
 ````
 
 5. Sometimes you want to check if something is NOT part of the body…
 
-````
+````python
 self.email_test_service.filter(to='foo@bar.com')[0].assert_body_contains_not('scam')
 ````
 
 To make your life a little easier and happier, each of these methods takes an optional parameter msg which is passed to
 the assertion and will be shown if it goes sideways. Here is an example:
 
-````
+````python
 self.email_test_service.filter(to='foo@bar.com')[0].assert_body_contains('inheritance', msg='Missing words!')
 ````
 
@@ -157,7 +158,7 @@ self.email_test_service.filter(to='foo@bar.com')[0].assert_body_contains('inheri
 This test case mixin helps out when unit-testing a view. It provides methods for the three main ways to request a
 view: `get`, `post` and `delete`. Authentication and the creation of the request is handled internally.
 
-````
+````python
 class MyViewTestCase(ClassBasedViewTestMixin, TestCase):
     view_class = views.MyView
 
@@ -189,7 +190,7 @@ able to use a method called `get_request(user=None)`. If you specify a user, he/
 cases you won't need to set an explicit url, so `/` will be taken as a default. If you do need it, just pass set
 the `url` parameter.
 
-````
+````python
 from django.test import TestCase
 from ai_django_core.tests.mixins import RequestProviderMixin
 
@@ -211,3 +212,7 @@ class MyAwesomeTest(RequestProviderMixin, TestCase):
         ...
 
 ````
+
+### BaseViewPermissionTestMixin
+
+Please refer to the view layer section to get details about how to use this view test mixin.

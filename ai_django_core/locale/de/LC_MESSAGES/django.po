@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-12 16:45+0200\n"
+"POT-Creation-Date: 2022-06-29 10:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,54 +18,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\admin\views\forms.py:11
+#: .\ai_django_core\admin\views\forms.py:12
 msgid "No title defined"
 msgstr "Kein Titel gesetzt"
 
-#: .\admin\views\forms.py:12 .\view_layer\form_mixins.py:16
+#: .\ai_django_core\admin\views\forms.py:13
+#: .\ai_django_core\view_layer\form_mixins.py:16
 msgid "Save"
 msgstr "Speichern"
 
-#: .\mail\services\base.py:40
+#: .\ai_django_core\mail\services\base.py:42
 msgid "Email factory requires a mail service class."
 msgstr "E-Mailfactory benötigt eine Mailservice-Klasse."
 
-#: .\mail\services\base.py:42
+#: .\ai_django_core\mail\services\base.py:44
 msgid "Email factory requires a target mail address."
 msgstr "E-Mailfactory benötigt eine Ziel-Mailadresse."
 
-#: .\mail\services\base.py:204
+#: .\ai_django_core\mail\services\base.py:212
 msgid "Missing or mislabeled data provided for email attachment."
 msgstr "Fehlende oder falsch deklarierte Daten für E-Mailanhänge übergeben."
 
-#: .\mail\services\base.py:253
+#: .\ai_django_core\mail\services\base.py:269
 msgid "Email service requires a subject."
 msgstr "E-Mailservice benötigt einen Betreff."
 
-#: .\mail\services\base.py:255
+#: .\ai_django_core\mail\services\base.py:271
 msgid "Email service requires a template."
 msgstr "E-Mailservice benötigt ein Template."
 
-#: .\mail\services\base.py:257
+#: .\ai_django_core\mail\services\base.py:273
 msgid "Email service requires a target mail address."
 msgstr "E-Mailservice benötigt eine Ziel-Mailadresse."
 
-#: .\models.py:10
+#: .\ai_django_core\models.py:10
 msgid "Created at"
 msgstr "Erstellt am"
 
-#: .\models.py:23
+#: .\ai_django_core\models.py:25
 msgid "Created by"
 msgstr "Erstellt von"
 
-#: .\models.py:25
+#: .\ai_django_core\models.py:31
 msgid "Last modified at"
 msgstr "Zuletzt geändert am"
 
-#: .\models.py:26
+#: .\ai_django_core\models.py:34
 msgid "Last modified by"
 msgstr "Zuletzt geändert von"
 
-#: .\utils\date.py:71
+#: .\ai_django_core\tests\mixins.py:92
+msgid "Please pass a user object to RequestProviderMixin."
+msgstr "Bitte ein User-Objekt an RequestProviderMixin übergeben."
+
+#: .\ai_django_core\utils\date.py:74
 msgid "Seconds must be positive."
 msgstr "Sekunden müssen eine positive Zahl sein."
+
+#: .\ai_django_core\view_layer\mixins.py:20
+msgid ""
+"Class-based view using DjangoPermissionRequiredMixin without defining a "
+"permission list."
+msgstr "Klassen-basierter View verwendet DjangoPermissionRequiredMixin ohne definierte Berechtigungen."
+
+#: .\ai_django_core\view_layer\tests\mixins.py:31
+msgid "BaseViewPermissionTestMixin used without setting a \"view_class\"."
+msgstr "BaseViewPermissionTestMixin verwendet ohne eine View-Klasse gesetzt zu haben."
