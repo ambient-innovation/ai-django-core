@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.1.2** (2022-06-30)
+  * Extended docs for `BaseViewPermissionTestMixin` with limitation when using a caching wrapper
+
 * **6.1.1** (2022-06-29)
   * Fixed unittest for django<3.2
 

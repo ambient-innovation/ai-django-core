@@ -232,6 +232,8 @@ class PublicLandingPageView(DjangoPermissionRequiredMixin, generic.TemplateView)
 
 #### Testing
 
+##### Setup
+
 As stated above, ensuring that every single view is protected is tedious and error-prone. Therefore, this package
 provides a test mixin to ensure the following things:
 
@@ -257,6 +259,22 @@ Note, that the permissions are defined redundantly. This approach reduces the ri
 adding the permissions.
 
 If you have implemented more custom logic, feel free to just add more test cases of your own.
+
+##### Limitations
+
+If you are using the caching decorator directly in a class-based view, the tests will fail. You have to switch to a
+class decorator like this:
+
+````python
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views import generic
+
+
+@method_decorator(cache_page(60 * 10), name='dispatch')
+class MyModelListView(generic.ListView):
+   ...
+````
 
 ## Generic views
 
