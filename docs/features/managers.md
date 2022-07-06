@@ -148,21 +148,22 @@ Then you'll save the `.all()` and can directly use the exposed methods:
 project_list = Project.objects.visible_for(request.user)
 ````
 
-#### GloballyVisibleManager
+#### Default manager for global visibility
+
+If you have the case that a certain model does not require any user-level permissions, you can use the
+``GloballyVisibleQuerySet``. This manager (or more precisely custom queryset) just returns all records when calling any
+of its base  methods:
+
+````
+    def visible_for(self, user):
+        return self.all()
+````
 
 It is advisable to use this manager for every class. This way, you can ensure that if some permissions are added to a
 model, they are put in the right place (the `visible_for()` method) and not somewhere in the code.
 
 Secondly you do not have to decide every time you need the manger if you need to use `visible_for()` or not - just use
 it all the time.
-
-If you have the case that a certain model does not require any user-level permissions, you can use the
-``GloballyVisibleManager``. This manager just returns all records when calling any of its base methods:
-
-````
-    def visible_for(self, user):
-        return self.all()
-````
 
 Usually you would use this manager for metadata like categories. As pointed out above, you could use the base manager
 class BUT if you have to add some user-level permissions later on, you reduce the risk of bad patterns in your code.

@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.1.3** (2022-06-30)
+  * Clarified docs for `GloballyVisibleQuerySet`
+
 * **6.1.2** (2022-06-30)
   * Extended docs for `BaseViewPermissionTestMixin` with limitation when using a caching wrapper
 
