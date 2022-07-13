@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.2.0** (2022-07-13)
+  * Added test case for `BaseViewPermissionTestMixin` to ensure that defined permissions exist in the database
+
 * **6.1.3** (2022-06-30)
   * Clarified docs for `GloballyVisibleQuerySet`
 
