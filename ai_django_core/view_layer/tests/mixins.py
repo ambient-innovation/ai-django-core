@@ -1,7 +1,7 @@
 from typing import Union
 from unittest import mock
 
-from django.contrib.auth.models import AnonymousUser, User, Permission
+from django.contrib.auth.models import AnonymousUser, Permission, User
 from django.utils.translation import gettext_lazy as _
 
 from ai_django_core.tests.errors import TestSetupConfigurationError
@@ -54,14 +54,16 @@ class BaseViewPermissionTestMixin(RequestProviderMixin):
     def test_permissions_exist_in_database(self):
         for permission in self.permission_list:
             if '.' not in permission:
-                raise TestSetupConfigurationError(f'View "{self.view_class}" contains ill-formatted permission '
-                                                  f'"{permission}".')
+                raise TestSetupConfigurationError(
+                    f'View "{self.view_class}" contains ill-formatted permission ' f'"{permission}".'
+                )
             app_label, codename = permission.split('.')
             permission_qs = Permission.objects.filter(content_type__app_label=app_label, codename=codename)
 
             if not permission_qs.exists():
-                raise TestSetupConfigurationError(f'View "{self.view_class}" contains invalid permission '
-                                                  f'"{permission}".')
+                raise TestSetupConfigurationError(
+                    f'View "{self.view_class}" contains invalid permission ' f'"{permission}".'
+                )
 
     def test_passes_login_barrier_is_called(self):
         with mock.patch.object(self.view_class, 'passes_login_barrier', return_value=False) as mock_method:
