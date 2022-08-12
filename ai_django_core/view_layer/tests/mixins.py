@@ -48,8 +48,16 @@ class BaseViewPermissionTestMixin(RequestProviderMixin):
         self.assertIsNotNone(self.permission_list, msg='Missing permission list declaration in test')
         self.assertIsNotNone(self.view_class.permission_list, msg='Missing permission list declaration in view')
 
-        # Proper assertion
-        self.assertEqual(self.permission_list, list(self.view_class.permission_list))
+        # Assert same amount of permissions
+        self.assertEqual(len(self.permission_list), len(self.view_class.permission_list))
+
+        # Compare target permissions to real permissions
+        for permission in self.permission_list:
+            self.assertIn(permission, list(self.view_class.permission_list))
+
+        # Compare real permissions to target permissions
+        for permission in self.view_class.permission_list:
+            self.assertIn(permission, list(self.permission_list))
 
     def test_permissions_exist_in_database(self):
         for permission in self.permission_list:

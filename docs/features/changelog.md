@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.2.1** (2022-08-12)
+  * Improved detecting of permission mismatches in view test mixin `BaseViewPermissionTestMixin`
+
 * **6.2.0** (2022-07-13)
   * Added test case for `BaseViewPermissionTestMixin` to ensure that defined permissions exist in the database
 
