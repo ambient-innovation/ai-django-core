@@ -14,6 +14,7 @@ classifiers = [
     "Framework :: Django :: 3.1",
     "Framework :: Django :: 3.2",
     "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.1",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
@@ -84,7 +85,7 @@ known_first_party = ['ai_django_core', 'testapp', 'tests']
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py{37,38,39,310}-django{22,30,31,32,40}
+envlist = py{37,38,39,310}-django{22,30,31,32,40,41}
 isolated_build = True
 
 [testenv]
@@ -94,6 +95,7 @@ deps =
     django31: Django>=3.1,<3.2
     django32: Django>=3.2,<3.3
     django40: Django>=4.0,<4.1
+    django41: Django>=4.1,<4.2
 extras = dev,drf,graphql,view-layer
 commands =
     pytest --ds settings tests

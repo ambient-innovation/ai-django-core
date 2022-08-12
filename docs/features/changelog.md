@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.2.2** (2022-08-12)
+  * Added Django 4.1 to test matrix and compatible versions
+
 * **6.2.1** (2022-08-12)
   * Improved detecting of permission mismatches in view test mixin `BaseViewPermissionTestMixin`
 
