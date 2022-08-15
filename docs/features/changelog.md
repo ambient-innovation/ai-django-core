@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.2.3** (2022-08-15)
+  * Fixed some translations
+
 * **6.2.2** (2022-08-12)
   * Added Django 4.1 to test matrix and compatible versions
 
