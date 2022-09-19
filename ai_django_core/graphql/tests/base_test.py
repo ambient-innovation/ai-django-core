@@ -15,7 +15,7 @@ class GraphQLTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(GraphQLTestCase, cls).setUpClass()
+        super().setUpClass()
 
         if not cls.GRAPHQL_SCHEMA:
             raise AttributeError('Variable GRAPHQL_SCHEMA not defined in GraphQLTestCase.')

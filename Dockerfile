@@ -1,5 +1,11 @@
 ### STAGE 2: Setup ###
-FROM python:3.9
+FROM python:3.10
+
+# Update OS dependencies
+RUN apt-get update && \
+    apt-get -y upgrade && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set env variables used in this Dockerfile (add a unique prefix, such as DOCKYARD)
 # Local directory with project source

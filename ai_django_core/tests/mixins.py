@@ -46,7 +46,7 @@ class ClassBasedViewTestMixin:
 
         # Setup messages
         messages = FallbackStorage(request)
-        setattr(request, '_messages', messages)
+        request._messages = messages
 
         # Call view
         return self.view_class.as_view()(request, *args, **url_params)

@@ -1,5 +1,12 @@
 # Changelog
 
+* **6.3.0** (2022-09-19)
+  * Ran `flake8-bugbear` and `pyupgrade` and updated the code accordingly
+  * Improved security vulnerability scanning
+  * Updated local build and test suite to Python 3.10
+  * Added `flake8-bugbear` to Quality Assurance measures
+  * Added `pyupgrade` to Quality Assurance measures
+
 * **6.2.3** (2022-08-15)
   * Fixed some translations
 
