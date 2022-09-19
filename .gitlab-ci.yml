@@ -1,22 +1,32 @@
-image: docker:stable
+include:
+  - template: Security/Container-Scanning.gitlab-ci.yml
+
+image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
 
 stages:
-- lint
-- build
-- test
+  - lint
+  - build
+  - security
+  - security_results
+  - test
 
 # When using dind, it's wise to use the overlays driver for
 # improved performance.
 variables:
-  DOCKER_DRIVER: overlay2
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-  DOCKER_HOST: tcp://localhost:2375
+
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_VERIFY: 1
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
 
 services:
-  - docker:18.09-dind
+  # alias is necessary for gitlab to recognise the service correctly because of the prefix:
+  - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    alias: docker
 
 black and isort:
-  image: python:3.9-slim
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
   stage: lint
   tags:
     - normal-load
@@ -25,24 +35,13 @@ black and isort:
     - black --check --diff --color . && isort . --profile black --check --diff
 
 flake8:
-  image: python:3.9-slim
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
   stage: lint
   tags:
     - normal-load
   script:
-    - pip install flake8 pep8-naming
+    - pip install flake8 pep8-naming flake8-bugbear
     - flake8 .
-
-security check backend:
-  image: python:3.9-slim
-  stage: lint
-  tags:
-    - low-load
-  script:
-    - pip install pipreqs safety
-    - pipreqs
-    - safety check --file requirements.txt
-  allow_failure: true
 
 build:
   stage: build
@@ -54,6 +53,33 @@ build:
     - docker pull $CI_REGISTRY_IMAGE:master || true
     - docker build --cache-from $CI_REGISTRY_IMAGE:master -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
+
+container_scanning:
+  stage: security
+  tags:
+    - low-load
+  variables:
+    GIT_STRATEGY: fetch
+    DOCKER_IMAGE: $IMAGE_TAG
+    CS_DEFAULT_BRANCH_IMAGE: $CI_REGISTRY_IMAGE:develop
+    CS_SEVERITY_THRESHOLD: HIGH
+    CS_IGNORE_UNFIXED: "true"
+    # https://docs.gitlab.com/ee/user/application_security/container_scanning/#report-language-specific-findings
+    CS_DISABLE_LANGUAGE_VULNERABILITY_SCAN: "false"
+    DOCKER_FILE: Dockerfile
+
+check security scan results:
+  stage: security_results
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine:latest
+  dependencies:
+    - container_scanning
+  tags:
+    - low-load
+  before_script:
+    - apk update && apk add jq
+  script:
+    - jq -e "( .vulnerabilities | length ) == 0" ./gl-container-scanning-report.json
+  allow_failure: true
 
 tests:
   stage: test

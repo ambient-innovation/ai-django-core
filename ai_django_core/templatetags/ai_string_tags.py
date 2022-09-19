@@ -23,7 +23,7 @@ def concat(obj, str):
     :param str:
     :return:
     """
-    return "%s%s" % (obj, str)
+    return f"{obj}{str}"
 
 
 @register.filter

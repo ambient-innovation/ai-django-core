@@ -23,7 +23,7 @@ def slugify_file_name(file_name: str, length: int = 40) -> str:
     name, ext = os.path.splitext(file_name)
     name = smart_str(slugify(name).replace('-', '_'))
     ext = smart_str(slugify(ext))
-    result = '%s%s%s' % (name[:length], "." if ext else "", ext)
+    result = '{}{}{}'.format(name[:length], "." if ext else "", ext)
     return result
 
 

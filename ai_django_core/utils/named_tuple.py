@@ -38,7 +38,7 @@ def get_namedtuple_choices(name, choices_tuple):
 
     class Choices(namedtuple(name, [name for val, name, desc in choices_tuple])):
         __slots__ = ()
-        _choices = tuple([desc for val, name, desc in choices_tuple])
+        _choices = tuple(desc for val, name, desc in choices_tuple)
 
         def get_choices(self):
             return list(zip(tuple(self), self._choices))
@@ -55,15 +55,14 @@ def get_namedtuple_choices(name, choices_tuple):
             return choices
 
         def get_all(self):
-            for val, name, desc in choices_tuple:
-                yield val, name, desc
+            yield from choices_tuple
 
         def get_choices_tuple(self):
             return choices_tuple
 
         def get_values(self):
             values = []
-            for val, name, desc in choices_tuple:
+            for val, _name, _desc in choices_tuple:
                 if isinstance(val, type([])):
                     values.extend(val)
                 else:
@@ -71,26 +70,26 @@ def get_namedtuple_choices(name, choices_tuple):
             return values
 
         def get_value_by_name(self, input_name):
-            for val, name, desc in choices_tuple:
-                if name == input_name:
+            for val, _name, _desc in choices_tuple:
+                if _name == input_name:
                     return val
             return False
 
         def get_desc_by_value(self, input_value):
-            for val, name, desc in choices_tuple:
+            for val, _name, _desc in choices_tuple:
                 if val == input_value:
-                    return desc
+                    return _desc
             return False
 
         def get_name_by_value(self, input_value):
-            for val, name, desc in choices_tuple:
+            for val, _name, _desc in choices_tuple:
                 if val == input_value:
-                    return name
+                    return _name
             return False
 
         def is_valid(self, selection):
-            for val, name, desc in choices_tuple:
-                if val == selection or name == selection or desc == selection:
+            for val, _name, _desc in choices_tuple:
+                if val == selection or _name == selection or _desc == selection:
                     return True
             return False
 

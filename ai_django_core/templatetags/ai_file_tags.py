@@ -18,7 +18,7 @@ def filename(value, max_length=25):
     name = os.path.basename(value.url)
     if len(name) > max_length:
         ext = name.split('.')[-1]
-        name = "%s[..].%s" % (name[:max_length], ext)
+        name = f"{name[:max_length]}[..].{ext}"
     return name
 
 
@@ -31,6 +31,6 @@ def filesize(value):
     :return filesize:
     """
     try:
-        return os.path.getsize("%s%s" % (settings.MEDIA_ROOT, value))
+        return os.path.getsize(f"{settings.MEDIA_ROOT}{value}")
     except Exception:
         return 0

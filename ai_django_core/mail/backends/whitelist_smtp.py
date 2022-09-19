@@ -41,7 +41,7 @@ class WhitelistEmailBackend(SMTPEmailBackend):
         Getter for configuration variable from the settings.
         Will return a string with a placeholder for redirecting non-whitelisted domains.
         """
-        return getattr(settings, 'EMAIL_BACKEND_REDIRECT_ADDRESS')
+        return settings.EMAIL_BACKEND_REDIRECT_ADDRESS
 
     @staticmethod
     def whitify_mail_addresses(mail_address_list: list) -> list:
