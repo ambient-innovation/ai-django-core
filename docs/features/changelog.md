@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.3.1** (2022-09-19)
+  * Updated GitHub test matrix OS
+
 * **6.3.0** (2022-09-19)
   * Integrated `flake8-bugbear` and `pyupgrade` including required code adjustments
   * Improved security vulnerability scanning
