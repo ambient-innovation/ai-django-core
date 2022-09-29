@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.3.2** (2022-09-29)
+  * Updated gitlab-ci for showing tests in MR
+
 * **6.3.1** (2022-09-19)
   * Updated GitHub test matrix OS
 
