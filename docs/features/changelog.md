@@ -1,5 +1,9 @@
 # Changelog
 
+* **6.4.0** (2022-09-29)
+  * Models inheriting from `CommonInfo` will automatically save the four CommonInfo fields in addition to the fields
+    selected when using `update_fields` in the models save method.
+
 * **6.3.2** (2022-09-29)
   * Updated gitlab-ci for showing tests in MR
 

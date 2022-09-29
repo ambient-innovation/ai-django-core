@@ -41,7 +41,7 @@ class CommonInfo(CreatedAtInfo, models.Model):
     @staticmethod
     def get_current_user():
         """
-        Get the currently logged in user over middleware.
+        Get the currently logged-in user over middleware.
         Can be overwritten to use e.g. other middleware or additional functionality.
         :return: user instance
         """
@@ -62,6 +62,11 @@ class CommonInfo(CreatedAtInfo, models.Model):
         self.lastmodified_at = now()
         current_user = self.get_current_user()
         self.set_user_fields(current_user)
+
+        # Handle case that somebody only wants to update some fields
+        if 'update_fields' in kwargs:
+            kwargs['update_fields'] += ('lastmodified_at', 'lastmodified_by', 'created_at', 'created_by')
+
         super().save(*args, **kwargs)
 
     class Meta:

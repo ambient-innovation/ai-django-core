@@ -14,6 +14,7 @@ you can use the abstract class `CommonInfo` like this:
 ````python
 from ai_django_core.models import CommonInfo
 
+
 class MyFancyModel(CommonInfo):
     ...
 ````
@@ -22,6 +23,8 @@ You then get four fields: `created_by`, `created_at`, `lastmodified_by`, `lastmo
 
 If you are interested in the details, just have a look at the code base.
 
+Note, that those fields will be automatically added to the `update_fields` if you choose to update only a subset of
+fields on saving your object.
 
 ### Automatic object ownership
 
