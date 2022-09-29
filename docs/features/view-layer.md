@@ -136,27 +136,59 @@ things within the view.
 
 ### RequestInFormKwargsMixin
 
-The ``RequestInFormKwargsMixin`` is a handy helper for passing the request automated form the view to the form. If you
+The ``RequestInFormKwargsMixin`` is a handy helper for passing the request from the view to the form. If you
 need for example the current request user within the form, you need to have the current request available.
 
-Just add the mixin to the parents of your class-based view class:
+*Attention: It is encouraged to only pass what you need and therefore - in most cases - pass the user object
+using* `UserInFormKwargsMixin` *instead of this mixin.*
+
+Just add the mixin to your class-based view:
 
 ````python
+from ai_django_core.view_layer.views import RequestInFormKwargsMixin
 from django.views import generic
 
 
-class MyModelEditView(RequestInFormKwargsMixin, generic.CreateView):
+# views.py
+class MyModelCreateView(RequestInFormKwargsMixin, generic.CreateView):
     model = MyModel
-    template_name = 'myapp/mymodel_edit.html'
     form_class = MyModelForm
     ...
 
 
-class MyModelEditView(RequestInFormKwargsMixin, generic.UpdateView):
+# forms.py
+class MyModelForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        # Get request from kwargs
+        self.request = kwargs.pop('request')
+````
+
+### UserInFormKwargsMixin
+
+The ``UserInFormKwargsMixin`` is a handy helper for passing the request user from the view to the form. A common
+use-case would be to set the ownership of the to-be-created object or store the last user changing this record.
+
+Just add the mixin to your class-based view:
+
+````python
+from ai_django_core.view_layer.views import UserInFormKwargsMixin
+from django import forms
+from django.views import generic
+
+# views.py
+class MyModelCreateView(UserInFormKwargsMixin, generic.CreateView):
     model = MyModel
-    template_name = 'myapp/mymodel_edit.html'
     form_class = MyModelForm
     ...
+
+
+# forms.py
+class MyModelForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        # Get request from kwargs
+        self.user = kwargs.pop('user')
 ````
 
 Make sure that you overwrite the ``__init__`` method of your form and move the `request` to the class. Otherwise
