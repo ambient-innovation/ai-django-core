@@ -90,4 +90,12 @@ tests:
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $IMAGE_TAG
-    - docker run $IMAGE_TAG pytest --ds settings tests --cov=ai_django_core/
+    - docker run -v `pwd`:/reports $IMAGE_TAG pytest --ds settings tests --cov=ai_django_core/ --cov-report xml:/reports/cov.xml --junitxml=/reports/junit.xml
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    reports:
+      junit: ./junit.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: ./cov.xml
+
