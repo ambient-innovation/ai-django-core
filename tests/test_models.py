@@ -7,7 +7,6 @@ from testapp.models import CommonInfoBasedModel
 
 
 class CommonInfoTest(TestCase):
-
     @freeze_time('2022-06-26 10:00')
     def test_save_update_fields_common_fields_set(self):
         with freeze_time('2020-09-19'):
