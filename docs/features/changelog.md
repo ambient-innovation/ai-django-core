@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.5.0** (2022-09-29)
+  * Added view mixin `UserInFormKwargsMixin` to pass the user to a form in a `FormView`, `CreateView` or `UpdateView`
+
 * **6.4.0** (2022-09-29)
   * Models inheriting from `CommonInfo` will automatically save the four CommonInfo fields in addition to the fields
     selected when using `update_fields` in the models save method.

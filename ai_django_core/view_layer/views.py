@@ -33,6 +33,18 @@ class RequestInFormKwargsMixin:
         return kwargs
 
 
+class UserInFormKwargsMixin:
+    """
+    Injects the request user in the form.
+    Attention: Have to be removed in the init of the form (via .pop())
+    """
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+
 class ToggleView(SingleObjectMixin, generic.View):
     """
     Generic view for updating an object without any user data being sent. Therefore, we don't need a form to validate
