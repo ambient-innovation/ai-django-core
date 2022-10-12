@@ -89,9 +89,10 @@ from django.db import models
 from ai_django_core.mixins.models import PermissionModelMixin
 
 class ComparisonMyModelAndOtherModelPermission(PermissionModelMixin, models.Model):
-    permissions = (
-        ('view_comparison', 'Can view the comparison'),
-    )
+    class Meta:
+        permissions = (
+            ('view_comparison', 'Can view the comparison'),
+        )
 ````
 
 Take care that you still have to create a migration so your newly created permissions will be inserted in your database.

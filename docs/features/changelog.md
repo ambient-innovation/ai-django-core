@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.6.1** (2022-10-12)
+  * Bugfix in documentation of mixin `PermissionModelMixin`
+
 * **6.6.0** (2022-10-12)
   * Added model mixin `PermissionModelMixin` to provide a neat way of handling non-(database)-model-related permissions
   * Improved mixin documentation
