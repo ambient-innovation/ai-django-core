@@ -70,6 +70,32 @@ BLEACH_ALLOWED_TAGS = ['span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 As the mixin works by extending the models `safe()`-method, bleaching **will not** be applied on all storage operations
 done directly by the database, like `MyModel.objects.all().update(my_html_field='I am malicious content!')`.
 
+Take care, that you have to set `BLEACH_ALLOWED_TAGS`. Otherwise, all tags will be allowed.
+
+## Models
+
+### PermissionModelMixin
+
+When working with the Django permissions system, it happens quite often that you have to create a permission which
+doesn't belong to a real-world data model. For example, if you want to show a comparison between table A and B - to
+which model you would add this permission?
+
+To fix this handicap, you can use the `PermissionModelMixin` which will create an unmanaged model (no database table
+being created) which has no default permissions. You can just add your favourite permissions there and have a nice and
+clean place to start from.
+
+````python
+from django.db import models
+from ai_django_core.mixins.models import PermissionModelMixin
+
+class ComparisonMyModelAndOtherModelPermission(PermissionModelMixin, models.Model):
+    permissions = (
+        ('view_comparison', 'Can view the comparison'),
+    )
+````
+
+Take care that you still have to create a migration so your newly created permissions will be inserted in your database.
+
 ## Validation
 
 ### CleanOnSaveMixin
@@ -80,7 +106,11 @@ called on a regular model save. Just derive your model from the `CleanOnSaveMixi
 on every save. Note that it won't be called on bulk operations not targeting model save.
 
 ````python
+from django.db import models
+from ai_django_core.mixins.validation import CleanOnSaveMixin
+
 class ModelWithCleanMixin(CleanOnSaveMixin, models.Model):
     def clean(self):
         # to your magic here
+        pass
 ````

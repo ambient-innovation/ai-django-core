@@ -1,5 +1,10 @@
 # Changelog
 
+* **6.6.0** (2022-10-12)
+  * Added model mixin `PermissionModelMixin` to provide a neat way of handling non-(database)-model-related permissions
+  * Improved mixin documentation
+  * Updated GitHub Actions
+
 * **6.5.0** (2022-09-29)
   * Added view mixin `UserInFormKwargsMixin` to pass the user to a form in a `FormView`, `CreateView` or `UpdateView`
 
