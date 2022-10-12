@@ -4,6 +4,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from ai_django_core.managers import GloballyVisibleQuerySet
+from ai_django_core.mixins.models import PermissionModelMixin
 from ai_django_core.mixins.validation import CleanOnSaveMixin
 from ai_django_core.models import CommonInfo
 
@@ -59,3 +60,7 @@ class ModelWithOneToOneToSelf(models.Model):
 class ModelWithCleanMixin(CleanOnSaveMixin, models.Model):
     def clean(self):
         return True
+
+
+class MyPermissionModelMixin(PermissionModelMixin, models.Model):
+    pass
