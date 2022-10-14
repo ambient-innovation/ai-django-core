@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.6.2** (2022-10-12)
+  * Updated documentation of mixin `PermissionModelMixin` in regard to a caveat with default permissions
+
 * **6.6.1** (2022-10-12)
   * Bugfix in documentation of mixin `PermissionModelMixin`
 

@@ -97,6 +97,10 @@ class ComparisonMyModelAndOtherModelPermission(PermissionModelMixin, models.Mode
 
 Take care that you still have to create a migration so your newly created permissions will be inserted in your database.
 
+Attention: If you only need your custom permissions and not the Django default ones (`add_*`, `change_*`, ...), you have
+to set the meta attribute `default_permissions` to an empty tuple or list. Otherwise, they will be created. It is not
+possible to use inheritance here, explained in this [Django ticket](https://code.djangoproject.com/ticket/29386).
+
 ## Validation
 
 ### CleanOnSaveMixin
