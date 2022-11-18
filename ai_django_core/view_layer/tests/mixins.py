@@ -1,7 +1,9 @@
 from typing import Union
 from unittest import mock
 
-from django.contrib.auth.models import AnonymousUser, Permission, User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import AnonymousUser, Permission
 from django.utils.translation import gettext_lazy as _
 
 from ai_django_core.tests.errors import TestSetupConfigurationError
@@ -22,7 +24,7 @@ class BaseViewPermissionTestMixin(RequestProviderMixin):
 
     @classmethod
     def get_test_user(cls):
-        return User.objects.create(username='test_user', email='test.user@ai-django-core.com')
+        return get_user_model().objects.create(username='test_user', email='test.user@ai-django-core.com')
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -30,7 +32,9 @@ class BaseViewPermissionTestMixin(RequestProviderMixin):
         if not self.view_class:
             raise TestSetupConfigurationError(_('BaseViewPermissionTestMixin used without setting a "view_class".'))
 
-    def get_view_instance(self, *, user: Union[User, AnonymousUser], kwargs: dict = None, method: str = 'GET'):
+    def get_view_instance(
+        self, *, user: Union[AbstractBaseUser, AnonymousUser], kwargs: dict = None, method: str = 'GET'
+    ):
         """
         Creates an instance of the given view class and injects a valid request.
         """

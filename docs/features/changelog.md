@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.6.3** (2022-11-18)
+  * Fixed `BaseViewPermissionTestMixin` to work with custom user models
+
 * **6.6.2** (2022-10-12)
   * Updated documentation of mixin `PermissionModelMixin` in regard to a caveat with default permissions
 
