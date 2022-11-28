@@ -7,6 +7,8 @@ from ai_django_core.managers import GloballyVisibleQuerySet
 from ai_django_core.mixins.models import PermissionModelMixin
 from ai_django_core.mixins.validation import CleanOnSaveMixin
 from ai_django_core.models import CommonInfo
+from testapp.managers import ModelWithSelectorQuerySet
+from testapp.selectors import ModelWithSelectorGloballyVisibleSelector
 
 
 class MySingleSignalModel(models.Model):
@@ -47,6 +49,13 @@ def send_email(sender, instance, **kwargs):
 
 class CommonInfoBasedModel(CommonInfo):
     value = models.PositiveIntegerField(default=0)
+
+
+class ModelWithSelector(models.Model):
+    value = models.PositiveIntegerField(default=0)
+
+    objects = ModelWithSelectorQuerySet.as_manager()
+    selectors = ModelWithSelectorGloballyVisibleSelector()
 
 
 class ModelWithFkToSelf(models.Model):

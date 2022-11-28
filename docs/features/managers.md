@@ -8,7 +8,7 @@ A frequent requirement for information system database records are often not pub
 who can view what. The django permission system allows restricting access to a whole model but in a lot of cases the
 visibility needs to be determined on object level. Let's say we have this data structure:
 
-````
+```python
 # models.py
 class Company(models.Model):
     name = models.CharField(max_length=100)
@@ -20,7 +20,7 @@ class User(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=100)
     company = models.ForeignKey(Company)
-````
+```
 
 We have a multi-tenant system which helps to organise projects for different companies. As an employee of company "A" I
 am only allowed to see all projects belonging to company "A". If we restrict access with the django permissions to the
@@ -34,7 +34,7 @@ these access levels in a reproducible, understandable and DRY way.
 If you derive your managers from ``AbstractUserSpecificManager``, you will expose three methods: `visible_for()`,
 `editable_for()` and `deletable_for()`. Each method needs to be implemented per manager class like this:
 
-````
+```python
 # managers.py
 class ProjectManager(AbstractUserSpecificManager):
 
@@ -46,27 +46,27 @@ class ProjectManager(AbstractUserSpecificManager):
 
     def deletable_for(self, user):
         return self.get_queryset().filter(company=user.company)
-````
+```
 
 Now just register the custom manager within the model:
 
-````
+```python
 # models.py
 class Project(models.Model):
     name = models.CharField(max_length=100)
     company = models.ForeignKey(Company)
 
     objects = ProjectManager()
-````
+```
 
 Now you can easily use the given methods in every view, service or serializers as follows:
 
-````
+```python
 # views.py
 def project_list(request):
     project_list = Project.objects.all().visible_for(request.user)
     return render(request, 'project/project_list.html', {'project_list': project_list})
-````
+```
 
 Obviously, if you are not listing your projects but want to validate if the user is allowed to create/edit or delete the
 given object, you should use the other two methods.
@@ -78,7 +78,7 @@ given object, you should use the other two methods.
 In most cases you want to implement a custom manager to put your model-related methods into and register a custom
 queryset class to handle the permissions.
 
-````
+```python
 # managers.py
 class ProjectQuerySet(AbstractUserSpecificQuerySet):
 
@@ -95,18 +95,21 @@ class ProjectManager(models.Manager):
 
     def get_queryset(self):
         return ProjectQuerySet(self.model, using=self._db)
-````
+```
 
 In the model, you'll register only the manager as usual.
 
-````
+```python
 # models.py
 class Project(models.Model):
     name = models.CharField(max_length=100)
     company = models.ForeignKey(Company)
 
     objects = ProjectManager()
-````
+```
+
+*Update*: If you want to even further improve your coding patterns, you can use the `AbstractUserSpecificSelectorMixin`,
+please refer to the "Query Selectors" page.
 
 #### Directly use custom QuerySet class
 
@@ -117,7 +120,7 @@ implementing custom manger methods!
 
 At first, use a custom queryset class like this:
 
-````
+```python
 # managers.py
 class ProjectQuerySet(AbstractUserSpecificQuerySet):
 
@@ -129,35 +132,35 @@ class ProjectQuerySet(AbstractUserSpecificQuerySet):
 
     def deletable_for(self, user):
         return self.filter(company=user.company)
-````
+```
 
 Take care that you need to register it a little different in the model:
 
-````
+```python
 # models.py
 class Project(models.Model):
     name = models.CharField(max_length=100)
     company = models.ForeignKey(Company)
 
     objects = ProjectQuerySet.as_manager()
-````
+```
 
 Then you'll save the `.all()` and can directly use the exposed methods:
 
-````
+```python
 project_list = Project.objects.visible_for(request.user)
-````
+```
 
 #### Default manager for global visibility
 
 If you have the case that a certain model does not require any user-level permissions, you can use the
 ``GloballyVisibleQuerySet``. This manager (or more precisely custom queryset) just returns all records when calling any
-of its base  methods:
+of its base methods:
 
-````
-    def visible_for(self, user):
-        return self.all()
-````
+```python
+def visible_for(self, user):
+    return self.all()
+```
 
 It is advisable to use this manager for every class. This way, you can ensure that if some permissions are added to a
 model, they are put in the right place (the `visible_for()` method) and not somewhere in the code.

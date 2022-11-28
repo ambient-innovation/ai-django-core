@@ -43,6 +43,28 @@ flake8:
     - pip install flake8 pep8-naming flake8-bugbear
     - flake8 .
 
+check python version coding style:
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
+  stage: lint
+  tags:
+    - low-load
+  script:
+    - apt-get update && apt-get install --no-install-recommends -y git
+    - pip install pre-commit
+    - pre-commit install -t pre-push -t pre-commit --install-hooks
+    - pre-commit run --all-files --hook-stage push pyupgrade
+
+check django version coding style:
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
+  stage: lint
+  tags:
+    - low-load
+  script:
+    - apt-get update && apt-get install --no-install-recommends -y git
+    - pip install pre-commit
+    - pre-commit install -t pre-push -t pre-commit --install-hooks
+    - pre-commit run --all-files --hook-stage push django-upgrade
+
 build:
   stage: build
   tags:
