@@ -1,3 +1,3 @@
 """Ambient toolbox - Lots of helper functions and useful widgets"""
 
-__version__ = '6.6.3'
+__version__ = '6.7.0'

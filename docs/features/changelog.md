@@ -1,5 +1,13 @@
 # Changelog
 
+* **6.7.0** (2022-11-25)
+  * Added `Selector` base class
+  * Added `AbstractUserSpecificSelectorMixin` and `GloballyVisibleSelector` helpers for selector pattern
+  * Added documentation for new selector pattern
+  * Added `django-upgrade` to linting
+  * Updated linting tools `black` & `pyupgrade`
+  * Added `pyupgrade` and `django-upgrade` to pipeline
+
 * **6.6.3** (2022-11-18)
   * Fixed `BaseViewPermissionTestMixin` to work with custom user models
 
