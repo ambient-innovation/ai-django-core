@@ -13,6 +13,7 @@ from ai_django_core.utils.date import (
     date_month_delta,
     datetime_format,
     first_day_of_month,
+    get_first_and_last_of_month,
     get_formatted_date_str,
     get_next_calendar_week,
     get_next_month,
@@ -29,12 +30,15 @@ class DateUtilTest(TestCase):
     def test_get_start_and_end_date_from_calendar_week(self):
         monday, sunday = get_start_and_end_date_from_calendar_week(2016, 52)
         self.assertEqual(monday, datetime.date(year=2016, month=12, day=26))
+        self.assertEqual(sunday, datetime.date(year=2017, month=1, day=1))
 
         monday, sunday = get_start_and_end_date_from_calendar_week(2018, 1)
         self.assertEqual(monday, datetime.date(year=2018, month=1, day=1))
+        self.assertEqual(sunday, datetime.date(year=2018, month=1, day=7))
 
         monday, sunday = get_start_and_end_date_from_calendar_week(2017, 30)
         self.assertEqual(monday, datetime.date(year=2017, month=7, day=24))
+        self.assertEqual(sunday, datetime.date(year=2017, month=7, day=30))
 
     def test_get_next_calendar_week_any_week(self):
         self.assertEqual(get_next_calendar_week(datetime.date(year=2020, month=9, day=19)), 39)
@@ -200,3 +204,65 @@ class DateUtilTest(TestCase):
     def test_datetime_format_different_timezone(self):
         source_date = datetime.datetime(year=2020, month=6, day=26, hour=8, tzinfo=pytz.UTC)
         self.assertEqual(datetime_format(source_date, '%d.%m.%Y %H:%M'), '26.06.2020 10:00')
+
+    @freeze_time('2022-12-14')
+    def test_get_first_and_last_of_month_in_december(self):
+        first_of_month, last_of_month = get_first_and_last_of_month()
+        expected_first_of_month = datetime.date(day=1, month=12, year=2022)
+        expected_last_of_month = datetime.date(day=31, month=12, year=2022)
+
+        self.assertEqual(expected_first_of_month, first_of_month)
+        self.assertEqual(expected_last_of_month, last_of_month)
+
+    @freeze_time('2020-02-14')
+    def test_get_first_and_last_of_month_in_february_leap_year(self):
+        first_of_month, last_of_month = get_first_and_last_of_month()
+        expected_first_of_month = datetime.date(day=1, month=2, year=2020)
+        expected_last_of_month = datetime.date(day=29, month=2, year=2020)
+
+        self.assertEqual(expected_first_of_month, first_of_month)
+        self.assertEqual(expected_last_of_month, last_of_month)
+
+    @freeze_time('2022-02-14')
+    def test_get_first_and_last_of_month_in_february_non_leap_year(self):
+        first_of_month, last_of_month = get_first_and_last_of_month()
+        expected_first_of_month = datetime.date(day=1, month=2, year=2022)
+        expected_last_of_month = datetime.date(day=28, month=2, year=2022)
+
+        self.assertEqual(expected_first_of_month, first_of_month)
+        self.assertEqual(expected_last_of_month, last_of_month)
+
+    @freeze_time('2022-04-04')
+    def test_get_first_and_last_of_month_in_april(self):
+        first_of_month, last_of_month = get_first_and_last_of_month()
+        expected_first_of_month = datetime.date(day=1, month=4, year=2022)
+        expected_last_of_month = datetime.date(day=30, month=4, year=2022)
+
+        self.assertEqual(expected_first_of_month, first_of_month)
+        self.assertEqual(expected_last_of_month, last_of_month)
+
+    def test_get_first_and_last_of_month_with_date_objects_passed(self):
+        date_mapping = {
+            datetime.date(day=14, month=12, year=2022): {
+                'first': datetime.date(day=1, month=12, year=2022),
+                'last': datetime.date(day=31, month=12, year=2022),
+            },
+            datetime.date(day=14, month=2, year=2020): {
+                'first': datetime.date(day=1, month=2, year=2020),
+                'last': datetime.date(day=29, month=2, year=2020),
+            },
+            datetime.date(day=14, month=2, year=2022): {
+                'first': datetime.date(day=1, month=2, year=2022),
+                'last': datetime.date(day=28, month=2, year=2022),
+            },
+            datetime.date(day=4, month=4, year=2022): {
+                'first': datetime.date(day=1, month=4, year=2022),
+                'last': datetime.date(day=30, month=4, year=2022),
+            },
+        }
+
+        for date_object in date_mapping:
+            first_of_month, last_of_month = get_first_and_last_of_month(date_object=date_object)
+
+            self.assertEqual(date_mapping[date_object]['first'], first_of_month)
+            self.assertEqual(date_mapping[date_object]['last'], last_of_month)

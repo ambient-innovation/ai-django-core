@@ -84,6 +84,9 @@ Example: run all hooks of pre-push stage
 
 ## Translation files
 
+If you have added custom text, make sure to wrap it in `_()` where `_` is
+gettext_lazy (`from django.utils.translation import gettext_lazy as _`).
+
 How to create translation file:
 
 * Navigate to `ai_django_core/ai_django_core` (the inner directory!)

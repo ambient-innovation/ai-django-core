@@ -72,7 +72,6 @@ name = "ai_django_core"
 
 [tool.black]
 line-length = 120
-target-version = ['py310']
 multi_line_output = 3
 skip-string-normalization = true
 include_trailing_comma = true

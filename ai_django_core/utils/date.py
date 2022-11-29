@@ -1,6 +1,6 @@
 import datetime
 from calendar import monthrange
-from typing import Union
+from typing import Tuple, Union
 
 import pytz
 from dateutil.relativedelta import relativedelta
@@ -148,3 +148,20 @@ def date_month_delta(start_date: datetime.date, end_date: datetime.date) -> floa
 
     # Return data
     return delta
+
+
+def get_first_and_last_of_month(date_object: datetime.date = None) -> Tuple[datetime.date, datetime.date]:
+    """
+    Returns first and last day of a month as date objects.
+    Will either return first/last of current month (if no datetime_object is passed), or will determine first/last of
+    the month of the passed datetime.date object
+    """
+    first_of_month = timezone.now().replace(day=1).date() if not date_object else date_object.replace(day=1)
+
+    # Add one month to first_of_month
+    first_of_next_month = first_of_month + relativedelta(months=1)
+
+    # Subtract one day, to get the last of month
+    last_of_month = first_of_next_month - datetime.timedelta(days=1)
+
+    return first_of_month, last_of_month
