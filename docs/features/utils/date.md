@@ -166,6 +166,25 @@ months = date_month_delta(datetime.date(year=2020, month=8, day=1), datetime.dat
 # months = 2.0
 ````
 
+### Get the first and last date of a month
+
+The function ``get_first_and_last_of_month()`` returns the first and last date of a month as a Tuple.
+The month is either the current month (if no date_object is passed), or the month of any date that is being passed.
+Dates passed need to be datetime.date objects (not datetime.datetime)!
+
+````
+from ai_django_core.utils import get_first_and_last_of_month
+
+# Today is 04.04.2022
+first_of_month, last_of_month = get_first_and_last_of_month()
+# first_of_month = datetime.date(day=1, month=4, year=2022)
+# last_of_month = datetime.date(day=30, month=4, year=2022)
+
+# Today is 02.06.2022
+first_of_month, last_of_month = get_first_and_last_of_month(datetime(day=16, month=12, year=2022))
+# first_of_month = datetime.date(day=1, month=12, year=2022)
+# last_of_month = datetime.date(day=31, month=12, year=2022)
+````
 
 ### Get current date
 
