@@ -5,6 +5,7 @@
   * Added `AbstractUserSpecificSelectorMixin` and `GloballyVisibleSelector` helpers for selector pattern
   * Added documentation for new selector pattern
   * Added `django-upgrade` to linting
+  * Added date helper `get_first_and_last_of_month`
   * Updated linting tools `black` & `pyupgrade`
   * Added `pyupgrade` and `django-upgrade` to pipeline
 
