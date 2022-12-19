@@ -4,7 +4,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from ai_django_core.managers import GloballyVisibleQuerySet
-from ai_django_core.mixins.models import PermissionModelMixin
+from ai_django_core.mixins.models import PermissionModelMixin, SaveWithoutSignalsMixin
 from ai_django_core.mixins.validation import CleanOnSaveMixin
 from ai_django_core.models import CommonInfo
 from testapp.managers import ModelWithSelectorQuerySet
@@ -73,3 +73,12 @@ class ModelWithCleanMixin(CleanOnSaveMixin, models.Model):
 
 class MyPermissionModelMixin(PermissionModelMixin, models.Model):
     pass
+
+
+class ModelWithSaveWithoutSignalsMixin(SaveWithoutSignalsMixin, models.Model):
+    value = models.PositiveIntegerField(default=0)
+
+
+@receiver(pre_save, sender=ModelWithSaveWithoutSignalsMixin)
+def increase_value_on_pre_save(sender, instance, **kwargs):
+    instance.value += 1
