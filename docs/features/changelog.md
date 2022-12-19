@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.8.0** (2022-12-19)
+  * Added `SaveWithoutSignalsMixin` model mixin
+
 * **6.7.0** (2022-11-25)
   * Added `Selector` base class
   * Added `AbstractUserSpecificSelectorMixin` and `GloballyVisibleSelector` helpers for selector pattern
