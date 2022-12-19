@@ -95,11 +95,39 @@ class ComparisonMyModelAndOtherModelPermission(PermissionModelMixin, models.Mode
         )
 ````
 
-Take care that you still have to create a migration so your newly created permissions will be inserted in your database.
+Note that you still have to create a migration so your newly created permissions will be inserted in your database.
 
 Attention: If you only need your custom permissions and not the Django default ones (`add_*`, `change_*`, ...), you have
 to set the meta attribute `default_permissions` to an empty tuple or list. Otherwise, they will be created. It is not
 possible to use inheritance here, explained in this [Django ticket](https://code.djangoproject.com/ticket/29386).
+
+### SaveWithoutSignalsMixin
+
+When working with Django signals, you might run into the conceptual problem, that signals are being triggered on
+`.save()` calls although you wish for them not to be called, or that you run into racing-conditions where one signal
+edits data before another signal was supposed to prepare the data.
+This might happen in large, ever-growing projects where it is wiser, to work with a quickfix, 
+instead of rethinking your projects whole architecture.
+
+For this use-case, you can use the `SaveWithoutSignalsMixin` from which your model can inherit, 
+which will add a `.save_without_signals()` method to your models, disconnecting all signals, 
+saving the instance and then reconnecting the signals.
+
+```python
+# models.py
+from django.db import models
+from ai_django_core.mixins.models import SaveWithoutSignalsMixin
+
+class MyModelWithAnnoyingSignals(SaveWithoutSignalsMixin, models.Model):
+    pass
+
+# another_file.py
+
+...
+my_model = MyModelWithAnnoyingSignals.objects.create()
+my_model.save_without_signals()  # save method call without any signals being triggered
+my_model.save()  # "normal" save method, which will trigger signals
+```
 
 ## Validation
 
