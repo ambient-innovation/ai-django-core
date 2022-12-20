@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.8.1** (2022-12-20)
+  * Fixed broken init file
+
 * **6.8.0** (2022-12-19)
   * Added `SaveWithoutSignalsMixin` model mixin
 
