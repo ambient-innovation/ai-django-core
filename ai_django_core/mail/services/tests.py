@@ -60,7 +60,7 @@ class EmailTestService:
                 match = False
             if bcc and bcc not in email.bcc:
                 match = False
-            if subject and not re.search(subject, email.subject):
+            if subject and not re.search(subject, str(email.subject)):
                 match = False
 
             # Add email if all set conditions are valid

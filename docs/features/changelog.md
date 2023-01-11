@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.8.3** (2023-01-11)
+  * Fixed bug with filtering in EmailTestService for subject passing a gettext_lazy object (second occurrence)
+
 * **6.8.2** (2023-01-11)
   * Fixed bug with filtering in EmailTestService for subject passing a gettext_lazy object
 
