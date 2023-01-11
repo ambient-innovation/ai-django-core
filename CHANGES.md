@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.8.4** (2023-01-11)
+  * Moved changelog to "CHANGES.md" to make Dependabot understand/find it
+
 * **6.8.3** (2023-01-11)
   * Fixed bug with filtering in EmailTestService for subject passing a gettext_lazy object (second occurrence)
 
