@@ -47,7 +47,8 @@ class EmailTestService:
             raise ValueError('EmailTestService.filter called without parameters')
 
         if subject and not isinstance(subject, re.Pattern):
-            subject = re.compile(f"^{re.escape(subject)}$")
+            # If the "subject" is a translatable, we have to cast it to string
+            subject = re.compile(f"^{re.escape(str(subject))}$")
 
         match_list = []
         for email in self._outbox:

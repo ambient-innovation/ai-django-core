@@ -3,6 +3,7 @@ import re
 from django.core import mail
 from django.core.mail import EmailMultiAlternatives
 from django.test import TestCase
+from django.utils.translation import gettext_lazy as _
 
 from ai_django_core.mail.services.tests import EmailTestService, EmailTestServiceMail, EmailTestServiceQuerySet
 
@@ -122,9 +123,17 @@ class EmailTestServiceTest(TestCase):
         qs = self.ets.filter(to=self.to, cc=self.cc, bcc=self.bcc, subject='Not my subject')
         self.assertEqual(qs.count(), 0)
 
+    def test_filter_subject_regular(self):
+        qs = self.ets.filter(subject=self.subject)
+        self.assertEqual(qs.count(), 1)
+
     def test_filter_subject_regex_invalid(self):
         qs = self.ets.filter(subject=re.compile('Not my subject'))
         self.assertEqual(qs.count(), 0)
+
+    def test_filter_subject_translatable(self):
+        qs = self.ets.filter(subject=_(self.subject))
+        self.assertEqual(qs.count(), 1)
 
     def test_filter_subject_regex_valid_single(self):
         qs = self.ets.filter(subject=re.compile('definitely not'))
