@@ -28,6 +28,8 @@ class CoverageService:
         )
         self.pipelines_url_with_token = f'{self.pipelines_url}&private_token={self.token}'
 
+        self.disable_coverage: bool = os.environ.get('GITLAB_CI_DISABLE_COVERAGE', False)
+
     def get_latest_target_branch_commit_sha(self) -> str:
         """
         Get the latest commit which is in the current branch and the target compare branch.
@@ -124,6 +126,12 @@ class CoverageService:
         Compare coverage from target branch (latest develop) with the current one.
         At first, we try to get a successfully finished pipeline for the "self.target_branch" (usually "develop")
         """
+
+        # Check, if coverage is supposed to run. If not, inform the user and return early.
+        if self.disable_coverage:
+            print('Coverage was skipped!')
+            sys.exit(0)
+
         print('\n###########################################################################\n')
         print('DEBUG INFO:')
 
