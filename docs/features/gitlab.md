@@ -61,3 +61,6 @@ Hint: For merge-commits (i.e.: Merge develop into master), or hotfixes into bran
 run a Pipeline on your source-branch (i.e.: `develop` if you want to merge `develop` into `master`) with the _Input
 variable key_ set to `GITLAB_CI_COVERAGE_TARGET_BRANCH` and the _Input variable value_ set to the target branch (
 i.e.: `master` if you want to merge `develop` into `master`).
+
+Hint: If you wish to not run coverage for a specific pipeline for whatever reason, simply run the pipeline
+with `GITLAB_CI_DISABLE_COVERAGE = True` and no coverage will be collected.
