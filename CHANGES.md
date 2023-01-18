@@ -1,5 +1,9 @@
 # Changelog
 
+* **6.9.0** (2023-01-18)
+  * Added "GITLAB_CI_DISABLE_COVERAGE" flag to coverage script for Gitlab pipeline
+  * Fixed typo in the docs
+
 * **6.8.4** (2023-01-11)
   * Moved changelog to "CHANGES.md" to make Dependabot understand/find it
 
