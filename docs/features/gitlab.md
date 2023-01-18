@@ -16,7 +16,7 @@ Take care that you have to set up Gitalb to recognise your coverage before you c
 
 ### Installation
 
-* Create a file called `scripts/validate_coverage.py` and add teh following:
+* Create a file called `scripts/validate_coverage.py` and add the following:
 
 ```python
 from ai_django_core.gitlab.coverage import CoverageService
