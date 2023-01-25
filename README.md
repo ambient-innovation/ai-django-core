@@ -102,7 +102,8 @@ How to compile translation files:
 ## Publish to ReadTheDocs.io
 
 - Fetch the latest changes in GitHub mirror and push them
-- Trigger new build at ReadTheDocs.io (follow instructions in admin panel at RTD)
+- Trigger new build at ReadTheDocs.io (follow instructions in admin panel at RTD) if the GitHub webhook is not yet set
+  up.
 
 ## Publish to PyPi
 
