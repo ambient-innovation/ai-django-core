@@ -31,7 +31,7 @@ dynamic = ["version", "description"]
 license = {"file" = "LICENSE.md"}
 dependencies = [
     'Django>=2.2.28',
-    'bleach>=1.4.3',
+    'bleach>=1.4,<6',
     'python-dateutil>=2.5.3',
     'html2text>=2020.1.16',
 ]

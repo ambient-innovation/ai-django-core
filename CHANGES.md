@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.9.1** (2023-01-25)
+  * Set version border for dependency "bleach" because of breaking changes
+
 * **6.9.0** (2023-01-18)
   * Added "GITLAB_CI_DISABLE_COVERAGE" flag to coverage script for Gitlab pipeline
   * Fixed typo in the docs
@@ -405,7 +408,7 @@
     * Added helper class `DateHelper` to provide constants to use in django's ORM lookup `__week_day`
 
 * **1.2.4** (2019-05-20)
-    * More refactoring on `CurrentUserMiddleware` to make it more easy to override internal functions
+    * More refactoring on `CurrentUserMiddleware` to make it easier to override internal functions
 
 * **1.2.3** (2019-05-20)
     * Moved `get_current_user` function inside `CurrentUserMiddleware` as a static method to enable devs to override it
