@@ -1,5 +1,8 @@
 # Changelog
 
+* **6.9.2** (2023-02-06)
+  * Updated `pre-commit` packages
+
 * **6.9.1** (2023-01-25)
   * Set version border for dependency "bleach" because of breaking changes
 

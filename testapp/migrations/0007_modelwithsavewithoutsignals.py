@@ -6,7 +6,6 @@ import ai_django_core.mixins.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('testapp', '0006_modelwithselector'),
     ]

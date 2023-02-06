@@ -6,7 +6,6 @@ import ai_django_core.mixins.validation
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('testapp', '0004_auto_20210511_1343'),
     ]
