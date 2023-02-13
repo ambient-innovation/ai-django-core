@@ -219,8 +219,8 @@ Please refer to the view layer section to get details about how to use this view
 
 ### DjangoMessagingFrameworkTestMixin
 
-If you're working with Django views, you might want to use (and therefore test) the Django messaging framework.
- To make this as easy as possible, just inherit your view test class from the `DjangoMessagingFrameworkTestMixin`.
+If you're working with Django views, you might want to use (and therefore test) the Django messaging framework. To make
+this as easy as possible, just inherit your view test class from the `DjangoMessagingFrameworkTestMixin`.
 
 You can either check for a full message or just for a partial one.
 
