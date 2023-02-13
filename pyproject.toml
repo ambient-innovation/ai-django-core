@@ -85,7 +85,7 @@ known_first_party = ['ai_django_core', 'testapp', 'tests']
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py{37,38,39,310}-django{22,30,31,32,40,41}
+envlist = py{37,38,39,310,311}-django{22,30,31,32,40,41}
 isolated_build = True
 
 [testenv]
