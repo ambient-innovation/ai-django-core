@@ -2,9 +2,11 @@ from typing import Optional, Union
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.messages import get_messages
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from django.test import RequestFactory
 from django.utils.translation import gettext_lazy as _
@@ -105,3 +107,33 @@ class RequestProviderMixin:
         request.method = method
 
         return request
+
+
+class DjangoMessagingFrameworkTestMixin:
+    """
+    Mixin to enable test cases to easily check for messages in the request.
+    This test is made for the Django Messaging Framework.
+    """
+
+    def assert_full_message_in_request(self, request: WSGIRequest, message: str) -> None:
+        messages = list(get_messages(request))
+
+        self.assertGreater(len(messages), 0, "The request doesn't contain any messages.")
+        message_found = False
+        for request_message in messages:
+            if str(request_message) == message:
+                message_found = True
+
+        self.assertTrue(message_found, f"Message {message!r} not found in request.")
+
+    def assert_partial_message_in_request(self, request: WSGIRequest, message: str) -> None:
+        messages = list(get_messages(request))
+
+        self.assertGreater(len(messages), 0, "The request doesn't contain any messages.")
+
+        message_found = False
+        for request_message in messages:
+            if message in str(request_message):
+                message_found = True
+
+        self.assertTrue(message_found, f"Message part {message!r} not found in request.")

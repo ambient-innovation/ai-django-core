@@ -1,5 +1,9 @@
 # Changelog
 
+* **6.10.0** (2023-02-13)
+  * Added test mixin `DjangoMessagingFrameworkTestMixin`
+  * Added python 3.11 to test matrix and supported versions
+
 * **6.9.2** (2023-02-06)
   * Updated `pre-commit` packages
 

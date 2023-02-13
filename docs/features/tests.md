@@ -216,3 +216,29 @@ class MyAwesomeTest(RequestProviderMixin, TestCase):
 ### BaseViewPermissionTestMixin
 
 Please refer to the view layer section to get details about how to use this view test mixin.
+
+### DjangoMessagingFrameworkTestMixin
+
+If you're working with Django views, you might want to use (and therefore test) the Django messaging framework.
+ To make this as easy as possible, just inherit your view test class from the `DjangoMessagingFrameworkTestMixin`.
+
+You can either check for a full message or just for a partial one.
+
+````python
+from django.test import TestCase
+from ai_django_core.tests.mixins import DjangoMessagingFrameworkTestMixin
+
+class MyViewTest(DjangoMessagingFrameworkTestMixin, TestCase):
+
+    def test_my_message_full_case(self):
+        # The view creates a message: "It's sunny on Sundays."
+        view = function_to_instantiate_your_view()
+        self.assert_full_message_in_request(
+            view.request, 'It's sunny on Sundays.')
+
+    def test_my_message_partial_case(self):
+        # The view creates a message: "I have added *n* new records" with "n" being a variable
+        view = function_to_instantiate_your_view()
+        self.assert_partial_message_in_request(
+            view.request, 'I have added')
+````
