@@ -25,23 +25,16 @@ services:
   - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
     alias: docker
 
-black and isort:
+lint:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
   stage: lint
   tags:
-    - normal-load
+    - low-load
   script:
-    - pip install black isort typing-extensions
-    - black --check --diff --color . && isort . --profile black --check --diff
-
-flake8:
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
-  stage: lint
-  tags:
-    - normal-load
-  script:
-    - pip install flake8 pep8-naming flake8-bugbear
-    - flake8 .
+    - apt-get update && apt-get install --no-install-recommends -y git
+    - pip install pre-commit
+    - pre-commit install -t pre-push -t pre-commit --install-hooks
+    - pre-commit run --all-files --hook-stage push
 
 check python version coding style:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
@@ -69,6 +62,9 @@ build:
   stage: build
   tags:
     - normal-load
+  before_script:
+    # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
+    - until docker info; do sleep 1; done
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#using-docker-caching
