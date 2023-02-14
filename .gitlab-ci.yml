@@ -106,6 +106,9 @@ tests:
     - normal-load
   variables:
     GIT_STRATEGY: none
+  before_script:
+    # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
+    - until docker info; do sleep 1; done
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $IMAGE_TAG
