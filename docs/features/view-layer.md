@@ -27,7 +27,7 @@ class MyForm(CrispyLayoutFormMixin, forms.Form):
 The form will have the following properties:
 
 | Attribute     | Default configuration                           |
-| ------------- | ----------------------------------------------- |
+|---------------|-------------------------------------------------|
 | Form tag      | Yes                                             |
 | Form class    | form-horizontal form-bordered form-row-stripped |
 | Method        | POST                                            |
@@ -121,7 +121,7 @@ For example, you want to allow only the "owner" of an object to view its detail 
 from django.views import generic
 
 
-class MyModelDetailView(CustomPermissionMixin, generics.DetailView):
+class MyModelDetailView(CustomPermissionMixin, generic.DetailView):
     ...
 
     def validate_permissions(self):
@@ -134,9 +134,134 @@ class MyModelDetailView(CustomPermissionMixin, generics.DetailView):
 If the method returns `False`, the regular dispatch will just simply render your `403` page and skip all the other
 things within the view.
 
+### HtmxResponseMixin
+
+The `HtmxResponseMixin` is a neat helper for passing headers to your HTMX frontend. You can set the
+`HX-Redirect` and the `HX-Trigger` headers as a class attribute of your view and don't have to worry about how to fiddle
+it into your Django response. Misconfiguration will lead to an error.
+
+#### HX-Redirect
+
+The HTMX docs are very brief about the [HX-Redirect header](https://htmx.org/docs/#response-headers). If you want to
+make a call to your backend and in response to this reload your page, you can achieve this as follows:
+
+````python
+from ai_django_core.view_layer.htmx_mixins import HtmxResponseMixin
+from django.urls import reverse_lazy
+from django.views import generic
+
+
+class MyView(HtmxResponseMixin, generic.View):
+    hx_redirect_url = reverse_lazy('myapp:mymodel-view')
+    ...
+````
+
+A typical scenario would be that you delete something from your page or have multiple changes on your previous page you
+don't want to update all one by one.
+
+If you need a more elaborate way to set up your redirect url, you can overwrite the getter.
+
+````python
+# views.py
+from ai_django_core.view_layer.htmx_mixins import HtmxResponseMixin
+from django.urls import reverse
+from django.views import generic
+
+
+class MyView(HtmxResponseMixin, generic.View):
+
+   def get_hx_redirect_url(self):
+      return reverse('myapp:mymodel-view', kwargs={...})
+````
+
+#### HX-Trigger
+
+[HX-Triggers](https://htmx.org/docs/#response-headers) will be converted to HTMX javascript events and can be listened
+to by your HTMX components in the frontend. Take care that you have to listen on `from:body`, otherwise your events
+won't be detected. The moment, your frontend detects the event, a new call to the backend is triggered to rerender the
+defined component.
+
+````html
+  <a hx-get="{% url 'notification:menu-list' %}"
+     hx-trigger="updateNotificationMenu from:body"
+     ...>Notifications</a>
+````
+
+The `updateNotificationMenu` is the javascript event, which will be sent from the backend.
+
+````python
+from ai_django_core.view_layer.htmx_mixins import HtmxResponseMixin
+from django.views import generic
+
+
+class MyView(HtmxResponseMixin, generic.View):
+    hx_trigger = 'updateNotificationMenu'
+    ...
+````
+
+This is the most straight-forward case. You send a signal without any context and listen to it with HTMX.
+
+If you want to add context, for example you are using some kind of notification library, like `toastr` or `UIKit`,
+you can directly send the along with the event.
+
+````python
+# views.py
+from ai_django_core.view_layer.htmx_mixins import HtmxResponseMixin
+from django.views import generic
+
+
+class MyView(HtmxResponseMixin, generic.View):
+    hx_trigger = {'userNotification': 'Stuff happened!'}
+    ...
+````
+
+This is the required vanilla JS:
+
+````javascript
+// base.html or any javascript file
+document.body.addEventListener("userNotification", function (e) {
+    UIkit.notification({
+        message: e.detail.value,
+        status: 'success',
+        pos: 'top-center',
+        timeout: 1000,
+    });
+});
+````
+
+Attention: If you want to send multiple events, you have to use the second option, even if you don't provide any
+context.
+
+````python
+# views.py
+from ai_django_core.view_layer.htmx_mixins import HtmxResponseMixin
+from django.views import generic
+
+
+class MyView(HtmxResponseMixin, generic.View):
+   hx_trigger = {'updateNotificationMenu': None, 'updateOtherComponent': None}
+   ...
+````
+
+If you need a more elaborate way to set up your triggers, you can overwrite the getter.
+
+````python
+# views.py
+from ai_django_core.view_layer.htmx_mixins import HtmxResponseMixin
+from django.views import generic
+
+
+class MyView(HtmxResponseMixin, generic.View):
+
+   def get_hx_trigger(self):
+      return {'my_event': None}
+````
+
+
+
 ### RequestInFormKwargsMixin
 
-The ``RequestInFormKwargsMixin`` is a handy helper for passing the request from the view to the form. If you
+The `RequestInFormKwargsMixin` is a handy helper for passing the request from the view to the form. If you
 need for example the current request user within the form, you need to have the current request available.
 
 *Attention: It is encouraged to only pass what you need and therefore - in most cases - pass the user object
@@ -175,6 +300,7 @@ Just add the mixin to your class-based view:
 from ai_django_core.view_layer.views import UserInFormKwargsMixin
 from django import forms
 from django.views import generic
+
 
 # views.py
 class MyModelCreateView(UserInFormKwargsMixin, generic.CreateView):
@@ -305,7 +431,7 @@ from django.views import generic
 
 @method_decorator(cache_page(60 * 10), name='dispatch')
 class MyModelListView(generic.ListView):
-   ...
+    ...
 ````
 
 ## Generic views

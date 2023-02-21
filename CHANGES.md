@@ -1,5 +1,11 @@
 # Changelog
 
+* **6.11.0** (2023-02-19)
+  * Added `HtmxResponseMixin` for Django views
+  * Added missing `object` class attribute to `ToggleView`
+  * Updated local lint, build and test suite to Python 3.11
+  * Updated readme file for contribution
+
 * **6.10.1** (2023-02-13)
   * Updated bug in documentation
 

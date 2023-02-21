@@ -40,10 +40,11 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     'freezegun',
+    'gevent',
+    'pre-commit',
     'pytest-cov',
     'pytest-django',
     'pytest-mock',
-    'gevent',
 ]
 docs = [
     'sphinx==4.2.0',

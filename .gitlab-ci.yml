@@ -26,7 +26,7 @@ services:
     alias: docker
 
 lint:
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.11-slim
   stage: lint
   tags:
     - low-load
@@ -37,7 +37,7 @@ lint:
     - pre-commit run --all-files --hook-stage push
 
 check python version coding style:
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.11-slim
   stage: lint
   tags:
     - low-load
@@ -48,7 +48,7 @@ check python version coding style:
     - pre-commit run --all-files --hook-stage push pyupgrade
 
 check django version coding style:
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10-slim
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.11-slim
   stage: lint
   tags:
     - low-load
