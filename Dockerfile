@@ -1,5 +1,5 @@
 ### STAGE 2: Setup ###
-FROM python:3.10
+FROM python:3.11
 
 # Update OS dependencies
 RUN apt-get update && \

@@ -28,6 +28,13 @@ This package contains various useful helper functions. You can read up on all th
 
 # Contribute
 
+## Setup package for development
+
+- Create a Python 3.11 virtualenv
+- Activate the virtualenv (take care that you need `Scripts/activate.ps1` for Windows users instead of
+  `Scripts/activate`)
+- Install dependencies with `pip install .[dev,docs,view-layer,drf,graphql]`
+
 ## Add functionality
 
 - Clone the project locally
