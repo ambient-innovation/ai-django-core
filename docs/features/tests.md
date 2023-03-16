@@ -234,7 +234,7 @@ class MyViewTest(DjangoMessagingFrameworkTestMixin, TestCase):
         # The view creates a message: "It's sunny on Sundays."
         view = function_to_instantiate_your_view()
         self.assert_full_message_in_request(
-            view.request, 'It's sunny on Sundays.')
+            view.request, "It's sunny on Sundays.")
 
     def test_my_message_partial_case(self):
         # The view creates a message: "I have added *n* new records" with "n" being a variable
@@ -242,3 +242,29 @@ class MyViewTest(DjangoMessagingFrameworkTestMixin, TestCase):
         self.assert_partial_message_in_request(
             view.request, 'I have added')
 ````
+
+## Test structure validator
+
+### Motivation
+
+When working in a Django project, it can happen very easily that you create unit-tests in a way that they won't be
+auto-discovered. The mean thing about this is that you can still run those tests - so it's hard to find those issues.
+
+The most common mistakes are forgetting the `__init__.py` in the directory or not prefixing your python files
+with `test_`. To tackle this problem, we created a handy management command you can run manually or integrate in your
+CI pipeline.
+
+    python manage.py validate_test_structure
+
+
+### Configuration
+
+You can define all of those settings variables in your main Django settings file.
+
+| Variable                                        | Type | Default                 | Explanation                                                         |
+|-------------------------------------------------|------|-------------------------|---------------------------------------------------------------------|
+| TEST_STRUCTURE_VALIDATOR_FILE_WHITELIST         | list | []                      | Filenames which will be ignored, will always ignore `__init__`      |
+| TEST_STRUCTURE_VALIDATOR_BASE_DIR               | Path | settings.BASE_DIR       | Root path to your application (BASE_DIR in a vanilla Django setup)   |
+| TEST_STRUCTURE_VALIDATOR_BASE_APP_NAME          | str  | "apps"                  | Directory where all your Django apps live in, can be set to "".     |
+| TEST_STRUCTURE_VALIDATOR_APP_LIST               | list | settings.INSTALLED_APPS | List of all your Django apps you want to validate                   |
+| TEST_STRUCTURE_VALIDATOR_IGNORED_DIRECTORY_LIST | list | []                      | Directories which will be ignored, will always ignore `__pycache__` |

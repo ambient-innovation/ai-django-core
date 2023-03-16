@@ -17,7 +17,7 @@ def get_first_char(value):
 @register.filter(name='concat')
 def concat(obj, str):
     """
-    Concats the the two given strings
+    Concats the two given strings
 
     :param obj:
     :param str:
