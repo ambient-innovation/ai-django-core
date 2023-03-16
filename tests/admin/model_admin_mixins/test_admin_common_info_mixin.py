@@ -13,7 +13,7 @@ from testapp.models import CommonInfoBasedModel
 class CommonInfoBasedModelForm(forms.ModelForm):
     class Meta:
         model = CommonInfoBasedModel
-        exclude = ()
+        fields = ('value',)
 
 
 class TestCommonInfoAdminMixinAdmin(CommonInfoAdminMixin, admin.ModelAdmin):

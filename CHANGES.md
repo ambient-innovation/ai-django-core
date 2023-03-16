@@ -1,5 +1,11 @@
 # Changelog
 
+* **6.12.0** (2023-03-16)
+  * Added `validate_test_structure` management command for validating project test structure
+  * Fixed syntax error in docs
+  * Fixed typo in docstring of `concat` method
+  * Improved code in test app
+
 * **6.11.0** (2023-02-19)
   * Added `HtmxResponseMixin` for Django views
   * Added missing `object` class attribute to `ToggleView`

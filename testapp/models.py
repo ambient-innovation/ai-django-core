@@ -16,6 +16,9 @@ class MySingleSignalModel(models.Model):
 
     objects = GloballyVisibleQuerySet.as_manager()
 
+    def __str__(self):
+        return str(self.value)
+
 
 class ForeignKeyRelatedModel(models.Model):
     single_signal = models.ForeignKey(
@@ -23,6 +26,9 @@ class ForeignKeyRelatedModel(models.Model):
     )
 
     objects = GloballyVisibleQuerySet.as_manager()
+
+    def __str__(self):
+        return str(self.id)
 
 
 @receiver(pre_save, sender=MySingleSignalModel)
@@ -32,6 +38,9 @@ def increase_value_no_dispatch_uid(sender, instance, **kwargs):
 
 class MyMultipleSignalModel(models.Model):
     value = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return str(self.value)
 
 
 @receiver(pre_save, sender=MyMultipleSignalModel, dispatch_uid='test.mysinglesignalmodel.increase_value_with_uuid')
@@ -50,6 +59,9 @@ def send_email(sender, instance, **kwargs):
 class CommonInfoBasedModel(CommonInfo):
     value = models.PositiveIntegerField(default=0)
 
+    def __str__(self):
+        return str(self.value)
+
 
 class ModelWithSelector(models.Model):
     value = models.PositiveIntegerField(default=0)
@@ -57,26 +69,44 @@ class ModelWithSelector(models.Model):
     objects = ModelWithSelectorQuerySet.as_manager()
     selectors = ModelWithSelectorGloballyVisibleSelector()
 
+    def __str__(self):
+        return str(self.value)
+
 
 class ModelWithFkToSelf(models.Model):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return str(self.id)
+
 
 class ModelWithOneToOneToSelf(models.Model):
     peer = models.OneToOneField('self', blank=True, null=True, related_name='related_peer', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
 
 
 class ModelWithCleanMixin(CleanOnSaveMixin, models.Model):
     def clean(self):
         return True
 
+    def __str__(self):
+        return str(self.id)
+
 
 class MyPermissionModelMixin(PermissionModelMixin, models.Model):
     pass
 
+    def __str__(self):
+        return str(self.id)
+
 
 class ModelWithSaveWithoutSignalsMixin(SaveWithoutSignalsMixin, models.Model):
     value = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return str(self.value)
 
 
 @receiver(pre_save, sender=ModelWithSaveWithoutSignalsMixin)

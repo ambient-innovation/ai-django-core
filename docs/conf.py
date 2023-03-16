@@ -37,7 +37,7 @@ from ai_django_core import __version__  # noqa: E402
 # -- Project information -----------------------------------------------------
 
 project = 'ai-django-core'
-copyright = '2022, Ambient Innovation: GmbH'
+copyright = '2022, Ambient Innovation: GmbH'  # noqa
 author = 'Ambient Innovation: GmbH <hello@ambient.digital>'
 version = __version__
 release = __version__
