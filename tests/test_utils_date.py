@@ -197,7 +197,7 @@ class DateUtilTest(TestCase):
 
     @override_settings(TIME_ZONE='Europe/Cologne')
     def test_datetime_format_wrong_timezone(self):
-        source_date = datetime.datetime(year=2020, month=6, day=26, hour=8)
+        source_date = datetime.datetime(year=2020, month=6, day=26, hour=8, tzinfo=datetime.timezone.utc)
         self.assertEqual(datetime_format(source_date, '%d.%m.%Y %H:%M'), '26.06.2020 08:00')
 
     @override_settings(TIME_ZONE='Europe/Berlin')

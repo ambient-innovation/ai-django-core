@@ -1,5 +1,10 @@
 # Changelog
 
+* **7.0.0** (2023-03-28)
+  * *Breaking change:* Dropped Python 3.7 support due to end of lifetime
+  * Added `ALWAYS_UPDATE_FIELDS` flag to `CommonInfo` model
+  * Added `ruff` linter and replaced `flake8` and `isort` with it
+
 * **6.12.0** (2023-03-16)
   * Added `validate_test_structure` management command for validating project test structure
   * Fixed syntax error in docs

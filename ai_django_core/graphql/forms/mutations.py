@@ -14,7 +14,7 @@ class DjangoValidatedModelFormMutation(DjangoModelFormMutation):
         abstract = True
 
     @classmethod
-    def mutate(cls, root, info, input):
+    def mutate(cls, root, info, input):  # noqa A002
         """
         Handle mutation logic.
         Most code derived one-to-one from base class.
@@ -23,8 +23,8 @@ class DjangoValidatedModelFormMutation(DjangoModelFormMutation):
         def on_resolve(payload):
             try:
                 payload.client_mutation_id = input.get("client_mutation_id")
-            except Exception:
-                raise Exception(f"Cannot set client_mutation_id in the payload object {repr(payload)}")
+            except Exception as e:
+                raise Exception(f"Cannot set client_mutation_id in the payload object {repr(payload)}") from e
             return payload
 
         result = cls.mutate_and_get_payload(root, info, **input)

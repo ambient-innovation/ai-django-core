@@ -15,15 +15,11 @@ def get_first_char(value):
 
 
 @register.filter(name='concat')
-def concat(obj, str):
+def concat(obj, value: str) -> str:
     """
-    Concats the two given strings
-
-    :param obj:
-    :param str:
-    :return:
+    Concatenates the two given strings
     """
-    return f"{obj}{str}"
+    return f"{obj}{value}"
 
 
 @register.filter

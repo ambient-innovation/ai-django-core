@@ -88,11 +88,11 @@ class ModelWithOneToOneToSelf(models.Model):
 
 
 class ModelWithCleanMixin(CleanOnSaveMixin, models.Model):
-    def clean(self):
-        return True
-
     def __str__(self):
         return str(self.id)
+
+    def clean(self):
+        return True
 
 
 class MyPermissionModelMixin(PermissionModelMixin, models.Model):

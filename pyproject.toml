@@ -21,7 +21,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -78,15 +77,59 @@ multi_line_output = 3
 skip-string-normalization = true
 include_trailing_comma = true
 
-[tool.isort]
-profile = "black"
-line_length = 120
-known_first_party = ['ai_django_core', 'testapp', 'tests']
+[tool.ruff]
+# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
+select = ["E", "F", "W", "N", "I", "B", "A", "DTZ", "DJ"]
+ignore = [
+    'N999',     # Project name contains underscore, not fixable
+    'A003',     # Django attributes shadow python builtins
+    'DJ001',    # Django model text-based fields shouldn't be nullable
+    'B905',     # Can be enabled when Python <=3.9 support is dropped
+    'DTZ001',   # TODO will affect "tz_today()" method
+    'DTZ005',   # TODO will affect "tz_today()" method
+]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable =["E", "F", "W", "N", "I", "B", "A", "DTZ", "DJ"]
+unfixable = []
+
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "*/migrations/*"
+]
+
+# Same as Black.
+line-length = 120
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Assume Python 3.10.
+target-version = "py311"
 
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py{37,38,39,310,311}-django{22,30,31,32,40,41}
+envlist = py{38,39,310,311}-django{22,30,31,32,40,41}
 isolated_build = True
 
 [testenv]
@@ -103,7 +146,6 @@ commands =
 
 [gh-actions]
 python =
-    3.7: py37
     3.8: py38
     3.9: py39
     3.10: py310

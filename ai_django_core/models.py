@@ -9,14 +9,14 @@ from ai_django_core.middleware.current_user import CurrentUserMiddleware
 class CreatedAtInfo(models.Model):
     created_at = models.DateTimeField(_("Created at"), default=now, db_index=True)
 
+    class Meta:
+        abstract = True
+
     def save(self, *args, **kwargs):
         # just a fallback for old data
         if not self.created_at:
             self.created_at = now()
         super().save(*args, **kwargs)
-
-    class Meta:
-        abstract = True
 
 
 class CommonInfo(CreatedAtInfo, models.Model):
@@ -41,6 +41,20 @@ class CommonInfo(CreatedAtInfo, models.Model):
         on_delete=models.SET_NULL,
     )
 
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.lastmodified_at = now()
+        current_user = self.get_current_user()
+        self.set_user_fields(current_user)
+
+        # Handle case that somebody only wants to update some fields
+        if 'update_fields' in kwargs and self.ALWAYS_UPDATE_FIELDS:
+            kwargs['update_fields'] += ('lastmodified_at', 'lastmodified_by', 'created_at', 'created_by')
+
+        super().save(*args, **kwargs)
+
     @staticmethod
     def get_current_user():
         """
@@ -60,17 +74,3 @@ class CommonInfo(CreatedAtInfo, models.Model):
             if not self.pk:
                 self.created_by = user
             self.lastmodified_by = user
-
-    def save(self, *args, **kwargs):
-        self.lastmodified_at = now()
-        current_user = self.get_current_user()
-        self.set_user_fields(current_user)
-
-        # Handle case that somebody only wants to update some fields
-        if 'update_fields' in kwargs and self.ALWAYS_UPDATE_FIELDS:
-            kwargs['update_fields'] += ('lastmodified_at', 'lastmodified_by', 'created_at', 'created_by')
-
-        super().save(*args, **kwargs)
-
-    class Meta:
-        abstract = True
