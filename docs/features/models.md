@@ -24,7 +24,8 @@ You then get four fields: `created_by`, `created_at`, `lastmodified_by`, `lastmo
 If you are interested in the details, just have a look at the code base.
 
 Note, that those fields will be automatically added to the `update_fields` if you choose to update only a subset of
-fields on saving your object.
+fields on saving your object. However, you can set the class attribute `ALWAYS_UPDATE_FIELDS` to `False`
+on your model to disable this behavior.
 
 ### Automatic object ownership
 

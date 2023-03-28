@@ -20,6 +20,9 @@ class CreatedAtInfo(models.Model):
 
 
 class CommonInfo(CreatedAtInfo, models.Model):
+    # Automatically add the model's fields to the 'update_fields' list if specified on save()
+    ALWAYS_UPDATE_FIELDS = True
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_("Created by"),
@@ -64,7 +67,7 @@ class CommonInfo(CreatedAtInfo, models.Model):
         self.set_user_fields(current_user)
 
         # Handle case that somebody only wants to update some fields
-        if 'update_fields' in kwargs:
+        if 'update_fields' in kwargs and self.ALWAYS_UPDATE_FIELDS:
             kwargs['update_fields'] += ('lastmodified_at', 'lastmodified_by', 'created_at', 'created_by')
 
         super().save(*args, **kwargs)
