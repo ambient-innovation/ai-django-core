@@ -236,57 +236,52 @@ class EmailTestServiceQuerySet(TestCase):
         self._ensure_matching_list_was_populated()
         return self[-1] if self.count() > 0 else False
 
-    def assert_one(self, msg=None):
+    def assert_one(self, msg: str = None):
         """
         Makes an assertion to make sure queried element exists exactly once
-        :param msg: str
-        :return:
         """
         self.assertEqual(self.one(), True, msg=msg)
 
-    def assert_quantity(self, target_quantity, msg=None):
+    def assert_quantity(self, target_quantity: str, msg: str = None):
         """
         Makes an assertion to make sure that amount of queried mails are equal to `target_quantity`
-        :param target_quantity: int
-        :param msg: str
         :return:
         """
         self.assertEqual(self.count(), target_quantity, msg=msg)
 
-    def assert_subject(self, subject, msg=None):
+    def assert_subject(self, subject: str, msg: str = None):
         """
         Searches in a given email inside the HTML AND TXT part for a given string
-        :param subject: str
-        :param msg: str
         """
-        warnings.warn('EmailTestServiceQuerySet.assert_subject is deprecated. Use queryset[0].assert_subject instead.')
+        warnings.warn(
+            'EmailTestServiceQuerySet.assert_subject is deprecated. Use queryset[0].assert_subject instead.',
+            stacklevel=2,
+        )
         # Ensure we just have found one element
         self._validate_lookup_cache_contains_one_element()
         self[0].assert_subject(subject, msg)
 
-    def assert_body_contains(self, search_str, msg=None):
+    def assert_body_contains(self, search_str: str, msg: str = None):
         """
         Searches in a given email inside the HTML AND TXT part for a given string
-        :param search_str: str
-        :param msg: str
         """
         warnings.warn(
             'EmailTestServiceQuerySet.assert_body_contains is deprecated. '
-            'Use queryset[0].assert_body_contains instead.'
+            'Use queryset[0].assert_body_contains instead.',
+            stacklevel=2,
         )
         # Ensure we just have found one element
         self._validate_lookup_cache_contains_one_element()
         self[0].assert_body_contains(search_str, msg)
 
-    def assert_body_contains_not(self, search_str, msg=None):
+    def assert_body_contains_not(self, search_str: str, msg: str = None):
         """
         Searches in a given email inside the HTML AND TXT part for a given string
-        :param search_str: str
-        :param msg: str
         """
         warnings.warn(
             'EmailTestServiceQuerySet.assert_body_contains is deprecated. '
-            'Use queryset[0].assert_body_contains_not instead.'
+            'Use queryset[0].assert_body_contains_not instead.',
+            stacklevel=2,
         )
         # Ensure we just have found one element
         self._validate_lookup_cache_contains_one_element()

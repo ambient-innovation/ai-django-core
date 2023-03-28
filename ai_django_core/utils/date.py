@@ -93,7 +93,7 @@ def get_start_and_end_date_from_calendar_week(year: int, calendar_week: int) -> 
     """
     Returns the first and last day of a given calendar week
     """
-    monday = datetime.datetime.strptime(f'{year}-{calendar_week}-1', "%Y-%W-%w").date()
+    monday = datetime.datetime.strptime(f'{year}-{calendar_week}-1', "%Y-%W-%w").astimezone().date()
     return monday, monday + datetime.timedelta(days=6.9)
 
 

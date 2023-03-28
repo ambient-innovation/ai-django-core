@@ -18,30 +18,21 @@ jobs:
           python-version: "3.11"
 
       - name: Install required packages
-        run: pip install flake8 pep8-naming black isort
+        run: pip install black ruff
 
-      - name: Run flake8
-        run: flake8
+      - name: Run ruff
+        run: ruff .
 
       - name: Run black
         run: black .
-
-      - name: Run isort
-        run: isort .
 
   build:
     name: Python ${{ matrix.python-version }}, django ${{ matrix.django-version }}
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9, '3.10', '3.11']
+        python-version: [3.8, 3.9, '3.10', '3.11']
         django-version: [22, 30, 31, 32, 40, 41]
-
-        exclude:
-          - python-version: 3.7
-            django-version: 40
-          - python-version: 3.7
-            django-version: 41
 
     steps:
       - uses: actions/checkout@v3

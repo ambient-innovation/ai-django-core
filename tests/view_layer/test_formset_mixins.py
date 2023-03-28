@@ -6,10 +6,10 @@ from ai_django_core.view_layer.formset_mixins import CountChildrenFormsetMixin
 from testapp.models import ForeignKeyRelatedModel, MySingleSignalModel
 
 
-class MySingleSignalModelForm(forms.ModelForm):
+class ForeignKeyRelatedModelForm(forms.ModelForm):
     class Meta:
-        model = MySingleSignalModel
-        exclude = ()
+        model = ForeignKeyRelatedModel
+        fields = ('single_signal',)
 
 
 class MySingleSignalModelFormset(CountChildrenFormsetMixin, BaseInlineFormSet):
@@ -21,7 +21,7 @@ class CountChildrenFormsetMixinTest(TestCase):
         formset_class = inlineformset_factory(
             MySingleSignalModel,
             ForeignKeyRelatedModel,
-            form=MySingleSignalModelForm,
+            form=ForeignKeyRelatedModelForm,
             formset=MySingleSignalModelFormset,
             extra=3,
             can_delete=True,
@@ -39,7 +39,7 @@ class CountChildrenFormsetMixinTest(TestCase):
         formset_class = inlineformset_factory(
             MySingleSignalModel,
             ForeignKeyRelatedModel,
-            form=MySingleSignalModelForm,
+            form=ForeignKeyRelatedModelForm,
             formset=MySingleSignalModelFormset,
             extra=3,
             can_delete=True,

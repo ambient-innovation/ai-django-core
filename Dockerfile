@@ -19,7 +19,7 @@ ENV FLIT_ROOT_INSTALL=1
 WORKDIR $AI_CORE_SRVHOME
 
 # Install Python dependencies
-COPY pyproject.toml README.md tox.ini $AI_CORE_SRVHOME
+COPY pyproject.toml README.md $AI_CORE_SRVHOME
 COPY ai_django_core/__init__.py $AI_CORE_SRVHOME/ai_django_core/
 RUN pip install -U pip flit
 RUN flit install --deps all --extras all
