@@ -27,7 +27,7 @@ class DateHelper:
 
 def tz_today(str_format=None):
     """
-    Returns either a timezone-aware today object or string. Depending if the `str_format` param is set.
+    Returns either a timezone-aware today object or string. Depending on if the `str_format` param is set.
     :param str_format: If set, formats the date object to a string. Pass strftime-compatible value
     :return:
     """

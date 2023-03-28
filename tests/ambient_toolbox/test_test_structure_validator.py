@@ -185,8 +185,10 @@ class TestStructureValidatorTest(TestCase):
 
         self.assertEqual(len(service.issue_list), 2)
 
-        self.assertIn('__init__.py missing in', service.issue_list[0])
-        self.assertIn('testapp/tests/missing_init', service.issue_list[0])
+        complaint_list = sorted(service.issue_list)
 
-        self.assertIn('Python file without "test_" prefix found:', service.issue_list[1])
-        self.assertIn('testapp/tests/subdirectory/missing_test_prefix.py', service.issue_list[1])
+        self.assertIn('Python file without "test_" prefix found:', complaint_list[0])
+        self.assertIn('testapp/tests/subdirectory/missing_test_prefix.py', complaint_list[0])
+
+        self.assertIn('__init__.py missing in', complaint_list[1])
+        self.assertIn('testapp/tests/missing_init', complaint_list[1])
