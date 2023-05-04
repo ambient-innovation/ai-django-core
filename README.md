@@ -2,6 +2,14 @@
 [![Downloads](https://pepy.tech/badge/ai-django-core)](https://pepy.tech/project/ai-django-core)
 [![Documentation Status](https://readthedocs.org/projects/ai-django-core/badge/?version=latest)](https://ai-django-core.readthedocs.io/en/latest/?badge=latest)
 
+# Disclaimer: Package was superseded by ambient-toolbox!
+
+This package was renamed, moved and deprecated under the old name. The successor is the "**Ambient Toolbox**".
+* [PyPI](https://pypi.org/project/ambient-toolbox/)
+* [Migration docs](https://github.com/ambient-innovation/ambient-toolbox#migration-from-ai_django_core)
+
+---
+
 # Overview
 
 This package contains various useful helper functions. You can read up on all the fancy things at

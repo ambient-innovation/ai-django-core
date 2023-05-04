@@ -1,5 +1,8 @@
 # Changelog
 
+* **7.0.1** (2023-05-04)
+  * **This package was superseded by** [ambient-toolbox](https://pypi.org/project/ambient-toolbox/). Please install the successor package.
+
 * **7.0.0** (2023-03-28)
   * *Breaking change:* Dropped Python 3.7 support due to end of lifetime
   * Added `ALWAYS_UPDATE_FIELDS` flag to `CommonInfo` model
