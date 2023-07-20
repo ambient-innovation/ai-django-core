@@ -1,5 +1,8 @@
 # Changelog
 
+* **7.0.2** (2023-05-04)
+  * Added Django system check to warn about deprecation
+
 * **7.0.1** (2023-05-04)
   * **This package was superseded by** [ambient-toolbox](https://pypi.org/project/ambient-toolbox/). Please install the successor package.
 
