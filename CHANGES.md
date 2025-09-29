@@ -1,5 +1,8 @@
 # Changelog
 
+* **7.0.3** (2025-09-29)
+  * Set inactive PyPI classifier
+
 * **7.0.2** (2023-05-04)
   * Added Django system check to warn about deprecation
 
